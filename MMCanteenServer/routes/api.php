@@ -14,12 +14,10 @@ use Illuminate\Http\Request;
 */
 
 Route::group(['prefix' => 'v1', 'middleware' => 'cors'], function() {
-        
-    // Auth User
-    Route::post('user/register', [
-        'uses' => 'AuthController@store'
-    ]);
+    // Petugas
+    Route::apiResource('petugas', 'PetugasController');
     
+    // Auth User    
     Route::post('user/signin', [
         'uses' => 'AuthController@signin'
     ]);
