@@ -1,0 +1,55 @@
+EndPoint MMCanteen API
+
+#Admin
+
+URI						|	Desc			|	Method
+----------------------------------------------------------
+api/petugas/				Read				GET
+api/petugas/				Create				POST
+api/petugas/{id}			Update				PUT/PATCH
+api/petugas/{id}			Delete				DELETE
+api/petugas/{id}			Detail				GET
+
+api/siswa/{params}			Read				GET
+api/siswa/					Create				POST
+api/siswa/{id}				Update				PUT/PATCH
+api/siswa/{id}				Delete 				DELETE
+api/siswa/{id}				Detail				GET
+
+api/kelas/					Read				GET
+api/kelas/					Create				POST
+api/kelas/{id}				Update				PUT/PATCH
+api/kelas/{id}				Delete 				DELETE
+api/kelas/{id}				Detail				GET
+
+api/th-ajaran/				Read				GET
+api/th-ajaran/				Create				POST
+api/th-ajaran/{id}			Update				PUT/PATCH
+api/th-ajaran/{id}			Delete 				DELETE
+api/th-ajaran/{id}			Detail				GET
+
+api/absen/{params}			Read				GET
+
+
+#Petugas
+
+URI						|	Desc			|	Method
+----------------------------------------------------------
+api/absen/{params}			Read				GET
+api/absen/					Create				POST
+
+api/siswa/{params}			Read				GET
+
+
+#User
+URI						|	Desc			|	Method
+----------------------------------------------------------
+api/signin					Login				POST
+api/logout					Logout					
+
+
+
+DESC
+----------------------------------------------------------
+@params_siswa (kelas, th-ajaran)
+@params_absen (kelas, th-ajaran, bulan, tahun)
