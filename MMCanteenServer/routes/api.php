@@ -19,6 +19,9 @@ Route::group(['prefix' => 'v1', 'middleware' => 'cors'], function() {
 
     // Kelas
     Route::apiResource('kelas', 'KelasController');
+
+    //Tahun Ajaran
+    Route::apiResource('th-ajaran', 'TahunAjaranController');
     
     // Auth User    
     Route::post('user/signin', [
