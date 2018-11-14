@@ -89,7 +89,7 @@ class PetugasController extends Controller
             }
 
             $user->signin = [
-                'href' => 'api/v1/signin',
+                'link' => 'api/v1/signin',
                 'method' => 'POST',
                 'params' => 'name, password'
             ];
@@ -124,7 +124,12 @@ class PetugasController extends Controller
             'method' => 'PATCH'
         ];
 
-        return response()->json($user, 200);
+        $response = [
+            'msg' => 'Detail petugas',
+            'user' => $user
+        ];
+
+        return response()->json($response, 200);
     }
 
     /**
@@ -184,7 +189,7 @@ class PetugasController extends Controller
         $response = [
             'msg' => 'User deleted',
             'create' => [
-                'href' => 'api/v1/petugas',
+                'link' => 'api/v1/petugas',
                 'method' => 'POST',
                 'params' => 'name, password, role'
             ]             

@@ -16,6 +16,9 @@ use Illuminate\Http\Request;
 Route::group(['prefix' => 'v1', 'middleware' => 'cors'], function() {
     // Petugas
     Route::apiResource('petugas', 'PetugasController');
+
+    // Kelas
+    Route::apiResource('kelas', 'KelasController');
     
     // Auth User    
     Route::post('user/signin', [
