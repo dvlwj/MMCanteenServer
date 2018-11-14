@@ -8,6 +8,11 @@ use App\Kelas;
 
 class KelasController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('jwt.auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -138,7 +143,7 @@ class KelasController extends Controller
     public function destroy($id)
     {
         $kelas = Kelas::findOrFail($id);
-        
+
         if(!$kelas->delete()) {
             return response()->json([
                 'msg' => 'Delete failed'
