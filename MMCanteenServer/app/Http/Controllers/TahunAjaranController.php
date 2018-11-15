@@ -10,7 +10,7 @@ class TahunAjaranController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.auth');
+        $this->middleware(['jwt.auth', 'isAdmin']);
     }
     
     /**
@@ -30,7 +30,8 @@ class TahunAjaranController extends Controller
 
         $response = [
             'msg' => 'List of Tahun Ajaran',
-            'data' => $th_ajarans
+            'data' => $th_ajarans,
+            'user' => $user
         ];
 
         return response()->json($response, 200);
