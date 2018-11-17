@@ -17,7 +17,6 @@ class CreateSiswasTable extends Migration
             $table->increments('id');
             $table->string('nis');
             $table->string('name');
-            $table->string('qrcode');
             $table->integer('kelas_id')->unsigned();
             $table->integer('th_ajaran_id')->unsigned();
             $table->timestamps();

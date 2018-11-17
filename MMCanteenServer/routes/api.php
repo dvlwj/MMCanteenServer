@@ -17,6 +17,9 @@ Route::group(['prefix' => 'v1', 'middleware' => 'cors'], function() {
     // Petugas
     Route::apiResource('petugas', 'PetugasController');
 
+    // Siswa
+    Route::apiResource('siswa', 'SiswaController');
+
     // Kelas
     Route::apiResource('kelas', 'KelasController');
 
