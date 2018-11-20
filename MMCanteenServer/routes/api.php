@@ -25,6 +25,9 @@ Route::group(['prefix' => 'v1', 'middleware' => 'cors'], function() {
 
     //Tahun Ajaran
     Route::apiResource('th-ajaran', 'TahunAjaranController');
+
+    // Absen
+    Route::post('absen', 'AbsenController@store');
     
     // Auth User    
     Route::post('user/signin', [

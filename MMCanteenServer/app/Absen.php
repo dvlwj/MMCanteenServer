@@ -19,4 +19,9 @@ class Absen extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function siswa()
+    {
+        return $this->belongsToMany(Siswa::class);
+    }
 }

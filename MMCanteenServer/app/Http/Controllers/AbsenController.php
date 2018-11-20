@@ -5,9 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Absen;
+use App\Siswa;
+use App\Kelas;
+use App\TahunAjaran;
+use App\User;
 
 class AbsenController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('jwt.auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +24,7 @@ class AbsenController extends Controller
      */
     public function index()
     {
-        //
+        //kelas, th_ajaran, bulan, tahun
     }
 
     /**
@@ -25,26 +34,19 @@ class AbsenController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $this->validate($request, [
-            'user_id' => 'required', 
-            'siswa_id' => 'required', 
-            'kelas' => 'required', 
-            'th_ajaran' => 'required',
-            'time' => 'required'
-        ]);
-
+    {   
         $user_id = $request->input('user_id');
-        $siswa_id = $request->input('siswa_id');
-        $kelas = $request->input('kelas');
-        $th_ajaran = $request->input('th_ajaran');
-        $time = $request->input('time');
+        $nis = $request->input('nis');
+
+        $siswa = Siswa::where('nis', $nis)->first();
+        $kelas = Kelas::where('id', $siswa->kelas_id)->first();
+        $th_ajaran = TahunAjaran::where('id', $siswa->th_ajaran_id)->first();
         
         $absen = new Absen([
             'user_id' => $user_id,
-            'siswa_id' => $siswa_id,
-            'kelas' => $kelas,
-            'th_ajaran' => $th_ajaran,
+            'siswa_id' => $siswa->id,
+            'kelas' => $kelas->name,
+            'th_ajaran' => $th_ajaran->tahun,
             'time' => $time
         ]);
 

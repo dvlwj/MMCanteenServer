@@ -8,6 +8,11 @@ use App\Siswa;
 
 class SiswaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['jwt.auth', 'isAdmin'])->except('index');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +20,7 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        //
+        //kelas, th_ajaran
     }
 
     /**
