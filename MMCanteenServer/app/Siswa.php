@@ -12,7 +12,7 @@ class Siswa extends Model
      * @var array
      */
     protected $fillable = [
-        'nis', 'name', 'qrcode', 'kelas_id', 'th_ajaran_id'
+        'nis', 'name', 'kelas_id', 'th_ajaran_id'
     ];
 
     public function kelas()
