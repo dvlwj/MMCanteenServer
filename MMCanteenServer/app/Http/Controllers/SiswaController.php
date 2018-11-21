@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Siswa;
+use Illuminate\Support\Facades\DB;
 
 class SiswaController extends Controller
 {
@@ -99,11 +100,15 @@ class SiswaController extends Controller
      */
     public function show($id)
     {
-        $siswa = Siswa::findOrFail($id);
-        $siswa->update = [
-            'link' => 'api/v1/siswa/' . $siswa->id,
-            'method' => 'PATCH'
-        ];
+        $siswa = Siswa::find($id);
+        if ($siswa == '') {
+            return response()->json(['msg' => 'Siswa not found'], 404);
+        } else {
+            $siswa->update = [
+                'link' => 'api/v1/siswa/' . $siswa->id,
+                'method' => 'PATCH'
+            ];
+        }
 
         $response = [
             'msg' => 'Detail siswa',
@@ -134,11 +139,15 @@ class SiswaController extends Controller
         $kelas_id = $request->input('kelas_id');
         $th_ajaran_id = $request->input('th_ajaran_id');
 
-        $siswa = Kelas::findOrFail($id);
-        $siswa->nis = $nis;
-        $siswa->name = $name;
-        $siswa->kelas_id = $kelas_id;
-        $siswa->th_ajaran_id = $th_ajaran_id;
+        $siswa = Siswa::find($id);
+        if ($siswa == '') {
+            return response()->json(['msg' => 'Siswa not found'], 404);
+        } else {
+            $siswa->nis = $nis;
+            $siswa->name = $name;
+            $siswa->kelas_id = $kelas_id;
+            $siswa->th_ajaran_id = $th_ajaran_id;
+        }
 
         if(!$siswa->update()) {
             return response()->json([
@@ -162,7 +171,11 @@ class SiswaController extends Controller
      */
     public function destroy($id)
     {
-        $siswa = Siswa::findOrFail($id);
+        $siswa = Siswa::find($id);
+
+        if ($siswa == '') {
+            return response()->json(['msg' => 'Siswa not found'], 404);
+        }
 
         if(!$siswa->delete()) {
             return response()->json([

@@ -119,11 +119,15 @@ class PetugasController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
-        $user->update = [
-            'link' => 'api/v1/petugas/' . $user->id,
-            'method' => 'PATCH'
-        ];
+        $user = User::find($id);
+        if($user == '') {
+            return response()->json(['msg' => 'User not found'], 200);
+        } else {
+            $user->update = [
+                'link' => 'api/v1/petugas/' . $user->id,
+                'method' => 'PATCH'
+            ];
+        }
 
         $response = [
             'msg' => 'Detail petugas',
@@ -152,10 +156,15 @@ class PetugasController extends Controller
         $password = $request->input('password');
         $role = $request->input('role');
         
-        $user = User::findOrFail($id);
-        $user->name = $name;
-        $user->password = $password;
-        $user->role = $role;
+        $user = User::find($id);
+
+        if($user == '') {
+            return response()->json(['msg' => 'User not found'], 200);
+        } else {
+            $user->name = $name;
+            $user->password = $password;
+            $user->role = $role;
+        }
 
         if(!$user->update()) {
             return response()->json([
@@ -179,7 +188,11 @@ class PetugasController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
+
+        if($user == '') {
+            return response()->json(['msg' => 'Petugas not found'], 200);
+        }
 
         if(!$user->delete()) {
             return response()->json([

@@ -89,18 +89,23 @@ class KelasController extends Controller
      */
     public function show($id)
     {
-        $kelas = Kelas::findOrFail($id);
-        $kelas->update = [
-            'link' => 'api/v1/kelas/' . $kelas->id,
-            'method' => 'PATCH'
-        ];
+        $kelas = Kelas::find($id);
+        
+        if($kelas == '') {
+            return response()->json(['msg' => 'Kelas not found'], 200);
+        } else {
+            $kelas->update = [
+                'link' => 'api/v1/kelas/' . $kelas->id,
+                'method' => 'PATCH'
+            ];
+        }
 
         $response = [
             'msg' => 'Detail kelas',
             'kelas' => $kelas
         ];
 
-        return response()->json($response, 200);
+        return response()->json($kelas, 200);
     }
 
     /**
@@ -117,8 +122,13 @@ class KelasController extends Controller
         ]);
         
         $name = $request->input('name');
-        $kelas = Kelas::findOrFail($id);
-        $kelas->name = $name;
+        $kelas = Kelas::find($id);
+
+        if($kelas == '') {
+            return response()->json(['msg' => 'Kelas not found'], 200);
+        } else {
+            $kelas->name = $name;
+        }
 
         if(!$kelas->update()) {
             return response()->json([
@@ -142,7 +152,11 @@ class KelasController extends Controller
      */
     public function destroy($id)
     {
-        $kelas = Kelas::findOrFail($id);
+        $kelas = Kelas::find($id);
+
+        if($kelas == '') {
+            return response()->json(['msg' => 'Kelas not found'], 200);
+        }
 
         if(!$kelas->delete()) {
             return response()->json([
