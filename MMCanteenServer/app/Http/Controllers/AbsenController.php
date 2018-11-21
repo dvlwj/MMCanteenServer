@@ -27,7 +27,7 @@ class AbsenController extends Controller
     {
         //kelas, th_ajaran, bulan, tahun
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *
