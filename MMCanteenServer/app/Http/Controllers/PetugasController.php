@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\User;
+use JWTAuth;
 
 class PetugasController extends Controller
 {
@@ -47,7 +48,7 @@ class PetugasController extends Controller
         $this->validate($request, [
             'name' => 'required|min:5',
             'password' => 'required|min:6',
-            'role' => 'required'
+            'role' => 'required|nullable'
         ]);
 
         $name = $request->input('name');

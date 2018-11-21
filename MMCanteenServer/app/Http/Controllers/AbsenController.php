@@ -9,6 +9,7 @@ use App\Siswa;
 use App\Kelas;
 use App\TahunAjaran;
 use App\User;
+use JWTAuth;
 
 class AbsenController extends Controller
 {
@@ -22,7 +23,7 @@ class AbsenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function listAbsen($kelas, $th_ajaran, $bulan, $tahun)
     {
         //kelas, th_ajaran, bulan, tahun
     }
@@ -35,7 +36,8 @@ class AbsenController extends Controller
      */
     public function store(Request $request)
     {   
-        $user_id = $request->input('user_id');
+        $user = JWTAuth::toUser($request->header('token'));
+        $user_id = $user->id;
         $nis = $request->input('nis');
 
         $siswa = Siswa::where('nis', $nis)->first();

@@ -10,7 +10,7 @@ class SiswaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['jwt.auth', 'isAdmin'])->except('index');
+        $this->middleware(['jwt.auth', 'isAdmin'])->except('listSiswa');
     }
     
     /**
@@ -18,9 +18,23 @@ class SiswaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function listSiswa($kelas_id, $th_ajaran_id)
     {
         //kelas, th_ajaran
+        $siswa = DB::table('siswas')->where('kelas_id', $kelas_id)->where('th_ajaran_id', $th_ajaran_id)->get();
+        foreach($siswa as $data) {
+            $data->detail_siswa = [
+                'link' => 'api/v1/siswa/' . $data->id,
+                'method' => 'GET'
+            ];   
+        }
+
+        $response = [
+            'msg' => 'List of Siswa',
+            'siswa' => $siswa,
+        ];
+
+        return response()->json($response, 200);
     }
 
     /**
