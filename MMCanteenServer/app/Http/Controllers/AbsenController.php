@@ -43,6 +43,7 @@ class AbsenController extends Controller
         $siswa = Siswa::where('nis', $nis)->first();
         $kelas = Kelas::where('id', $siswa->kelas_id)->first();
         $th_ajaran = TahunAjaran::where('id', $siswa->th_ajaran_id)->first();
+        $time = date('Y-m-d H:i:s');
         
         $absen = new Absen([
             'user_id' => $user_id,
