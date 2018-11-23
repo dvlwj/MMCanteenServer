@@ -10,12 +10,13 @@ use App\Kelas;
 use App\TahunAjaran;
 use App\User;
 use JWTAuth;
+use Illuminate\Support\Facades\DB;
 
 class AbsenController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.auth');
+        // $this->middleware('jwt.auth');
     }
 
     /**
@@ -26,6 +27,19 @@ class AbsenController extends Controller
     public function listAbsen($kelas, $th_ajaran, $bulan, $tahun)
     {
         //kelas, th_ajaran, bulan, tahun
+        $absens = DB::table('absens')
+                    ->where('kelas', $kelas)
+                    ->where('th_ajaran', $th_ajaran)
+                    ->whereMonth('time', $bulan)
+                    ->whereYear('time', $tahun)
+                    ->get();
+        
+        $response = [
+            'msg' => 'List of Absen',
+            'absens' => $absens
+        ];
+
+        return response()->json($response, 200);
     }
     
     /**

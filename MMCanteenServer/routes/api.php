@@ -29,8 +29,9 @@ Route::group(['prefix' => 'v1', 'middleware' => 'cors'], function() {
 
     // Absen
     Route::post('absen', 'AbsenController@store')->name('absen.store');
-    Route::post('absen/{kelas}/{th_ajaran}/{bulan}/{tahun}', 'AbsenController@listAbsen')->name('absen.listAbsen');
+    Route::get('absen/{kelas}/{th_ajaran}/{bulan}/{tahun}', 'AbsenController@listAbsen')->name('absen.listAbsen');
     
     // Auth User    
     Route::post('user/signin', ['uses' => 'AuthController@signin'])->name('user.signin');
+    
 });
