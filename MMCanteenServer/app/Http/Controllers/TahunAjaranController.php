@@ -30,8 +30,7 @@ class TahunAjaranController extends Controller
 
         $response = [
             'msg' => 'List of Tahun Ajaran',
-            'data' => $th_ajarans,
-            'user' => $user
+            'data' => $th_ajarans
         ];
 
         return response()->json($response, 200);
@@ -88,11 +87,15 @@ class TahunAjaranController extends Controller
      */
     public function show($id)
     {
-        $th_ajaran = TahunAjaran::findOrFail($id);
-        $th_ajaran->update = [
-            'link' => 'api/v1/th-ajaran/' . $th_ajaran->id,
-            'method' => 'PATCH'
-        ];
+        $th_ajaran = TahunAjaran::find($id);
+        if($th_ajaran == '') {
+            return response()->json(['msg' => 'Tahun ajaran not found'], 200);
+        } else {
+            $th_ajaran->update = [
+                'link' => 'api/v1/th-ajaran/' . $th_ajaran->id,
+                'method' => 'PATCH'
+            ];
+        }
 
         $response = [
             'msg' => 'Detail Tahun Ajaran',
@@ -116,8 +119,13 @@ class TahunAjaranController extends Controller
         ]);
 
         $tahun = $request->input('tahun');
-        $th_ajaran = TahunAjaran::findOrFail($id);
-        $th_ajaran->tahun = $tahun;
+        $th_ajaran = TahunAjaran::find($id);
+        
+        if($th_ajaran == '') {
+            return response()->json(['msg' => 'Tahun ajaran not found'], 200);
+        } else {
+            $th_ajaran->tahun = $tahun;
+        }
 
         if(!$th_ajaran->update()) {
             return response()->json([
@@ -141,7 +149,11 @@ class TahunAjaranController extends Controller
      */
     public function destroy($id)
     {
-        $th_ajaran = TahunAjaran::findOrFail($id);
+        $th_ajaran = TahunAjaran::find($id);
+        
+        if($th_ajaran == '') {
+            return response()->json(['msg' => 'Tahun ajaran not found'], 200);
+        }
 
         if(!$th_ajaran->delete()) {
             return response()->json([
