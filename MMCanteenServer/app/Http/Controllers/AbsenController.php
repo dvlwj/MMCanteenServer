@@ -16,7 +16,7 @@ class AbsenController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.auth');
+        // $this->middleware('jwt.auth');
     }
 
     /**
@@ -33,7 +33,11 @@ class AbsenController extends Controller
                     ->whereMonth('time', $bulan)
                     ->whereYear('time', $tahun)
                     ->get();
-        
+        foreach($absens as $absen) {
+            $absen->data_siswa = DB::table('siswas')->select('id','nis', 'name')->where('id',$absen->siswa_id)->first();
+            $absen->data_petugas = DB::table('users')->select('id', 'name')->where('id',$absen->user_id)->first();
+        }
+
         $response = [
             'msg' => 'List of Absen',
             'absens' => $absens
