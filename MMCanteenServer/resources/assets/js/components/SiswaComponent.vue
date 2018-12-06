@@ -1,6 +1,19 @@
 <template>
-  <div class="panel-body">I'm an example SiswaComponent!
-    <qrcode text="I'm an example SiswaComponent!" size="100"></qrcode>
+  <div class="container">
+      <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+              <div class="panel panel-default">
+                  <div class="panel-heading">Siswa</div>
+
+                  <div class="panel-body">
+                      I'm an example SiswaComponent!
+                      <qrcode text="I'm an example SiswaComponent!"></qrcode>
+                      <br>
+                      <button @click="print" class="btn btn-primary">Print</button>
+                  </div>
+              </div>
+          </div>
+      </div>
   </div>
 </template>
 
@@ -13,6 +26,11 @@ export default {
   },
   components: {
     qrcode
+  },
+  methods: {
+    print : () => {
+      window.print()
+    }
   }
 };
 </script>

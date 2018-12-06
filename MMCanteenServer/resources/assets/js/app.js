@@ -13,7 +13,9 @@ import routes from "./routes";
 
 const router = new VueRouter({
   mode: "history",
-  routes: routes
+  routes: routes,
+  linkActiveClass: "active",
+  linkExactActiveClass: "active"
 });
 
 const app = new Vue(Vue.util.extend({ router })).$mount("#app");
