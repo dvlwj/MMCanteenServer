@@ -35,6 +35,7 @@ result  :
     
 ### Tahun Ajaran
 **Get All Data**
+
 URL : `localhost:8000/api/v1/th-ajaran`
 
 method : `GET`  
@@ -82,6 +83,7 @@ result :
     }
     
 **View/Detail Data**
+
 URL : `localhost:8000/api/v1/th-ajaran/1`
 
 method : `GET`
@@ -107,6 +109,7 @@ result :
     }
 
 **Edit Data**
+
 URL : `localhost:8000/api/v1/th-ajaran/1`
 
 method : `PUT` or `PATCH`
@@ -128,6 +131,7 @@ result :
     }
 
 **Delete Data**
+
 URL : `localhost:8000/api/v1/th-ajaran/1`
 
 method : `DELETE`
