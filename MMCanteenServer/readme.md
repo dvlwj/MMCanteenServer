@@ -13,7 +13,8 @@
 ### Login
 URL     : `localhost:8000/api/v1/user/signin` 
 method  : `POST` 
-params  : `name` and `password` 
+params  : `name` and `password`
+header : `application/json` 
 result  : 
 
     {
@@ -33,6 +34,7 @@ result  :
 URL : `localhost:8000/api/v1/th-ajaran`
 method : `GET`  
 params : none
+header : `application/json` and `token`
 result : 
 
     {
@@ -75,6 +77,7 @@ result :
 URL : `localhost:8000/api/v1/th-ajaran/1`
 method : `GET`
 params : `id`
+header : `application/json` and `token`
 result : 
 
     {
@@ -95,6 +98,7 @@ result :
 URL : `localhost:8000/api/v1/th-ajaran/1`
 method : `PUT` or `PATCH`
 params : `id`, `tahun`
+header : `application/json` and `token`
 result : 
 
     {
@@ -111,6 +115,7 @@ result :
 URL : `localhost:8000/api/v1/th-ajaran/1`
 method : `DELETE`
 params : `id`
+header : `application/json` and `token`
 result : 
 
     {
