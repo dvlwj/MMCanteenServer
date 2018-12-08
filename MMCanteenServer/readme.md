@@ -11,10 +11,14 @@
 ## Content API
 
 ### Login
-URL     : `localhost:8000/api/v1/user/signin` 
+URL     : `localhost:8000/api/v1/user/signin`
+
 method  : `POST` 
+
 params  : `name` and `password`
+
 header : `application/json` 
+
 result  : 
 
     {
@@ -32,9 +36,13 @@ result  :
 ### Tahun Ajaran
 **Get All Data**
 URL : `localhost:8000/api/v1/th-ajaran`
+
 method : `GET`  
+
 params : none
+
 header : `application/json` and `token`
+
 result : 
 
     {
@@ -75,9 +83,13 @@ result :
     
 **View/Detail Data**
 URL : `localhost:8000/api/v1/th-ajaran/1`
+
 method : `GET`
+
 params : `id`
+
 header : `application/json` and `token`
+
 result : 
 
     {
@@ -96,9 +108,13 @@ result :
 
 **Edit Data**
 URL : `localhost:8000/api/v1/th-ajaran/1`
+
 method : `PUT` or `PATCH`
+
 params : `id`, `tahun`
+
 header : `application/json` and `token`
+
 result : 
 
     {
@@ -113,9 +129,13 @@ result :
 
 **Delete Data**
 URL : `localhost:8000/api/v1/th-ajaran/1`
+
 method : `DELETE`
+
 params : `id`
+
 header : `application/json` and `token`
+
 result : 
 
     {
