@@ -2,54 +2,47 @@ EndPoint MMCanteen API
 
 #Admin
 
-URI						|	Desc			|	Method
-----------------------------------------------------------
-api/petugas/				Read				GET
-api/petugas/				Create				POST
-api/petugas/{id}			Update				PUT/PATCH
-api/petugas/{id}			Delete				DELETE
-api/petugas/{id}			Detail				GET
+URI							|	Desc			|	Method			| params
+-------------------------------------------------------------------------------
+api/v1/petugas/				Read				GET					token_jwt
+api/v1/petugas/				Create				POST				name, password, role, token_jwt
+api/v1/petugas/{id}			Update				PUT/PATCH			user_id, name, password, role_id, token_jwt
+api/v1/petugas/{id}			Delete				DELETE 				user_id, token_jwt
+api/v1/petugas/{id}			Detail				GET					user_id, token_jwt
 
-api/siswa/{params}			Read				GET
-api/siswa/					Create				POST
-api/siswa/{id}				Update				PUT/PATCH
-api/siswa/{id}				Delete 				DELETE
-api/siswa/{id}				Detail				GET
+api/v1/siswa/{params}		Read				GET					kelas, th_ajaran, token_jwt
+api/v1/siswa/				Create				POST				name, nis, id_kelas, id_th_ajaran, token_jwt
+api/v1/siswa/{id}			Update				PUT/PATCH			id, name, nis, id_kelas, id_th_ajaran, token_jwt
+api/v1/siswa/{id}			Delete 				DELETE 				id, token_jwt
+api/v1/siswa/{id}			Detail				GET					id, token_jwt
 
-api/kelas/					Read				GET
-api/kelas/					Create				POST
-api/kelas/{id}				Update				PUT/PATCH
-api/kelas/{id}				Delete 				DELETE
-api/kelas/{id}				Detail				GET
+api/v1/kelas/				Read				GET					token_jwt
+api/v1/kelas/				Create				POST				name, token_jwt
+api/v1/kelas/{id}			Update				PUT/PATCH			id, name, token_jwt
+api/v1/kelas/{id}			Delete 				DELETE 				id, token_jwt
+api/v1/kelas/{id}			Detail				GET					id, token_jwt
 
-api/th-ajaran/				Read				GET
-api/th-ajaran/				Create				POST
-api/th-ajaran/{id}			Update				PUT/PATCH
-api/th-ajaran/{id}			Delete 				DELETE
-api/th-ajaran/{id}			Detail				GET
+api/v1/th-ajaran/			Read				GET					token_jwt
+api/v1/th-ajaran/			Create				POST				name, token_jwt
+api/v1/th-ajaran/{id}		Update				PUT/PATCH			id, name, token_jwt
+api/v1/th-ajaran/{id}		Delete 				DELETE 				id, token_jwt
+api/v1/th-ajaran/{id}		Detail				GET					id, token_jwt
 
-api/absen/{params}			Read				GET
+api/v1/absen/{params}		Read				GET					kelas, th_ajaran, bulan, tahun, token_jwt
 
 
 #Petugas
 
-URI						|	Desc			|	Method
-----------------------------------------------------------
-api/absen/{params}			Read				GET
-api/absen/					Create				POST
+URI							|	Desc			|	Method			| params
+--------------------------------------------------------------------------------
+api/v1/absen/{params}			Read				GET				kelas, th_ajaran, bulan, tahun, token_jwt
+api/v1/absen/					Create				POST			user_id, siswa_id, date, kelas, th_ajaran, token_jwt
 
-api/siswa/{params}			Read				GET
+api/v1/siswa/{params}			Read				GET				kelas, th_ajaran, token_jwt
 
 
 #User
-URI						|	Desc			|	Method
-----------------------------------------------------------
-api/signin					Login				POST
-api/logout					Logout					
-
-
-
-DESC
-----------------------------------------------------------
-@params_siswa (kelas, th-ajaran)
-@params_absen (kelas, th-ajaran, bulan, tahun)
+URI							|	Desc			|	Method			| params
+--------------------------------------------------------------------------------
+api/v1/user/signin					Login				POST			name, password
+api/v1/user/logout					Logout					

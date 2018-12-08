@@ -1,58 +1,128 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# MMCanteen API
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## Installation
+  1. clone this repo `git clone https://github.com/egin10/MMCanteenServer.git`.
+  2. move to `MMCanteenServer` directory.
+  3. install dependencies use `composer install`.
+  4. edit and config file `.env` for your connection to database.
+  5. migrate databases with `php artisan migrate` command.
+  6. run service with `php artisan serve` command.
 
-## About Laravel
+## Content API
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+### Login
+URL     : `localhost:8000/api/v1/user/signin` 
+method  : `POST` 
+params  : `name` and `password`
+header : `application/json` 
+result  : 
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+    {
+    "msg": "User signin",
+    "user": {
+        "id": 1,
+        "name": "admin",
+        "role": "admin",
+        "created_at": "2018-11-21 03:55:27",
+        "updated_at": "2018-11-21 03:55:27"
+    },
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hcGkvdjEvdXNlci9zaWduaW4iLCJpYXQiOjE1NDQxMTI1ODcsImV4cCI6MTU0NDExNjE4NywibmJmIjoxNTQ0MTEyNTg3LCJqdGkiOiJhOHBLNlFxazhnZnFrVzREIn0.JhOqH3c2bsJKjLxhmJ8P1ecT1A7798Q2DC7BtqdXpSo" 
+    }
+    
+### Tahun Ajaran
+**Get All Data**
+URL : `localhost:8000/api/v1/th-ajaran`
+method : `GET`  
+params : none
+header : `application/json` and `token`
+result : 
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+    {
+    "msg": "List of Tahun Ajaran",
+    "data": [
+        {
+            "id": 1,
+            "tahun": "2018",
+            "created_at": "2018-11-21 04:41:33",
+            "updated_at": "2018-11-21 04:41:33",
+            "detail": {
+                "link": "api/v1/th-ajaran/1",
+                "method": "GET"
+            }
+        },
+        {
+            "id": 2,
+            "tahun": "2019",
+            "created_at": "2018-11-21 04:41:38",
+            "updated_at": "2018-11-21 04:41:38",
+            "detail": {
+                "link": "api/v1/th-ajaran/2",
+                "method": "GET"
+            }
+        },
+        {
+            "id": 3,
+            "tahun": "2020",
+            "created_at": "2018-11-21 04:41:43",
+            "updated_at": "2018-11-21 04:42:29",
+            "detail": {
+                "link": "api/v1/th-ajaran/3",
+                "method": "GET"
+            }
+        }
+    ]
+    }
+    
+**View/Detail Data**
+URL : `localhost:8000/api/v1/th-ajaran/1`
+method : `GET`
+params : `id`
+header : `application/json` and `token`
+result : 
 
-## Learning Laravel
+    {
+    "msg": "Detail Tahun Ajaran",
+    "data": {
+        "id": 1,
+        "tahun": "2018",
+        "created_at": "2018-11-21 04:41:33",
+        "updated_at": "2018-11-21 04:41:33",
+        "update": {
+            "link": "api/v1/th-ajaran/1",
+            "method": "PATCH"
+            }
+        }
+    }
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+**Edit Data**
+URL : `localhost:8000/api/v1/th-ajaran/1`
+method : `PUT` or `PATCH`
+params : `id`, `tahun`
+header : `application/json` and `token`
+result : 
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+    {
+    "msg": "Tahun Ajaran updated",
+    "th_ajaran": {
+        "id": 1,
+        "tahun": "2017",
+        "created_at": "2018-11-21 04:41:33",
+        "updated_at": "2018-12-08 10:15:18"
+        }
+    }
 
-## Laravel Sponsors
+**Delete Data**
+URL : `localhost:8000/api/v1/th-ajaran/1`
+method : `DELETE`
+params : `id`
+header : `application/json` and `token`
+result : 
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Pulse Storm](http://www.pulsestorm.net/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    {
+    "msg": "Tahun Ajaran deleted",
+    "create": {
+        "link": "api/v1/th-ajaran",
+        "method": "POST",
+        "params": "tahun"
+        }
+    }
