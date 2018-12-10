@@ -14,3 +14,7 @@
 Route::get('/{any}', function () {
 	return view('app');
 })->where('any', '.*');
+
+Route::get('{path}', function () {
+	return view('app');
+})->where('path', '([A-z\d-\/_.]+)?');

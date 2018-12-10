@@ -1761,9 +1761,7 @@ Vue.component("App", __webpack_require__(42));
 
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
   mode: "history",
-  routes: __WEBPACK_IMPORTED_MODULE_3__routes__["a" /* default */],
-  linkActiveClass: "active",
-  linkExactActiveClass: "active"
+  routes: __WEBPACK_IMPORTED_MODULE_3__routes__["a" /* default */]
 });
 
 var app = new Vue(Vue.util.extend({ router: router })).$mount("#app");
@@ -46591,7 +46589,7 @@ var render = function() {
                   "li",
                   { staticClass: "nav-item" },
                   [
-                    _c("router-link", { attrs: { to: "/", exect: "" } }, [
+                    _c("router-link", { attrs: { to: "/" } }, [
                       _vm._v("Dashboard")
                     ])
                   ],
@@ -46602,11 +46600,9 @@ var render = function() {
                   "li",
                   { staticClass: "nav-item" },
                   [
-                    _c(
-                      "router-link",
-                      { attrs: { to: "/petugas", exect: "" } },
-                      [_vm._v("Petugas")]
-                    )
+                    _c("router-link", { attrs: { to: "/petugas" } }, [
+                      _vm._v("Petugas")
+                    ])
                   ],
                   1
                 ),
@@ -46615,7 +46611,7 @@ var render = function() {
                   "li",
                   { staticClass: "nav-item" },
                   [
-                    _c("router-link", { attrs: { to: "/siswa", exect: "" } }, [
+                    _c("router-link", { attrs: { to: "/siswa" } }, [
                       _vm._v("Siswa")
                     ])
                   ],
