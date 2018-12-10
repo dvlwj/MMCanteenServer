@@ -22,15 +22,15 @@ header : `application/json`
 result  : 
 
     {
-    "msg": "User signin",
-    "user": {
-        "id": 1,
-        "name": "admin",
-        "role": "admin",
-        "created_at": "2018-11-21 03:55:27",
-        "updated_at": "2018-11-21 03:55:27"
-    },
-    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hcGkvdjEvdXNlci9zaWduaW4iLCJpYXQiOjE1NDQxMTI1ODcsImV4cCI6MTU0NDExNjE4NywibmJmIjoxNTQ0MTEyNTg3LCJqdGkiOiJhOHBLNlFxazhnZnFrVzREIn0.JhOqH3c2bsJKjLxhmJ8P1ecT1A7798Q2DC7BtqdXpSo" 
+        "msg": "User signin",
+        "user": {
+            "id": 1,
+            "name": "admin",
+            "role": "admin",
+            "created_at": "2018-11-21 03:55:27",
+            "updated_at": "2018-11-21 03:55:27"
+        },
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hcGkvdjEvdXNlci9zaWduaW4iLCJpYXQiOjE1NDQxMTI1ODcsImV4cCI6MTU0NDExNjE4NywibmJmIjoxNTQ0MTEyNTg3LCJqdGkiOiJhOHBLNlFxazhnZnFrVzREIn0.JhOqH3c2bsJKjLxhmJ8P1ecT1A7798Q2DC7BtqdXpSo" 
     }
     
 ### Tahun Ajaran
@@ -47,44 +47,44 @@ header : `application/json` and `token`
 result : 
 
     {
-    "msg": "List of Tahun Ajaran",
-    "data": [
-        {
-            "id": 1,
-            "tahun": "2018",
-            "created_at": "2018-11-21 04:41:33",
-            "updated_at": "2018-11-21 04:41:33",
-            "detail": {
-                "link": "api/v1/th-ajaran/1",
-                "method": "GET"
+        "msg": "List of Tahun Ajaran",
+        "data": [
+            {
+                "id": 1,
+                "tahun": "2018",
+                "created_at": "2018-11-21 04:41:33",
+                "updated_at": "2018-11-21 04:41:33",
+                "detail": {
+                    "link": "api/v1/th-ajaran/1",
+                    "method": "GET"
+                }
+            },
+            {
+                "id": 2,
+                "tahun": "2019",
+                "created_at": "2018-11-21 04:41:38",
+                "updated_at": "2018-11-21 04:41:38",
+                "detail": {
+                    "link": "api/v1/th-ajaran/2",
+                    "method": "GET"
+                }
+            },
+            {
+                "id": 3,
+                "tahun": "2020",
+                "created_at": "2018-11-21 04:41:43",
+                "updated_at": "2018-11-21 04:42:29",
+                "detail": {
+                    "link": "api/v1/th-ajaran/3",
+                    "method": "GET"
+                }
             }
-        },
-        {
-            "id": 2,
-            "tahun": "2019",
-            "created_at": "2018-11-21 04:41:38",
-            "updated_at": "2018-11-21 04:41:38",
-            "detail": {
-                "link": "api/v1/th-ajaran/2",
-                "method": "GET"
-            }
-        },
-        {
-            "id": 3,
-            "tahun": "2020",
-            "created_at": "2018-11-21 04:41:43",
-            "updated_at": "2018-11-21 04:42:29",
-            "detail": {
-                "link": "api/v1/th-ajaran/3",
-                "method": "GET"
-            }
-        }
-    ]
+        ]
     }
     
 **View/Detail Data**
 
-URL : `localhost:8000/api/v1/th-ajaran/1`
+URL : `localhost:8000/api/v1/th-ajaran/{id}`
 
 method : `GET`
 
@@ -95,22 +95,22 @@ header : `application/json` and `token`
 result : 
 
     {
-    "msg": "Detail Tahun Ajaran",
-    "data": {
-        "id": 1,
-        "tahun": "2018",
-        "created_at": "2018-11-21 04:41:33",
-        "updated_at": "2018-11-21 04:41:33",
-        "update": {
-            "link": "api/v1/th-ajaran/1",
-            "method": "PATCH"
+        "msg": "Detail Tahun Ajaran",
+        "data": {
+            "id": 1,
+            "tahun": "2018",
+            "created_at": "2018-11-21 04:41:33",
+            "updated_at": "2018-11-21 04:41:33",
+            "update": {
+                "link": "api/v1/th-ajaran/1",
+                "method": "PATCH"
+                }
             }
-        }
     }
 
 **Edit Data**
 
-URL : `localhost:8000/api/v1/th-ajaran/1`
+URL : `localhost:8000/api/v1/th-ajaran/{id}`
 
 method : `PUT` or `PATCH`
 
@@ -121,18 +121,18 @@ header : `application/json` and `token`
 result : 
 
     {
-    "msg": "Tahun Ajaran updated",
-    "th_ajaran": {
-        "id": 1,
-        "tahun": "2017",
-        "created_at": "2018-11-21 04:41:33",
-        "updated_at": "2018-12-08 10:15:18"
-        }
+        "msg": "Tahun Ajaran updated",
+        "th_ajaran": {
+            "id": 1,
+            "tahun": "2017",
+            "created_at": "2018-11-21 04:41:33",
+            "updated_at": "2018-12-08 10:15:18"
+            }
     }
 
 **Delete Data**
 
-URL : `localhost:8000/api/v1/th-ajaran/1`
+URL : `localhost:8000/api/v1/th-ajaran/{id}`
 
 method : `DELETE`
 
@@ -148,5 +148,120 @@ result :
         "link": "api/v1/th-ajaran",
         "method": "POST",
         "params": "tahun"
+        }
+    }
+
+### Kelas
+**Get All Data**
+
+URL : `localhost:8000/api/v1/kelas`
+
+method : `GET`  
+
+params : none
+
+header : `application/json` and `token`
+
+result : 
+
+    {
+        "msg": "List of Kelas",
+        "kelas": [
+            {
+                "id": 1,
+                "name": "3A",
+                "created_at": "2018-11-21 04:09:48",
+                "updated_at": "2018-11-21 04:09:48",
+                "detail_kelas": {
+                    "link": "api/v1/kelas/1",
+                    "method": "GET"
+                }
+            },
+            {
+                "id": 2,
+                "name": "3B",
+                "created_at": "2018-11-21 04:09:53",
+                "updated_at": "2018-11-21 04:09:53",
+                "detail_kelas": {
+                    "link": "api/v1/kelas/2",
+                    "method": "GET"
+                }
+            },
+            {
+                "id": 3,
+                "name": "3C",
+                "created_at": "2018-11-21 04:09:57",
+                "updated_at": "2018-11-21 04:09:57",
+                "detail_kelas": {
+                    "link": "api/v1/kelas/3",
+                    "method": "GET"
+                }
+            }
+        ]
+    }
+
+**View/Detail Data**
+
+URL : `localhost:8000/api/v1/kelas/{id}`
+
+method : `GET`  
+
+params : `id`
+
+header : `application/json` and `token`
+
+result : 
+
+    {
+        "id": 1,
+        "name": "3A",
+        "created_at": "2018-11-21 04:09:48",
+        "updated_at": "2018-11-21 04:09:48",
+        "update": {
+            "link": "api/v1/kelas/1",
+            "method": "PATCH"
+        }
+    }
+
+**Edit Data**
+
+URL : `localhost:8000/api/v1/kelas/{id}`
+
+method : `PUT` or `PATCH`  
+
+params : `id` and `name`
+
+header : `application/json` and `token`
+
+result : 
+
+    {
+        "msg": "Kelas updated",
+        "kelas": {
+            "id": 1,
+            "name": "4A",
+            "created_at": "2018-11-21 04:09:48",
+            "updated_at": "2018-12-10 15:26:36"
+        }
+    }
+
+**Delete Data**
+
+URL : `localhost:8000/api/v1/kelas/{id}`
+
+method : `DELETE`
+
+params : `id`
+
+header : `application/json` and `token`
+
+result : 
+
+    {
+        "msg": "Kelas deleted",
+        "create": {
+            "link": "api/v1/kelas",
+            "method": "POST",
+            "params": "name"
         }
     }
