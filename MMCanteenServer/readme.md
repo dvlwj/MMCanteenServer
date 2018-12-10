@@ -383,7 +383,7 @@ header : `application/json` and `token`
 result : 
 
     {
-         "msg": "Siswa created",
+        "msg": "Siswa created",
         "siswa": {
             "nis": "990099200195",
             "name": "Tukiman",
@@ -506,4 +506,99 @@ result :
             "method": "POST",
             "params": "nis, name, kelas_id, th_ajaran_id"
         }
+    }
+
+### Absen
+**Create/Add Data**  
+URL : `localhost:8000/api/v1/absen`  
+method : `POST`  
+params : `nis`  
+header : `application/json` and `token`  
+result : 
+
+    {
+        "msg": "Absen siswa added",
+        "absen": {
+            "user_id": 1,
+            "siswa_id": 2,
+            "kelas": "4A",
+            "th_ajaran": "2019",
+            "time": "2018-12-10 20:43:03",
+            "updated_at": "2018-12-10 20:43:03",
+            "created_at": "2018-12-10 20:43:03",
+            "id": 1
+        },
+        "link": "api/v1/absen",
+        "method": "GET",
+        "params": "kelas, th_ajaran, bulan, tahun"
+    }
+
+**Get All Data**  
+URL : `localhost:8000/api/v1/absen/{kelas}/{th_ajaran}/{bulan}/{tahun}`  
+method : `GET`  
+params : `kelas`, `th_ajaran`, `bulan` and `tahun`  
+header : `application/json` and `token`  
+result : 
+
+    {
+        "msg": "List of Absen",
+        "absens": [
+            {
+                "id": 1,
+                "time": "2018-12-10",
+                "user_id": 1,
+                "siswa_id": 2,
+                "kelas": "4A",
+                "th_ajaran": "2019",
+                "created_at": "2018-12-10 20:43:03",
+                "updated_at": "2018-12-10 20:43:03",
+                "data_siswa": {
+                    "id": 2,
+                    "nis": "990099200193",
+                    "name": "Mujiono"
+                },
+                "data_petugas": {
+                    "id": 1,
+                    "name": "admin"
+                }
+            },
+            {
+                "id": 2,
+                "time": "2018-12-10",
+                "user_id": 1,
+                "siswa_id": 3,
+                "kelas": "4A",
+                "th_ajaran": "2019",
+                "created_at": "2018-12-10 20:46:03",
+                "updated_at": "2018-12-10 20:46:03",
+                "data_siswa": {
+                    "id": 3,
+                    "nis": "990099200194",
+                    "name": "Antonio"
+                },
+                "data_petugas": {
+                    "id": 1,
+                    "name": "admin"
+                }
+            },
+            {
+                "id": 3,
+                "time": "2018-12-10",
+                "user_id": 1,
+                "siswa_id": 4,
+                "kelas": "4A",
+                "th_ajaran": "2019",
+                "created_at": "2018-12-10 20:46:13",
+                "updated_at": "2018-12-10 20:46:13",
+                "data_siswa": {
+                    "id": 4,
+                    "nis": "990099200195",
+                    "name": "Tukiman"
+                },
+                "data_petugas": {
+                    "id": 1,
+                    "name": "admin"
+                }
+            }
+        ]
     }
