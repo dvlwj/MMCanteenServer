@@ -30,7 +30,7 @@ class PetugasController extends Controller
         }
 
         $response = [
-            'msg' => 'List of user',
+            'msg' => 'List of Petugas',
             'users' => $users
         ];
 
@@ -96,7 +96,7 @@ class PetugasController extends Controller
             ];
 
             $response = [
-                'msg' => 'User created',
+                'msg' => 'Petugas created',
                 'user' => $user,
                 'token' => $token
             ];
@@ -121,7 +121,7 @@ class PetugasController extends Controller
     {
         $user = User::find($id);
         if($user == '') {
-            return response()->json(['msg' => 'User not found'], 200);
+            return response()->json(['msg' => 'Petugas not found'], 200);
         } else {
             $user->update = [
                 'link' => 'api/v1/petugas/' . $user->id,
@@ -159,7 +159,7 @@ class PetugasController extends Controller
         $user = User::find($id);
 
         if($user == '') {
-            return response()->json(['msg' => 'User not found'], 200);
+            return response()->json(['msg' => 'Petugas not found'], 200);
         } else {
             $user->name = $name;
             $user->password = $password;
@@ -173,7 +173,7 @@ class PetugasController extends Controller
         }
 
         $response = [
-            'msg' => 'User updated',
+            'msg' => 'Petugas updated',
             'user' => $user
         ];
 
@@ -201,7 +201,7 @@ class PetugasController extends Controller
         }
 
         $response = [
-            'msg' => 'User deleted',
+            'msg' => 'Petugas deleted',
             'create' => [
                 'link' => 'api/v1/petugas',
                 'method' => 'POST',
