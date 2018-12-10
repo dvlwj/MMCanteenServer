@@ -11,10 +11,10 @@
 ## Content API
 
 ### Login
-URL     : `localhost:8000/api/v1/user/signin`
-method  : `POST`
-params  : `name` and `password`
-header : `application/json`
+URL     : `localhost:8000/api/v1/user/signin`\s\s
+method  : `POST`\s\s
+params  : `name` and `password`\s\s
+header : `application/json`\s\s
 result  : 
 
     {
@@ -30,11 +30,11 @@ result  :
     }
     
 ### Tahun Ajaran
-**Get All Data**
-URL : `localhost:8000/api/v1/th-ajaran`
-method : `GET`  
-params : none
-header : `application/json` and `token`
+**Get All Data**\s\s
+URL : `localhost:8000/api/v1/th-ajaran`\s\s
+method : `GET`\s\s
+params : none\s\s
+header : `application/json` and `token`\s\s
 result : 
 
     {
@@ -73,11 +73,11 @@ result :
         ]
     }
     
-**View/Detail Data**
-URL : `localhost:8000/api/v1/th-ajaran/{id}`
-method : `GET`
-params : `id`
-header : `application/json` and `token`
+**View/Detail Data**\s\s
+URL : `localhost:8000/api/v1/th-ajaran/{id}`\s\s
+method : `GET`\s\s
+params : `id`\s\s
+header : `application/json` and `token`\s\s
 result : 
 
     {
@@ -94,11 +94,11 @@ result :
             }
     }
 
-**Edit Data**
-URL : `localhost:8000/api/v1/th-ajaran/{id}`
-method : `PUT` or `PATCH`
-params : `id`, `tahun`
-header : `application/json` and `token`
+**Edit Data**\s\s
+URL : `localhost:8000/api/v1/th-ajaran/{id}`\s\s
+method : `PUT` or `PATCH`\s\s
+params : `id`, `tahun`\s\s
+header : `application/json` and `token`\s\s
 result : 
 
     {
@@ -111,11 +111,11 @@ result :
             }
     }
 
-**Delete Data**
-URL : `localhost:8000/api/v1/th-ajaran/{id}`
-method : `DELETE`
-params : `id`
-header : `application/json` and `token`
+**Delete Data**\s\s
+URL : `localhost:8000/api/v1/th-ajaran/{id}`\s\s
+method : `DELETE`\s\s
+params : `id`\s\s
+header : `application/json` and `token`\s\s
 result : 
 
     {
@@ -128,11 +128,11 @@ result :
     }
 
 ### Kelas
-**Get All Data**
-URL : `localhost:8000/api/v1/kelas`
-method : `GET`  
-params : none
-header : `application/json` and `token`
+**Get All Data**\s\s
+URL : `localhost:8000/api/v1/kelas`\s\s
+method : `GET`\s\s
+params : none\s\s
+header : `application/json` and `token`\s\s
 result : 
 
     {
@@ -171,11 +171,11 @@ result :
         ]
     }
 
-**View/Detail Data**
-URL : `localhost:8000/api/v1/kelas/{id}`
-method : `GET`  
-params : `id`
-header : `application/json` and `token`
+**View/Detail Data**\s\s
+URL : `localhost:8000/api/v1/kelas/{id}`\s\s
+method : `GET`\s\s
+params : `id`\s\s
+header : `application/json` and `token`\s\s
 result : 
 
     {
@@ -189,11 +189,11 @@ result :
         }
     }
 
-**Edit Data**
-URL : `localhost:8000/api/v1/kelas/{id}`
-method : `PUT` or `PATCH`  
-params : `id` and `name`
-header : `application/json` and `token`
+**Edit Data**\s\s
+URL : `localhost:8000/api/v1/kelas/{id}`\s\s
+method : `PUT` or `PATCH`\s\s
+params : `id` and `name`\s\s
+header : `application/json` and `token`\s\s
 result : 
 
     {
@@ -206,11 +206,11 @@ result :
         }
     }
 
-**Delete Data**
-URL : `localhost:8000/api/v1/kelas/{id}`
-method : `DELETE`
-params : `id`
-header : `application/json` and `token`
+**Delete Data**\s\s
+URL : `localhost:8000/api/v1/kelas/{id}`\s\s
+method : `DELETE`\s\s
+params : `id`\s\s
+header : `application/json` and `token`\s\s
 result : 
 
     {
