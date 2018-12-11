@@ -22,9 +22,9 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li class="nav-item"><a href="#">MMCanteen</a></li>
-                    <li class="nav-item"><router-link to="/" exect>Dashboard</router-link></li>
-                    <li class="nav-item"><router-link to="/petugas" exect>Petugas</router-link></li>
-                    <li class="nav-item"><router-link to="/siswa" exect>Siswa</router-link></li>
+                    <li class="nav-item"><router-link to="/" >Dashboard</router-link></li>
+                    <li class="nav-item"><router-link to="/petugas" >Petugas</router-link></li>
+                    <li class="nav-item"><router-link to="/siswa" >Siswa</router-link></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
