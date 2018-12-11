@@ -46,29 +46,29 @@ class PetugasController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|min:5',
+            'username' => 'required|min:5',
             'password' => 'required|min:6',
             'role' => 'required|nullable'
         ]);
 
-        $name = $request->input('name');
+        $username = $request->input('username');
         $password = $request->input('password');
         $role = $request->input('role');
         
         $user = new User([
-            'name' => $name,
+            'username' => $username,
             'password' => bcrypt($password),
             'role' => $role
         ]);
 
         //JWT Auth Credentials
         $credentials = [
-            'name' => $name,
+            'username' => $username,
             'password' => $password
         ];
 
         //Check User
-        if (User::where('name', $name)->first()){
+        if (User::where('username', $username)->first()){
             return response()->json([
                 'msg' => 'Username is already taken'
             ], 200);
@@ -92,7 +92,7 @@ class PetugasController extends Controller
             $user->signin = [
                 'link' => 'api/v1/signin',
                 'method' => 'POST',
-                'params' => 'name, password'
+                'params' => 'username, password'
             ];
 
             $response = [
@@ -147,12 +147,12 @@ class PetugasController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required|min:5',
+            'username' => 'required|min:5',
             'password' => 'required|min:6',
             'role' => 'required'
         ]);
 
-        $name = $request->input('name');
+        $username = $request->input('username');
         $password = $request->input('password');
         $role = $request->input('role');
         
@@ -161,7 +161,7 @@ class PetugasController extends Controller
         if($user == '') {
             return response()->json(['msg' => 'Petugas not found'], 200);
         } else {
-            $user->name = $name;
+            $user->username = $username;
             $user->password = $password;
             $user->role = $role;
         }

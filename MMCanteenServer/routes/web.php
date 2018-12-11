@@ -11,10 +11,11 @@
 |
 */
 
-Route::get('/{any}', function () {
-	return view('app');
-})->where('any', '.*');
+Auth::routes();
+Route::get('/dashboard', 'HomeController@index')->name('home');
 
-Route::get('{path}', function () {
-	return view('app');
-})->where('path', '([A-z\d-\/_.]+)?');
+Route::get('/', function () {
+	return redirect()->route('login');
+});
+
+

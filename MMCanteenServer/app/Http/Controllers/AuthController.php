@@ -15,17 +15,17 @@ class AuthController extends Controller
      */
     public function signin (Request $request) {
         $this->validate($request, [
-            'name' => 'required',
+            'username' => 'required',
             'password' => 'required'
         ]);
 
-        $name = $request->input('name');
+        $username = $request->input('username');
         $password = $request->input('password');
 
-        if ($user = User::where('name', $name)->first()) {
+        if ($user = User::where('username', $username)->first()) {
             //JWT Auth Credentials
             $credentials = [
-                'name' => $name,
+                'username' => $username,
                 'password' => $password
             ];
 
