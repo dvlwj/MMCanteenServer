@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'MMCanteen') }}</title>
+    <title>{{ config('app.name', 'MMCanteen') }}|@yield('title')</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -42,14 +42,14 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
-                        <li><a href="{{ route('petugas') }}">Petugas</a></li>
-                        <li><a href="{{ route('absen') }}">Absen</a></li>
-                        <li><a href="{{ route('kelas') }}">Kelas</a></li>
-                        <li><a href="{{ route('th-ajaran') }}">Tahun Ajaran</a></li>
-                        <li><a href="{{ route('siswa') }}">Siswa</a></li>
                         @guest
                             <li><a href="{{ route('login') }}">Login</a></li>
                         @else
+                            <li class="{{request()->path() == 'petugas' ? 'active' : ''}}"><a href="{{ route('petugas') }}">Petugas</a></li>
+                            <li class="{{request()->path() == 'absen' ? 'active' : ''}}"><a href="{{ route('absen') }}">Absen</a></li>
+                            <li class="{{request()->path() == 'kelas' ? 'active' : ''}}"><a href="{{ route('kelas') }}">Kelas</a></li>
+                            <li class="{{request()->path() == 'th-ajaran' ? 'active' : ''}}"><a href="{{ route('th-ajaran') }}">Tahun Ajaran</a></li>
+                            <li class="{{request()->path() == 'siswa' ? 'active' : ''}}"><a href="{{ route('siswa') }}">Siswa</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                                     {{ Auth::user()->username }} <span class="caret"></span>
@@ -80,5 +80,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    @yield('script')
 </body>
 </html>
