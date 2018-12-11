@@ -13,7 +13,7 @@
 ### Login
 URL     : `localhost:8000/api/v1/user/signin`  
 method  : `POST`  
-params  : `name` and `password`  
+params  : `username` and `password`  
 header : `application/json`  
 result  :
 
@@ -21,7 +21,7 @@ result  :
         "msg": "User signin",
         "user": {
             "id": 1,
-            "name": "admin",
+            "username": "admin",
             "role": "admin",
             "created_at": "2018-11-21 03:55:27",
             "updated_at": "2018-11-21 03:55:27"
@@ -33,14 +33,14 @@ result  :
 **Create/Add Data**  
 URL : `localhost:8000/api/v1/petugas`  
 method : `POST`  
-params : `name`, `password` and `role`  
+params : `username`, `password` and `role`  
 header : `application/json` and `token`  
 result : 
 
     {
         "msg": "Petugas created",
         "user": {
-            "name": "Petugas4",
+            "username": "Petugas4",
             "role": "petugas",
             "updated_at": "2018-12-10 20:18:27",
             "created_at": "2018-12-10 20:18:27",
@@ -66,7 +66,7 @@ result :
         "users": [
             {
                 "id": 1,
-                "name": "admin",
+                "username": "admin",
                 "role": "admin",
                 "created_at": "2018-11-21 03:55:27",
                 "updated_at": "2018-11-21 03:55:27",
@@ -77,7 +77,7 @@ result :
             },
             {
                 "id": 2,
-                "name": "petugas1",
+                "username": "petugas1",
                 "role": "petugas",
                 "created_at": "2018-11-21 03:58:33",
                 "updated_at": "2018-11-21 03:58:33",
@@ -100,7 +100,7 @@ result :
         "msg": "Detail petugas",
         "user": {
             "id": 1,
-            "name": "admin",
+            "username": "admin",
             "role": "admin",
             "created_at": "2018-11-21 03:55:27",
             "updated_at": "2018-11-21 03:55:27",
@@ -114,7 +114,7 @@ result :
 **Edit Data**  
 URL : `localhost:8000/api/v1/petugas/{id}`  
 method : `PUT` or `PATCH`   
-params : `id`,`name`,`role` and `password`  
+params : `id`,`username`,`role` and `password`  
 header : `application/json` and `token`  
 result : 
 
@@ -122,7 +122,7 @@ result :
         "msg": "Petugas updated",
         "user": {
             "id": 2,
-            "name": "Petugas3",
+            "username": "Petugas3",
             "role": "petugas",
             "created_at": "2018-11-21 03:58:33",
             "updated_at": "2018-12-10 20:15:44"
@@ -140,7 +140,7 @@ result :
         "create": {
             "link": "api/v1/petugas",
             "method": "POST",
-            "params": "name, password, role"
+            "params": "username, password, role"
         }
     }
     
