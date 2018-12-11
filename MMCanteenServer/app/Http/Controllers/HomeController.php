@@ -25,4 +25,29 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function petugas()
+    {
+        return view('petugas');
+    }
+
+    public function kelas()
+    {
+        return view('kelas');
+    }
+
+    public function absen()
+    {
+        return view('absen');
+    }
+
+    public function siswa()
+    {
+        return view('siswa');
+    }
+
+    public function thAjaran()
+    {
+        return view('thAjaran');
+    }
 }

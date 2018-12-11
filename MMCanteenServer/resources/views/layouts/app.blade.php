@@ -42,11 +42,11 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
-                        <li><a href="#">Petugas</a></li>
-                        <li><a href="#">Absen</a></li>
-                        <li><a href="#">Kelas</a></li>
-                        <li><a href="#">Tahun Ajaran</a></li>
-                        <li><a href="#">Siswa</a></li>
+                        <li><a href="{{ route('petugas') }}">Petugas</a></li>
+                        <li><a href="{{ route('absen') }}">Absen</a></li>
+                        <li><a href="{{ route('kelas') }}">Kelas</a></li>
+                        <li><a href="{{ route('th-ajaran') }}">Tahun Ajaran</a></li>
+                        <li><a href="{{ route('siswa') }}">Siswa</a></li>
                         @guest
                             <li><a href="{{ route('login') }}">Login</a></li>
                         @else

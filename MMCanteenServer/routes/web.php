@@ -13,6 +13,11 @@
 
 Auth::routes();
 Route::get('/dashboard', 'HomeController@index')->name('home');
+Route::get('/petugas', 'HomeController@petugas')->name('petugas');
+Route::get('/kelas', 'HomeController@kelas')->name('kelas');
+Route::get('/absen', 'HomeController@absen')->name('absen');
+Route::get('/siswa', 'HomeController@siswa')->name('siswa');
+Route::get('/th-ajaran', 'HomeController@thAjaran')->name('th-ajaran');
 
 Route::get('/', function () {
 	return redirect()->route('login');
