@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Petugas</div>
+                <div class="panel-heading">Kelas</div>
 
                 <div class="panel-body">
                     @if (session('status'))
@@ -19,10 +19,31 @@
                     @endif
 
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                      Tambah Petugas +
+                      Tambah Kelas +
                     </button>
                     <hr>
-                    List of Petugas
+
+                    <table id="kelas" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kelas</th>
+                                <th>ID</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>System Architect</td>
+                                <td>2011/04/25</td>
+                                <td>
+                                    <button class="btn btn-warning">Edit</button>
+                                    <button class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -32,7 +53,7 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalCenterTitle">Form Tambah Data Petugas</h5>
+            <h5 class="modal-title" id="exampleModalCenterTitle">Form Tambah Data Kelas</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -40,19 +61,8 @@
           <div class="modal-body">
             <form>
                 <div class="form-group">
-                    <label for="username" class="col-form-label">Username</label>
-                    <input type="text" class="form-control" id="username">
-                </div>
-                <div class="form-group">
-                    <label for="password" class="col-form-label">Password</label>
-                    <input type="password" class="form-control" id="password">
-                </div>
-                <div class="form-group">
-                    <label for="role">Role</label>
-                    <select id="role" class="form-control">
-                        <option value="petugas">Petugas</option>
-                        <option value="admin">Admin</option>
-                    </select>
+                    <label for="name" class="col-form-label">Nama Kelas</label>
+                    <input type="text" class="form-control" id="name">
                 </div>
             </form>
           </div>
@@ -64,4 +74,12 @@
       </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+<script>
+    $(document).ready(function() {
+        $('kelas').DataTable();
+    } );
+</script>
 @endsection

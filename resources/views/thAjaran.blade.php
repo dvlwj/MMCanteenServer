@@ -22,7 +22,26 @@
                       Tambah Tahun Ajaran +
                     </button>
                     <hr>
-                    List of Tahun Ajaran <br>
+                    
+                    <table id="th-ajaran" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Tahun Ajaran</th>
+                                <th>ID</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>System Architect</td>
+                                <td>Edinburgh</td>
+                                <td>
+                                    <button class="btn btn-warning">Edit</button>
+                                    <button class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -57,6 +76,10 @@
 
 @section('script')
 <script>
+$(document).ready(function() {
+    $('#th-ajaran').DataTable();
+} );
+
 function yearValidation(year,ev) {
 
   var text = /^[0-9]{1,4}$/;
