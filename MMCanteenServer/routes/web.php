@@ -12,15 +12,33 @@
 */
 
 Auth::routes();
-Route::get('/dashboard', 'HomeController@index')->name('home');
-Route::get('/petugas', 'HomeController@petugas')->name('petugas');
-Route::get('/kelas', 'HomeController@kelas')->name('kelas');
-Route::get('/absen', 'HomeController@absen')->name('absen');
-Route::get('/siswa', 'HomeController@siswa')->name('siswa');
-Route::get('/th-ajaran', 'HomeController@thAjaran')->name('th-ajaran');
-
+Route::get('/dashboard', 'web\IndexController@index')->name('home');
 Route::get('/', function () {
 	return redirect()->route('login');
 });
 
+//Route Petugas
+Route::prefix('petugas')->group(function () {
+	Route::get('/', 'web\IndexController@petugas')->name('petugas');
+});
 
+//Route Kelas
+Route::prefix('kelas')->group(function () {
+	Route::get('/', 'web\IndexController@kelas')->name('kelas');
+});
+
+//Route Absen
+Route::prefix('absen')->group(function () {
+	Route::get('/', 'web\IndexController@absen')->name('absen');
+
+});
+
+//Route Siswa
+Route::prefix('siswa')->group(function () {
+	Route::get('/', 'web\IndexController@siswa')->name('siswa');
+});
+
+//Route Tahun Ajaran
+Route::prefix('th-ajaran')->group(function () {
+	Route::get('/', 'web\IndexController@thAjaran')->name('th-ajaran');
+});
