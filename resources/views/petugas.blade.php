@@ -195,15 +195,18 @@
     });
 
     function deleteData(id) {
-        $.ajax({  
-            url: 'http://localhost:8000/petugas/'+$('#editID').val(),  
-            type: 'DELETE',  
-            dataType: 'json', 
-            success: function (data) {
-                alert('Data berhasil dihapus.');
-                $("#petugas").load(window.location + " #petugas");
-            }
-        });
+        let conf = confirm("Apakah anda yakin data ini akan dihapus ?");
+        if(conf){
+            $.ajax({  
+                url: 'http://localhost:8000/petugas/'+id,  
+                type: 'DELETE',  
+                dataType: 'json', 
+                success: function (data) {
+                    alert('Data berhasil dihapus.');
+                    $("#petugas").load(window.location + " #petugas");
+                }
+            });
+        }
     }
 
     function refreshForm() {
