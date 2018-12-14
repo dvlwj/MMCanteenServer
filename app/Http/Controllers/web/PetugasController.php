@@ -118,8 +118,9 @@ class PetugasController extends Controller
     {
         $user = User::find($petuga);
         if($user == ''){
-            return response()->json(['msg' => 'Update Failed'], 404);
+            return response()->json(['msg' => 'Delete Failed'], 404);
         }else{
+            $user->delete();
             return response()->json(['msg' => 'Data berhasil dihapus'], 201);
         }
     }
