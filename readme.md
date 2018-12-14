@@ -6,7 +6,8 @@
   3. install dependencies use `composer install`.
   4. edit and config file `.env` for your connection to database.
   5. migrate databases with `php artisan migrate` command.
-  6. run service with `php artisan serve` command.
+  6. seeder data admin and petugas with `composer dump-autoload` and then run `php artisan db:seed --class=UsersTableSeeder`.
+  7. run service with `php artisan serve` command.
 
 ## Content API
 
