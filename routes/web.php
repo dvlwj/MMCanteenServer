@@ -1,44 +1,24 @@
 <?php
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-Auth::routes();
-Route::get('/dashboard', 'web\IndexController@index')->name('home');
 Route::get('/', function () {
 	return redirect()->route('login');
 });
+Route::get('/dashboard', 'web\IndexController@index')->name('home');
 
 //Route Petugas
-Route::prefix('petugas')->group(function () {
-	Route::get('/', 'web\IndexController@petugas')->name('petugas');
-});
+Route::resource('petugas', 'web\PetugasController')->except(['edit', 'create']);
 
 //Route Kelas
-Route::prefix('kelas')->group(function () {
-	Route::get('/', 'web\IndexController@kelas')->name('kelas');
-});
+Route::resource('kelas', 'web\KelasController')->except(['edit', 'create']);
 
 //Route Absen
-Route::prefix('absen')->group(function () {
-	Route::get('/', 'web\IndexController@absen')->name('absen');
-
-});
+Route::resource('absen', 'web\AbsenController')->except(['edit', 'create']);
 
 //Route Siswa
-Route::prefix('siswa')->group(function () {
-	Route::get('/', 'web\IndexController@siswa')->name('siswa');
-});
+Route::resource('siswa', 'web\SiswaController')->except(['edit', 'create']);
 
 //Route Tahun Ajaran
-Route::prefix('th-ajaran')->group(function () {
-	Route::get('/', 'web\IndexController@thAjaran')->name('th-ajaran');
-});
+Route::resource('th-ajaran', 'web\TahunAjaranController')->except(['edit', 'create']);

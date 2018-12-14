@@ -47,11 +47,11 @@
                         @guest
                             <li><a href="{{ route('login') }}">Login</a></li>
                         @else
-                            <li class="{{request()->path() == 'petugas' ? 'active' : ''}}"><a href="{{ route('petugas') }}">Petugas</a></li>
-                            <li class="{{request()->path() == 'absen' ? 'active' : ''}}"><a href="{{ route('absen') }}">Absen</a></li>
-                            <li class="{{request()->path() == 'kelas' ? 'active' : ''}}"><a href="{{ route('kelas') }}">Kelas</a></li>
-                            <li class="{{request()->path() == 'th-ajaran' ? 'active' : ''}}"><a href="{{ route('th-ajaran') }}">Tahun Ajaran</a></li>
-                            <li class="{{request()->path() == 'siswa' ? 'active' : ''}}"><a href="{{ route('siswa') }}">Siswa</a></li>
+                            <li class="{{request()->path() == 'petugas' ? 'active' : ''}}"><a href="{{ route('petugas.index') }}">Petugas</a></li>
+                            <li class="{{request()->path() == 'absen' ? 'active' : ''}}"><a href="{{ route('absen.index') }}">Absen</a></li>
+                            <li class="{{request()->path() == 'kelas' ? 'active' : ''}}"><a href="{{ route('kelas.index') }}">Kelas</a></li>
+                            <li class="{{request()->path() == 'th-ajaran' ? 'active' : ''}}"><a href="{{ route('th-ajaran.index') }}">Tahun Ajaran</a></li>
+                            <li class="{{request()->path() == 'siswa' ? 'active' : ''}}"><a href="{{ route('siswa.index') }}">Siswa</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                                     {{ Auth::user()->username }} <span class="caret"></span>
@@ -82,6 +82,16 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.3.1.js') }}"></script>
+    <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script>
+    <script>
+        $.ajaxSetup({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        });
+    </script>
     @yield('script')
 </body>
 </html>
