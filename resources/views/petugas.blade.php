@@ -29,7 +29,6 @@
                                 <th>Username</th>
                                 <th>Password</th>
                                 <th>Role</th>
-                                <th>ID</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -39,12 +38,11 @@
                                 <td>{{ $data->username }}</td>
                                 <td>******</td>
                                 <td><span class="badge badge-pill badge-primary">{{ $data->role }}</span></td>
-                                <td>{{ $data->id }}</td>
                                 <td>
                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editPetugas" onclick="getData('{{ $data->id }}')">
                                       Edit
                                     </button>
-                                    <button class="btn btn-danger">Delete</button>
+                                    <button class="btn btn-danger" onclick="deleteData('{{ $data->id }}')">Delete</button>
                                 </td>
                             </tr>
                             @endforeach
@@ -66,7 +64,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form>
+            <form id="form_add">
                 <div class="form-group">
                     <label for="username" class="col-form-label">Username</label>
                     <input type="text" class="form-control" id="username" placeholder="Username">
@@ -103,7 +101,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form>
+            <form id="form_edit">
                 <input type="hidden" class="form-control" id="editID">
                 <div class="form-group">
                     <label for="editUsername" class="col-form-label">Username</label>
@@ -148,22 +146,29 @@
 
     $('#saveAdd').click(function(e) {
         e.preventDefault();
-
-        $.ajax({  
-            url: 'http://localhost:8000/petugas',  
-            type: 'POST',  
-            dataType: 'json',  
-            data: {
-                username: $('#username').val(),
-                password: $('#password').val(),
-                role: $('#role').val()
-            },  
-            success: function (data) {
-                alert('Data berhasil ditambah.');
-                refreshForm();
-                $("#petugas").load(window.location + " #petugas");
-            }
-        });
+        if($('#username').val() == '' || $('#password').val() == '') {
+            alert("Username atau Password tidak boleh kosong!");
+        } else {
+            $.ajax({  
+                url: 'http://localhost:8000/petugas',  
+                type: 'POST',  
+                dataType: 'json',  
+                data: {
+                    username: $('#username').val(),
+                    password: $('#password').val(),
+                    role: $('#role').val()
+                },  
+                success: function (data) {
+                    if(data.msg == 'Username is already taken') {
+                        alert(data.msg);
+                    } else {
+                        alert('Data berhasil ditambah.');
+                        refreshForm();
+                        $("#petugas").load(window.location + " #petugas");
+                    }
+                }
+            });
+        }
     });
 
     $('#saveEdit').click(function(e) {
@@ -179,11 +184,27 @@
                 role: $('#editRole').val()
             },  
             success: function (data) {
-                alert('Data berhasil diedit.');
-                $("#petugas").load(window.location + " #petugas");
+                if(data.msg == 'Update Failed'){
+                    alert(data.msg);
+                }else{
+                    alert('Data berhasil diedit.');
+                    $("#petugas").load(window.location + " #petugas");
+                }
             }
         });
     });
+
+    function deleteData(id) {
+        $.ajax({  
+            url: 'http://localhost:8000/petugas/'+$('#editID').val(),  
+            type: 'DELETE',  
+            dataType: 'json', 
+            success: function (data) {
+                alert('Data berhasil dihapus.');
+                $("#petugas").load(window.location + " #petugas");
+            }
+        });
+    }
 
     function refreshForm() {
         $('#username').val('');

@@ -9,16 +9,16 @@ Route::get('/', function () {
 Route::get('/dashboard', 'web\IndexController@index')->name('home');
 
 //Route Petugas
-Route::resource('petugas', 'web\PetugasController')->except('edit');
+Route::resource('petugas', 'web\PetugasController')->except(['edit', 'create']);
 
 //Route Kelas
-Route::resource('kelas', 'web\KelasController')->except('edit');
+Route::resource('kelas', 'web\KelasController')->except(['edit', 'create']);
 
 //Route Absen
-Route::resource('absen', 'web\AbsenController')->except('edit');
+Route::resource('absen', 'web\AbsenController')->except(['edit', 'create']);
 
 //Route Siswa
-Route::resource('siswa', 'web\SiswaController')->except('edit');
+Route::resource('siswa', 'web\SiswaController')->except(['edit', 'create']);
 
 //Route Tahun Ajaran
-Route::resource('th-ajaran', 'web\TahunAjaranController')->except('edit');
+Route::resource('th-ajaran', 'web\TahunAjaranController')->except(['edit', 'create']);

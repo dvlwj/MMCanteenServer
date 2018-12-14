@@ -20,16 +20,6 @@ class PetugasController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -124,8 +114,13 @@ class PetugasController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($petuga)
     {
-        //
+        $user = User::find($petuga);
+        if($user == ''){
+            return response()->json(['msg' => 'Update Failed'], 404);
+        }else{
+            return response()->json(['msg' => 'Data berhasil dihapus'], 201);
+        }
     }
 }
