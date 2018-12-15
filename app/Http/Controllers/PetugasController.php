@@ -81,12 +81,12 @@ class PetugasController extends Controller
                 if(!$token = JWTAuth::attempt($credentials)) {
                     return response()->json([
                         'msg' => 'Username or Password are incorrect',
-                    ], 404);
+                    ]);
                 }
             } catch (JWTAuthException $e) {
                 return response()->json([
                     'msg' => 'failed_to_create_token',
-                ], 404);
+                ]);
             }
 
             $user->signin = [
@@ -108,7 +108,7 @@ class PetugasController extends Controller
             'msg' => 'An Error occured'
         ];
 
-        return response()->json($response, 404);
+        return response()->json($response);
     }
 
     /**
@@ -169,7 +169,7 @@ class PetugasController extends Controller
         if(!$user->update()) {
             return response()->json([
                 'msg' => 'Error during update'
-            ], 404);
+            ]);
         }
 
         $response = [
@@ -197,7 +197,7 @@ class PetugasController extends Controller
         if(!$user->delete()) {
             return response()->json([
                 'msg' => 'Delete failed'
-            ], 404);
+            ]);
         }
 
         $response = [

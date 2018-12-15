@@ -71,7 +71,7 @@ class SiswaController extends Controller
                 'msg' => 'NIS is already exist',
             ];
 
-            return response()->json($response, 404);
+            return response()->json($response);
         }
 
         if ($siswa->save()) {
@@ -89,7 +89,7 @@ class SiswaController extends Controller
             'msg' => 'An Error occured'
         ];
 
-        return response()->json($response, 404);
+        return response()->json($response);
     }
 
     /**
@@ -102,7 +102,7 @@ class SiswaController extends Controller
     {
         $siswa = Siswa::find($id);
         if ($siswa == '') {
-            return response()->json(['msg' => 'Siswa not found'], 404);
+            return response()->json(['msg' => 'Siswa not found']);
         } else {
             $siswa->update = [
                 'link' => 'api/v1/siswa/' . $siswa->id,
@@ -141,7 +141,7 @@ class SiswaController extends Controller
 
         $siswa = Siswa::find($id);
         if ($siswa == '') {
-            return response()->json(['msg' => 'Siswa not found'], 404);
+            return response()->json(['msg' => 'Siswa not found']);
         } else {
             $siswa->nis = $nis;
             $siswa->name = $name;
@@ -152,7 +152,7 @@ class SiswaController extends Controller
         if(!$siswa->update()) {
             return response()->json([
                 'msg' => 'Error during update'
-            ], 404);
+            ]);
         }
 
         $response = [
@@ -174,13 +174,13 @@ class SiswaController extends Controller
         $siswa = Siswa::find($id);
 
         if ($siswa == '') {
-            return response()->json(['msg' => 'Siswa not found'], 404);
+            return response()->json(['msg' => 'Siswa not found']);
         }
 
         if(!$siswa->delete()) {
             return response()->json([
                 'msg' => 'Delete failed'
-            ], 404);
+            ]);
         }
 
         $response = [

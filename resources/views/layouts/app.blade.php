@@ -47,10 +47,12 @@
                         @guest
                             <li><a href="{{ route('login') }}">Login</a></li>
                         @else
-                            <li class="{{request()->path() == 'petugas' ? 'active' : ''}}"><a href="{{ route('petugas.index') }}">Petugas</a></li>
+                            @if(Auth::user()->role == 'admin')
+                                <li class="{{request()->path() == 'petugas' ? 'active' : ''}}"><a href="{{ route('petugas.index') }}">Petugas</a></li>
+                                <li class="{{request()->path() == 'kelas' ? 'active' : ''}}"><a href="{{ route('kelas.index') }}">Kelas</a></li>
+                                <li class="{{request()->path() == 'th-ajaran' ? 'active' : ''}}"><a href="{{ route('th-ajaran.index') }}">Tahun Ajaran</a></li>
+                            @endif
                             <li class="{{request()->path() == 'absen' ? 'active' : ''}}"><a href="{{ route('absen.index') }}">Absen</a></li>
-                            <li class="{{request()->path() == 'kelas' ? 'active' : ''}}"><a href="{{ route('kelas.index') }}">Kelas</a></li>
-                            <li class="{{request()->path() == 'th-ajaran' ? 'active' : ''}}"><a href="{{ route('th-ajaran.index') }}">Tahun Ajaran</a></li>
                             <li class="{{request()->path() == 'siswa' ? 'active' : ''}}"><a href="{{ route('siswa.index') }}">Siswa</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>

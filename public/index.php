@@ -1,5 +1,7 @@
 <?php
-
+if (isset($_SERVER["HTTP_X_TEA_INSIDE_SERVER"])) {
+	$_SERVER["HTTP_HOST"] = $_SERVER["HTTP_X_TEA_INSIDE_SERVER"];
+}
 /**
  * Laravel - A PHP Framework For Web Artisans
  *

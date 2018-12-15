@@ -8,6 +8,10 @@ use App\Http\Controllers\Controller;
 
 class PetugasController extends Controller
 {
+    public function __construct(){
+        $this->middleware(['auth', 'isAdminWeb']); 
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -47,7 +51,7 @@ class PetugasController extends Controller
         if (User::where('username', $username)->first()){
             return response()->json([
                 'msg' => 'Username is already taken'
-            ], 200);
+            ]);
         } 
 
         if ($user->save()) {
@@ -63,7 +67,7 @@ class PetugasController extends Controller
             'msg' => 'An Error occured'
         ];
 
-        return response()->json($response, 404);
+        return response()->json($response);
     }
 
     /**
@@ -76,7 +80,7 @@ class PetugasController extends Controller
     {
         $data = User::find($petuga);
         if($data == '') {
-            return response()->json(['msg' => 'Data not found'], 404);
+            return response()->json(['msg' => 'Data not found']);
         }else{
             return response()->json($data, 200);
         }
@@ -104,7 +108,7 @@ class PetugasController extends Controller
         if($user->update()){
             return response()->json($user, 201);
         }else{
-            return response()->json(['msg' => 'Update Failed'], 404);
+            return response()->json(['msg' => 'Update Failed']);
         }
     }
 
@@ -118,7 +122,7 @@ class PetugasController extends Controller
     {
         $user = User::find($petuga);
         if($user == ''){
-            return response()->json(['msg' => 'Delete Failed'], 404);
+            return response()->json(['msg' => 'Delete Failed']);
         }else{
             $user->delete();
             return response()->json(['msg' => 'Data berhasil dihapus'], 201);

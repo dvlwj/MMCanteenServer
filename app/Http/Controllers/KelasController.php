@@ -60,7 +60,7 @@ class KelasController extends Controller
                 'msg' => 'Kelas is already exist',
             ];
 
-            return response()->json($response, 404);
+            return response()->json($response);
         }
 
         if($kelas->save()) {
@@ -78,7 +78,7 @@ class KelasController extends Controller
             'msg' => 'An Error occured'
         ];
 
-        return response()->json($response, 404);
+        return response()->json($response);
     }
 
     /**
@@ -133,7 +133,7 @@ class KelasController extends Controller
         if(!$kelas->update()) {
             return response()->json([
                 'msg' => 'Error during update'
-            ], 404);
+            ]);
         }
 
         $response = [
@@ -161,7 +161,7 @@ class KelasController extends Controller
         if(!$kelas->delete()) {
             return response()->json([
                 'msg' => 'Delete failed'
-            ], 404);
+            ]);
         }
 
         $response = [

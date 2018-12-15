@@ -87,6 +87,6 @@ class AbsenController extends Controller
             'msg' => 'An Error occured'
         ];
 
-        return response()->json($response, 404);
+        return response()->json($response);
     }
 }

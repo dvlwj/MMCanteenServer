@@ -8,6 +8,10 @@ use App\Http\Controllers\Controller;
 
 class KelasController extends Controller
 {
+    public function __construct(){
+        $this->middleware(['auth', 'isAdminWeb']); 
+    }
+    
     /**
      * Display a listing of the resource.
      *

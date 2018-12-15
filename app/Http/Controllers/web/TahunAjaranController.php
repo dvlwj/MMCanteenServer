@@ -8,6 +8,10 @@ use App\Http\Controllers\Controller;
 
 class TahunAjaranController extends Controller
 {
+    public function __construct(){
+        $this->middleware(['auth', 'isAdminWeb']); 
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -15,17 +19,8 @@ class TahunAjaranController extends Controller
      */
     public function index()
     {
-        return view('thAjaran');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $thAjaran = TahunAjaran::all();
+        return view('thAjaran', compact('thAjaran'));
     }
 
     /**
@@ -36,7 +31,37 @@ class TahunAjaranController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'tahun' => 'required|max:4'
+        ]);
+
+        $tahun = $request->input('tahun');
+
+        $th_ajaran = new TahunAjaran([
+            'tahun' => $tahun
+        ]);
+
+        //Check Tahun Ajaran
+        if (TahunAjaran::where('tahun', $tahun)->first()){
+            return response()->json([
+                'msg' => 'Tahun is already created'
+            ], 200);
+        }
+
+        if($th_ajaran->save()) {
+            $response = [
+                'msg' => 'Tahun Ajaran created',
+                'th_ajaran' => $th_ajaran
+            ];
+
+            return response()->json($response, 201);
+        }
+
+        $response = [
+            'msg' => 'An Error occured'
+        ];
+
+        return response()->json($response);
     }
 
     /**
@@ -45,20 +70,14 @@ class TahunAjaranController extends Controller
      * @param  \App\TahunAjaran  $tahunAjaran
      * @return \Illuminate\Http\Response
      */
-    public function show(TahunAjaran $tahunAjaran)
+    public function show($th_ajaran)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\TahunAjaran  $tahunAjaran
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(TahunAjaran $tahunAjaran)
-    {
-        //
+        $data = TahunAjaran::find($th_ajaran);
+        if($data == '') {
+            return response()->json(['msg' => 'Data not found']);
+        }else{
+            return response()->json($data, 200);
+        }
     }
 
     /**

@@ -45,7 +45,7 @@ class TahunAjaranController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'tahun' => 'required'
+            'tahun' => 'required|max:4'
         ]);
 
         $tahun = $request->input('tahun');
@@ -76,7 +76,7 @@ class TahunAjaranController extends Controller
             'msg' => 'An Error occured'
         ];
 
-        return response()->json($response, 404);
+        return response()->json($response);
     }
 
     /**
@@ -130,7 +130,7 @@ class TahunAjaranController extends Controller
         if(!$th_ajaran->update()) {
             return response()->json([
                 'msg' => 'Error during update'
-            ], 404);
+            ]);
         }
 
         $response = [
@@ -158,7 +158,7 @@ class TahunAjaranController extends Controller
         if(!$th_ajaran->delete()) {
             return response()->json([
                 'msg' => 'Delete failed'
-            ], 404);
+            ]);
         }
 
         $response = [
