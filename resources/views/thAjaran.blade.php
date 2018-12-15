@@ -39,9 +39,9 @@
                                 @if(Auth::user()->role == 'admin')
                                     <td>
                                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editTahunAjaran" onclick="getData('{{ $data->id }}')">
-                                      Edit
-                                    </button>
-                                        <button class="btn btn-danger">Delete</button>
+                                          Edit
+                                        </button>
+                                        <button class="btn btn-danger" onclick="deleteData('{{ $data->id }}')">Delete</button>
                                     </td>
                                 @endif
                             </tr>
@@ -100,7 +100,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id="saveEdit">Save</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" id="saveEdit">Save</button>
           </div>
         </div>
       </div>
@@ -162,6 +162,8 @@ $(document).ready(function() {
             success: function (data) {
                 if(data.msg == 'Update Failed'){
                     alert(data.msg);
+                }else if (data.msg == 'Tahun is already created'){
+                    alert(data.msg);
                 }else{
                     alert('Data berhasil diedit.');
                     $("#th-ajaran").load(window.location + " #th-ajaran");
@@ -173,6 +175,27 @@ $(document).ready(function() {
     function refreshForm() {
         $('#tahun').val('');
     }
+
+// DELETE DATA TAHUN AJARAN
+    function deleteData(id) {
+        let conf = confirm("Apakah anda yakin data ini akan dihapus ?");
+        if(conf){
+            $.ajax({  
+                url: 'http://localhost:8000/th-ajaran/'+id,  
+                type: 'DELETE',  
+                dataType: 'json', 
+                success: function (data) {
+                    if(data.msg == 'Delete Failed'){
+                        alert(data.msg);
+                    }else{
+                        alert('Data berhasil dihapus.');
+                        $("#th-ajaran").load(window.location + " #th-ajaran");
+                    }
+                }
+            });
+        }
+    }
+
 
 // VALIDATE YEAR
 function yearValidation(year,ev) {

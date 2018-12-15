@@ -111,8 +111,14 @@ class TahunAjaranController extends Controller
      * @param  \App\TahunAjaran  $tahunAjaran
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TahunAjaran $tahunAjaran)
+    public function destroy($th_ajaran)
     {
-        //
+        $thAjaran = TahunAjaran::find($th_ajaran);
+        if($thAjaran == ''){
+            return response()->json(['msg' => 'Delete Failed']);
+        }else{
+            $thAjaran->delete();
+            return response()->json(['msg' => 'Data berhasil dihapus'], 201);
+        }
     }
 }

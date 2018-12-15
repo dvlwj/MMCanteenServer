@@ -102,6 +102,12 @@ class PetugasController extends Controller
             $user->password = bcrypt($request->password);
         }
 
+        if(User::where('username', $request->username)->first()) {
+            return response()->json([
+                'msg' => 'Username is already taken'
+            ]);
+        }
+
         $user->username = $request->username;
         $user->role = $request->role;
 

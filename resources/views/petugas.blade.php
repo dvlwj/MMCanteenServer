@@ -186,6 +186,8 @@
             success: function (data) {
                 if(data.msg == 'Update Failed'){
                     alert(data.msg);
+                }else if (data.msg == 'Username is already taken'){
+                    alert(data.msg);
                 }else{
                     alert('Data berhasil diedit.');
                     $("#petugas").load(window.location + " #petugas");
@@ -202,8 +204,12 @@
                 type: 'DELETE',  
                 dataType: 'json', 
                 success: function (data) {
-                    alert('Data berhasil dihapus.');
-                    $("#petugas").load(window.location + " #petugas");
+                    if(data.msg == 'Delete Failed'){
+                        alert(data.msg);
+                    }else{
+                        alert('Data berhasil dihapus.');
+                        $("#petugas").load(window.location + " #petugas");
+                    }
                 }
             });
         }
