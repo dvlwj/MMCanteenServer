@@ -92,6 +92,7 @@
           <div class="modal-body">
             <form>
                 <div class="form-group">
+                    <input type="hidden" class="form-control" id="editID">
                     <label for="editTahun" class="col-form-label">Tahun Ajaran</label>
                     <input type="text" class="form-control" id="editTahun" onkeypress="yearValidation(this.value,event)" oninput="checkNumberFieldLength(this);">
                 </div>
@@ -117,6 +118,7 @@ $(document).ready(function() {
     function getData(id) {
         $.get('http://localhost:8000/th-ajaran/'+id, function(data) {
             $('#editTahun').val(data.tahun);
+            $('#editID').val(data.id); 
         });
     }
 
@@ -145,6 +147,32 @@ $(document).ready(function() {
             });
         }
     });
+
+// EDIT DATA TAHUN AJARAN
+    $('#saveEdit').click(function(e) {
+        e.preventDefault();
+
+        $.ajax({  
+            url: 'http://localhost:8000/th-ajaran/'+$('#editID').val(),  
+            type: 'PATCH',  
+            dataType: 'json',  
+            data: {
+                tahun: $('#editTahun').val()
+            },  
+            success: function (data) {
+                if(data.msg == 'Update Failed'){
+                    alert(data.msg);
+                }else{
+                    alert('Data berhasil diedit.');
+                    $("#th-ajaran").load(window.location + " #th-ajaran");
+                }
+            }
+        });
+    });
+
+    function refreshForm() {
+        $('#tahun').val('');
+    }
 
 // VALIDATE YEAR
 function yearValidation(year,ev) {

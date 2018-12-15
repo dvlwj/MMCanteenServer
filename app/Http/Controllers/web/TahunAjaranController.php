@@ -87,9 +87,22 @@ class TahunAjaranController extends Controller
      * @param  \App\TahunAjaran  $tahunAjaran
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TahunAjaran $tahunAjaran)
+    public function update(Request $request, $th_ajaran)
     {
-        //
+        $thAjaran = TahunAjaran::find($th_ajaran);
+        if($request->tahun == '') {
+            $thAjaran->tahun = $thAjaran->password;
+        }elseif (TahunAjaran::where('tahun', $request->tahun)->first()) {
+            return response()->json(['msg' => 'Tahun is already created'], 200);
+        }else{
+            $thAjaran->tahun = $request->tahun;
+        }
+
+        if($thAjaran->update()){
+            return response()->json($thAjaran, 201);
+        }else{
+            return response()->json(['msg' => 'Update Failed']);
+        }
     }
 
     /**
