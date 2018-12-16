@@ -23,7 +23,7 @@
                     </button>
                     <hr>
                     
-                    <table id="th-ajaran" class="table table-striped table-bordered" style="width:100%">
+                    <table id="thAjaran" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -73,7 +73,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id="saveAdd">Save</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" id="saveAdd">Save</button>
           </div>
         </div>
       </div>
@@ -111,7 +111,7 @@
 @section('script')
 <script>
 $(document).ready(function() {
-    $('#th-ajaran').DataTable();
+    $('#thAjaran').DataTable();
 } );
 
 // GET DATA TAHUN AJARAN
@@ -136,12 +136,12 @@ $(document).ready(function() {
                     tahun: $('#tahun').val()
                 },  
                 success: function (data) {
-                    if(data.msg == 'Tahun is already created') {
+                    if(data.status == 'fail') {
                         alert(data.msg);
                     } else {
                         alert('Data berhasil ditambah.');
                         refreshForm();
-                        $("#th-ajaran").load(window.location + " #th-ajaran");
+                        $("#thAjaran").load(window.location + " #thAjaran");
                     }
                 }
             });
@@ -160,23 +160,17 @@ $(document).ready(function() {
                 tahun: $('#editTahun').val()
             },  
             success: function (data) {
-                if(data.msg == 'Update Failed'){
-                    alert(data.msg);
-                }else if (data.msg == 'Tahun is already created'){
+                if(data.status == 'fail'){
                     alert(data.msg);
                 }else{
                     alert('Data berhasil diedit.');
-                    $("#th-ajaran").load(window.location + " #th-ajaran");
+                    $("#thAjaran").load(window.location + " #thAjaran");
                 }
             }
         });
     });
 
-    function refreshForm() {
-        $('#tahun').val('');
-    }
-
-// DELETE DATA TAHUN AJARAN
+// DELETE DATA KELAS
     function deleteData(id) {
         let conf = confirm("Apakah anda yakin data ini akan dihapus ?");
         if(conf){
@@ -185,17 +179,21 @@ $(document).ready(function() {
                 type: 'DELETE',  
                 dataType: 'json', 
                 success: function (data) {
-                    if(data.msg == 'Delete Failed'){
+                    if(data.status == 'fail'){
                         alert(data.msg);
                     }else{
+                        console.log(window.location);
                         alert('Data berhasil dihapus.');
-                        $("#th-ajaran").load(window.location + " #th-ajaran");
+                        $("#thAjaran").load(window.location + " #thAjaran");
                     }
                 }
             });
         }
     }
 
+    function refreshForm() {
+        $('#tahun').val('');
+    }
 
 // VALIDATE YEAR
 function yearValidation(year,ev) {

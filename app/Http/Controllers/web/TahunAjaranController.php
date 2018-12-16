@@ -44,12 +44,14 @@ class TahunAjaranController extends Controller
         //Check Tahun Ajaran
         if (TahunAjaran::where('tahun', $tahun)->first()){
             return response()->json([
+                'status' => 'fail',
                 'msg' => 'Tahun is already created'
             ], 200);
         }
 
         if($th_ajaran->save()) {
             $response = [
+                'status' => 'success',
                 'msg' => 'Tahun Ajaran created',
                 'th_ajaran' => $th_ajaran
             ];
@@ -58,6 +60,7 @@ class TahunAjaranController extends Controller
         }
 
         $response = [
+            'status' => 'fail',
             'msg' => 'An Error occured'
         ];
 
@@ -74,7 +77,7 @@ class TahunAjaranController extends Controller
     {
         $data = TahunAjaran::find($th_ajaran);
         if($data == '') {
-            return response()->json(['msg' => 'Data not found']);
+            return response()->json(['status' => 'fail','msg' => 'Data not found']);
         }else{
             return response()->json($data, 200);
         }
@@ -89,20 +92,35 @@ class TahunAjaranController extends Controller
      */
     public function update(Request $request, $th_ajaran)
     {
+        $this->validate($request, [
+            'tahun' => 'required'
+        ]);
+
+        $tahun = $request->input('tahun');
         $thAjaran = TahunAjaran::find($th_ajaran);
-        if($request->tahun == '') {
-            $thAjaran->tahun = $thAjaran->password;
-        }elseif (TahunAjaran::where('tahun', $request->tahun)->first()) {
-            return response()->json(['msg' => 'Tahun is already created'], 200);
-        }else{
-            $thAjaran->tahun = $request->tahun;
+        
+        if($thAjaran == '') {
+            return response()->json(['status' => 'fail','msg' => 'Tahun ajaran not found'], 200);
+        } elseif (TahunAjaran::where('tahun', $tahun)->first()){
+            return response()->json(['status' => 'fail','msg' => 'Tahun Ajaran is already taken.']);
+        } else {
+            $thAjaran->tahun = $tahun;
         }
 
-        if($thAjaran->update()){
-            return response()->json($thAjaran, 201);
-        }else{
-            return response()->json(['msg' => 'Update Failed']);
+        if(!$thAjaran->update()) {
+            return response()->json([
+                'status' => 'fail',
+                'msg' => 'Error during update'
+            ]);
         }
+
+        $response = [
+            'status' => 'success',
+            'msg' => 'Tahun Ajaran updated',
+            'th_ajaran' => $thAjaran
+        ];
+
+        return response()->json($response, 200);
     }
 
     /**
@@ -115,10 +133,10 @@ class TahunAjaranController extends Controller
     {
         $thAjaran = TahunAjaran::find($th_ajaran);
         if($thAjaran == ''){
-            return response()->json(['msg' => 'Delete Failed']);
+            return response()->json(['status' => 'fail','msg' => 'Delete Failed']);
         }else{
             $thAjaran->delete();
-            return response()->json(['msg' => 'Data berhasil dihapus'], 201);
+            return response()->json(['status' => 'fail','msg' => 'Data berhasil dihapus'], 201);
         }
     }
 }
