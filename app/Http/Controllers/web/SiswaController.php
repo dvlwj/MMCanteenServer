@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\web;
 
 use App\Siswa;
+use App\Kelas;
+use App\TahunAjaran;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -20,7 +22,9 @@ class SiswaController extends Controller
     public function index()
     {
         $siswa = Siswa::all();
-        return view('siswa', compact('siswa'));
+        $kelas = Kelas::all();
+        $thAjaran = TahunAjaran::all();
+        return view('siswa', compact(['siswa', 'kelas', 'thAjaran']));
     }
 
     /**
