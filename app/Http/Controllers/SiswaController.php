@@ -31,6 +31,7 @@ class SiswaController extends Controller
         }
 
         $response = [
+            'status' => 'success',
             'msg' => 'List of Siswa',
             'siswa' => $siswa,
         ];
@@ -68,6 +69,7 @@ class SiswaController extends Controller
         // Check NIS
         if (Siswa::where('nis', $nis)->first()) {
             $response = [
+                'status' => 'fail',
                 'msg' => 'NIS is already exist',
             ];
 
@@ -86,6 +88,7 @@ class SiswaController extends Controller
         }
 
         $response = [
+            'status' => 'fail',
             'msg' => 'An Error occured'
         ];
 
@@ -102,7 +105,7 @@ class SiswaController extends Controller
     {
         $siswa = Siswa::find($id);
         if ($siswa == '') {
-            return response()->json(['msg' => 'Siswa not found']);
+            return response()->json(['status' => 'fail','msg' => 'Siswa not found']);
         } else {
             $siswa->update = [
                 'link' => 'api/v1/siswa/' . $siswa->id,
@@ -111,6 +114,7 @@ class SiswaController extends Controller
         }
 
         $response = [
+            'status' => 'success',
             'msg' => 'Detail siswa',
             'siswa' => $siswa
         ];
@@ -141,7 +145,7 @@ class SiswaController extends Controller
 
         $siswa = Siswa::find($id);
         if ($siswa == '') {
-            return response()->json(['msg' => 'Siswa not found']);
+            return response()->json(['status' => 'fail','msg' => 'Siswa not found']);
         } else {
             $siswa->nis = $nis;
             $siswa->name = $name;
@@ -151,11 +155,13 @@ class SiswaController extends Controller
 
         if(!$siswa->update()) {
             return response()->json([
+                'status' => 'fail',
                 'msg' => 'Error during update'
             ]);
         }
 
         $response = [
+            'status' => 'success',
             'msg' => 'Siswa updated',
             'siswa' => $siswa
         ];
@@ -174,16 +180,18 @@ class SiswaController extends Controller
         $siswa = Siswa::find($id);
 
         if ($siswa == '') {
-            return response()->json(['msg' => 'Siswa not found']);
+            return response()->json(['status' => 'fail','msg' => 'Siswa not found']);
         }
 
         if(!$siswa->delete()) {
             return response()->json([
+                'status' => 'fail',
                 'msg' => 'Delete failed'
             ]);
         }
 
         $response = [
+            'status' => 'success',
             'msg' => 'Siswa deleted',
             'create' => [
                 'link' => 'api/v1/siswa',

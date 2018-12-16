@@ -33,16 +33,19 @@ class AuthController extends Controller
             try {
                 if (!$token = JWTAuth::attempt($credentials)) {
                     return response()->json([
+                        'status' => 'fail',
                         'msg' => 'Username or Password are incorrect',
                     ]);
                 }
             } catch (JWTAuthException $e) {
                 return response()->json([
+                    'status' => 'fail',
                     'msg' => 'failed_to_create_token',
                 ]);
             }
 
             $response = [
+                'status' => 'success',
                 'msg' => 'User signin',
                 'user' => $user,
                 'token' => $token
@@ -51,6 +54,7 @@ class AuthController extends Controller
         }
 
         $response = [
+            'status' => 'fail',
             'msg' => 'An error occured'
         ];
 

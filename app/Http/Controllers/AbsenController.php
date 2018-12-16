@@ -39,6 +39,7 @@ class AbsenController extends Controller
         }
 
         $response = [
+            'status' => 'success',
             'msg' => 'List of Absen',
             'absens' => $absens
         ];
@@ -73,6 +74,7 @@ class AbsenController extends Controller
 
         if ($absen->save()) {
             $response = [
+                'status' => 'success',
                 'msg' => 'Absen siswa added',
                 'absen' => $absen,
                 'link' => 'api/v1/absen',
@@ -84,6 +86,7 @@ class AbsenController extends Controller
         }
 
         $response = [
+            'status' => 'fail',
             'msg' => 'An Error occured'
         ];
 
