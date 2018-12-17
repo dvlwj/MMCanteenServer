@@ -28,7 +28,9 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Tahun Ajaran</th>
-                                <th>Action</th>
+                                @if(Auth::user()->role == 'admin')
+                                    <th>Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -136,7 +138,7 @@ $(document).ready(function() {
                     tahun: $('#tahun').val()
                 },  
                 success: function (data) {
-                    if(data.status == 'fail') {
+                    if(data.status == 0) {
                         alert(data.msg);
                     } else {
                         alert('Data berhasil ditambah.');
@@ -160,7 +162,7 @@ $(document).ready(function() {
                 tahun: $('#editTahun').val()
             },  
             success: function (data) {
-                if(data.status == 'fail'){
+                if(data.status == 0){
                     alert(data.msg);
                 }else{
                     alert('Data berhasil diedit.');
@@ -179,7 +181,7 @@ $(document).ready(function() {
                 type: 'DELETE',  
                 dataType: 'json', 
                 success: function (data) {
-                    if(data.status == 'fail'){
+                    if(data.status == 0){
                         alert(data.msg);
                     }else{
                         console.log(window.location);

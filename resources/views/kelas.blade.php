@@ -28,7 +28,9 @@
                             <tr>
                                 <th>Kelas</th>
                                 <th>ID</th>
-                                <th>Action</th>
+                                @if(Auth::user()->role == 'admin')
+                                    <th>Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -137,7 +139,7 @@
                     name: $('#name').val()
                 },  
                 success: function (data) {
-                    if(data.status == 'fail') {
+                    if(data.status == 0) {
                         alert(data.msg);
                     } else {
                         alert('Data berhasil ditambah.');
@@ -161,7 +163,7 @@
                 name: $('#editName').val()
             },  
             success: function (data) {
-                if(data.status == 'fail'){
+                if(data.status == 0){
                     alert(data.msg);
                 }else{
                     alert('Data berhasil diedit.');
@@ -180,7 +182,7 @@
                 type: 'DELETE',  
                 dataType: 'json', 
                 success: function (data) {
-                    if(data.status == 'fail'){
+                    if(data.status == 0){
                         alert(data.msg);
                     }else{
                         alert('Data berhasil dihapus.');

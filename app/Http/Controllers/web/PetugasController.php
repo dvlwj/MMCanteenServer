@@ -50,14 +50,14 @@ class PetugasController extends Controller
         //Check User
         if (User::where('username', $username)->first()){
             return response()->json([
-                'status' => 'fail',
+                'status' => 0,
                 'msg' => 'Username is already taken'
             ]);
         } 
 
         if ($user->save()) {
             $response = [
-                'status' => 'success',
+                'status' => 1,
                 'msg' => 'Petugas created',
                 'user' => $user,
             ];
@@ -66,7 +66,7 @@ class PetugasController extends Controller
         }
         
         $response = [
-            'status' => 'fail',
+            'status' => 0,
             'msg' => 'An Error occured'
         ];
 
@@ -83,7 +83,7 @@ class PetugasController extends Controller
     {
         $data = User::find($petuga);
         if($data == '') {
-            return response()->json(['status' => 'fail','msg' => 'Data not found']);
+            return response()->json(['status' => 0,'msg' => 'Data not found']);
         }else{
             return response()->json($data, 200);
         }
@@ -107,18 +107,19 @@ class PetugasController extends Controller
 
         if(User::where('username', $request->username)->first()) {
             return response()->json([
-                'status' => 'fail',
+                'status' => 0,
                 'msg' => 'Username is already taken'
             ]);
+        } else {
+            $user->username = $request->username;
         }
 
-        $user->username = $request->username;
         $user->role = $request->role;
 
         if($user->update()){
             return response()->json($user, 201);
         }else{
-            return response()->json(['status' => 'fail','msg' => 'Update Failed']);
+            return response()->json(['status' => 0,'msg' => 'Update Failed']);
         }
     }
 
@@ -132,10 +133,10 @@ class PetugasController extends Controller
     {
         $user = User::find($petuga);
         if($user == ''){
-            return response()->json(['status' => 'fail','msg' => 'Delete Failed']);
+            return response()->json(['status' => 0,'msg' => 'Delete Failed']);
         }else{
             $user->delete();
-            return response()->json(['status' => 'success','msg' => 'Data berhasil dihapus'], 201);
+            return response()->json(['status' => 1,'msg' => 'Data berhasil dihapus'], 201);
         }
     }
 }

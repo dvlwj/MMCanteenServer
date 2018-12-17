@@ -29,7 +29,9 @@
                                 <th>Username</th>
                                 <th>Password</th>
                                 <th>Role</th>
-                                <th>Action</th>
+                                @if(Auth::user()->role == 'admin')
+                                    <th>Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -38,12 +40,14 @@
                                 <td>{{ $data->username }}</td>
                                 <td>******</td>
                                 <td><span class="badge badge-pill badge-primary">{{ $data->role }}</span></td>
-                                <td>
-                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editPetugas" onclick="getData('{{ $data->id }}')">
-                                      Edit
-                                    </button>
-                                    <button class="btn btn-danger" onclick="deleteData('{{ $data->id }}')">Delete</button>
-                                </td>
+                                @if(Auth::user()->role == 'admin')
+                                    <td>
+                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editPetugas" onclick="getData('{{ $data->id }}')">
+                                          Edit
+                                        </button>
+                                        <button class="btn btn-danger" onclick="deleteData('{{ $data->id }}')">Delete</button>
+                                    </td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>
@@ -159,7 +163,7 @@
                     role: $('#role').val()
                 },  
                 success: function (data) {
-                    if(data.status == 'fail') {
+                    if(data.status == 0) {
                         alert(data.msg);
                     } else {
                         alert('Data berhasil ditambah.');
@@ -184,7 +188,7 @@
                 role: $('#editRole').val()
             },  
             success: function (data) {
-                if(data.status == 'fail'){
+                if(data.status == 0){
                     alert(data.msg);
                 }else{
                     alert('Data berhasil diedit.');
@@ -202,7 +206,7 @@
                 type: 'DELETE',  
                 dataType: 'json', 
                 success: function (data) {
-                    if(data.status == 'fail'){
+                    if(data.status == 0){
                         alert(data.msg);
                     }else{
                         alert('Data berhasil dihapus.');

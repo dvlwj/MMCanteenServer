@@ -22,19 +22,13 @@ class SiswaController extends Controller
     public function index()
     {
         $siswa = Siswa::all();
+        foreach ($siswa as $data) {
+            $data->kelas_name = Kelas::select('name')->where('id', $data->kelas_id)->first();
+            $data->th_ajaran_name = TahunAjaran::select('tahun')->where('id', $data->th_ajaran_id)->first();
+        }
         $kelas = Kelas::all();
         $thAjaran = TahunAjaran::all();
         return view('siswa', compact(['siswa', 'kelas', 'thAjaran']));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -45,7 +39,53 @@ class SiswaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'nis' => 'required', 
+            'name' => 'required', 
+            'kelas_id' => 'required', 
+            'th_ajaran_id' => 'required'
+        ]);
+
+        $nis = $request->input('nis');
+        $name = $request->input('name');
+        $kelas_id = $request->input('kelas_id');
+        $th_ajaran_id = $request->input('th_ajaran_id');
+
+        $siswa = new Siswa([
+            'nis' => $nis,
+            'name' => $name,
+            'kelas_id' => $kelas_id,
+            'th_ajaran_id' => $th_ajaran_id
+        ]);
+
+        // Check NIS
+        if (Siswa::where('nis', $nis)->first()) {
+            $response = [
+                'status' => 0,
+                'msg' => 'NIS is already exist',
+            ];
+
+            return response()->json($response);
+        }
+
+        if ($siswa->save()) {
+            $response = [
+                'status' => 1,
+                'msg' => 'Siswa created',
+                'siswa' => $siswa,
+                'link' => 'api/v1/siswa',
+                'method' => 'GET'
+            ];
+
+            return response()->json($response, 201);
+        }
+
+        $response = [
+            'status' => 0,
+            'msg' => 'An Error occured'
+        ];
+
+        return response()->json($response);
     }
 
     /**
@@ -55,17 +95,6 @@ class SiswaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Siswa $siswa)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Siswa  $siswa
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Siswa $siswa)
     {
         //
     }

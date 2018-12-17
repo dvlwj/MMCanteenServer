@@ -44,7 +44,7 @@ class KelasController extends Controller
         // Kelas check
         if(Kelas::where('name', $name)->first()) {
             $response = [
-                'status' => 'fail',
+                'status' => 0,
                 'msg' => 'Kelas is already exist',
             ];
 
@@ -53,7 +53,7 @@ class KelasController extends Controller
 
         if($kelas->save()) {
             $response = [
-                'status' => 'success',
+                'status' => 1,
                 'msg' => 'Kelas created',
                 'kelas' => $kelas
             ];
@@ -62,7 +62,7 @@ class KelasController extends Controller
         }
 
         $response = [
-            'status' => 'fail',
+            'status' => 0,
             'msg' => 'An Error occured'
         ];
 
@@ -79,7 +79,7 @@ class KelasController extends Controller
     {
         $data = Kelas::find($kela);
         if($data == '') {
-            return response()->json(['status' => 'fail','msg' => 'Data not found']);
+            return response()->json(['status' => 0,'msg' => 'Data not found']);
         }else{
             return response()->json($data, 200);
         }
@@ -102,22 +102,22 @@ class KelasController extends Controller
         $kelas = Kelas::find($kela);
 
         if($kelas == '') {
-            return response()->json(['status' => 'fail','msg' => 'Kelas not found'], 200);
+            return response()->json(['status' => 0,'msg' => 'Kelas not found'], 200);
         } elseif (Kelas::where('name', $name)->first()){
-            return response()->json(['status' => 'fail','msg' => 'Kelas is already taken.']);
+            return response()->json(['status' => 0,'msg' => 'Kelas is already taken.']);
         } else {
             $kelas->name = $name;
         }
 
         if(!$kelas->update()) {
             return response()->json([
-                'status' => 'fail',
+                'status' => 0,
                 'msg' => 'Error during update'
             ]);
         }
 
         $response = [
-            'status' => 'success',
+            'status' => 1,
             'msg' => 'Kelas updated',
             'kelas' => $kelas
         ];
@@ -135,10 +135,10 @@ class KelasController extends Controller
     {
         $kelas = Kelas::find($kela);
         if($kelas == ''){
-            return response()->json(['status' => 'fail','msg' => 'Delete Failed']);
+            return response()->json(['status' => 0,'msg' => 'Delete Failed']);
         }else{
             $kelas->delete();
-            return response()->json(['status' => 'success','msg' => 'Data berhasil dihapus'], 201);
+            return response()->json(['status' => 1,'msg' => 'Data berhasil dihapus'], 201);
         }
     }
 }
