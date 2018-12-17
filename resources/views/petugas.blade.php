@@ -159,7 +159,7 @@
                     role: $('#role').val()
                 },  
                 success: function (data) {
-                    if(data.msg == 'Username is already taken') {
+                    if(data.status == 'fail') {
                         alert(data.msg);
                     } else {
                         alert('Data berhasil ditambah.');
@@ -184,7 +184,7 @@
                 role: $('#editRole').val()
             },  
             success: function (data) {
-                if(data.msg == 'Update Failed'){
+                if(data.status == 'fail'){
                     alert(data.msg);
                 }else{
                     alert('Data berhasil diedit.');
@@ -202,8 +202,12 @@
                 type: 'DELETE',  
                 dataType: 'json', 
                 success: function (data) {
-                    alert('Data berhasil dihapus.');
-                    $("#petugas").load(window.location + " #petugas");
+                    if(data.status == 'fail'){
+                        alert(data.msg);
+                    }else{
+                        alert('Data berhasil dihapus.');
+                        $("#petugas").load(window.location + " #petugas");
+                    }
                 }
             });
         }

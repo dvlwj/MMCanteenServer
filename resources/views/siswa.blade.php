@@ -18,34 +18,40 @@
                         </div>
                     @endif
 
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                      Tambah Siswa +
-                    </button>
-                    <hr>
+                    @if(Auth::user()->role == 'admin')
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                          Tambah Siswa +
+                        </button>
+                        <hr>
+                    @endif
                     
                     <table id="siswa" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>NIS</th>
+                                <th>Nama Siswa</th>
+                                <th>Kelas</th>
+                                <th>Tahun Ajaran</th>
+                                @if(Auth::user()->role == 'admin')
+                                    <th>Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($siswa as $data)
                             <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>
-                                    <button class="btn btn-warning">Edit</button>
-                                    <button class="btn btn-danger">Delete</button>
-                                </td>
+                                <td>{{ $data->nis }}</td>
+                                <td>{{ $data->name }}</td>
+                                <td>{{ $data->kelas_id }}</td>
+                                <td>{{ $data->th_ajaran_id }}</td>
+                                @if(Auth::user()->role == 'admin')
+                                    <td>
+                                        <button class="btn btn-warning">Edit</button>
+                                        <button class="btn btn-danger">Delete</button>
+                                    </td>
+                                @endif
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

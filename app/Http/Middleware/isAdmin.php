@@ -25,7 +25,7 @@ class isAdmin
             } else {
                 return response()->json([
                     'msg' => 'Admin Only'
-                ], 404);
+                ]);
             }
         }catch (JWTException $e) {
             if($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {

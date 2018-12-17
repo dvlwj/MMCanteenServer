@@ -29,6 +29,7 @@ class TahunAjaranController extends Controller
         }
 
         $response = [
+            'status' => 'success',
             'msg' => 'List of Tahun Ajaran',
             'data' => $th_ajarans
         ];
@@ -45,7 +46,7 @@ class TahunAjaranController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'tahun' => 'required'
+            'tahun' => 'required|max:4'
         ]);
 
         $tahun = $request->input('tahun');
@@ -57,12 +58,14 @@ class TahunAjaranController extends Controller
         //Check Tahun Ajaran
         if (TahunAjaran::where('tahun', $tahun)->first()){
             return response()->json([
+                'status' => 'fail',
                 'msg' => 'Tahun is already created'
             ], 200);
         }
 
         if($th_ajaran->save()) {
             $response = [
+                'status' => 'success',
                 'msg' => 'Tahun Ajaran created',
                 'th_ajaran' => $th_ajaran,
                 'link' => 'api/v1/th-ajaran',
@@ -73,10 +76,11 @@ class TahunAjaranController extends Controller
         }
 
         $response = [
+            'status' => 'fail',
             'msg' => 'An Error occured'
         ];
 
-        return response()->json($response, 404);
+        return response()->json($response);
     }
 
     /**
@@ -89,7 +93,7 @@ class TahunAjaranController extends Controller
     {
         $th_ajaran = TahunAjaran::find($id);
         if($th_ajaran == '') {
-            return response()->json(['msg' => 'Tahun ajaran not found'], 200);
+            return response()->json(['status' => 'fail','msg' => 'Tahun ajaran not found'], 200);
         } else {
             $th_ajaran->update = [
                 'link' => 'api/v1/th-ajaran/' . $th_ajaran->id,
@@ -98,6 +102,7 @@ class TahunAjaranController extends Controller
         }
 
         $response = [
+            'status' => 'success',
             'msg' => 'Detail Tahun Ajaran',
             'data' => $th_ajaran
         ];
@@ -122,18 +127,20 @@ class TahunAjaranController extends Controller
         $th_ajaran = TahunAjaran::find($id);
         
         if($th_ajaran == '') {
-            return response()->json(['msg' => 'Tahun ajaran not found'], 200);
+            return response()->json(['status' => 'fail','msg' => 'Tahun ajaran not found'], 200);
         } else {
             $th_ajaran->tahun = $tahun;
         }
 
         if(!$th_ajaran->update()) {
             return response()->json([
+                'status' => 'fail',
                 'msg' => 'Error during update'
-            ], 404);
+            ]);
         }
 
         $response = [
+            'status' => 'success',
             'msg' => 'Tahun Ajaran updated',
             'th_ajaran' => $th_ajaran
         ];
@@ -152,16 +159,18 @@ class TahunAjaranController extends Controller
         $th_ajaran = TahunAjaran::find($id);
         
         if($th_ajaran == '') {
-            return response()->json(['msg' => 'Tahun ajaran not found'], 200);
+            return response()->json(['status' => 'fail','msg' => 'Tahun ajaran not found'], 200);
         }
 
         if(!$th_ajaran->delete()) {
             return response()->json([
+                'status' => 'fail',
                 'msg' => 'Delete failed'
-            ], 404);
+            ]);
         }
 
         $response = [
+            'status' => 'success',
             'msg' => 'Tahun Ajaran deleted',
             'create' => [
                 'link' => 'api/v1/th-ajaran',

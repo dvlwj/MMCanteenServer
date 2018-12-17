@@ -29,6 +29,7 @@ class KelasController extends Controller
         }
 
         $response = [
+            'status' => 'success',
             'msg' => 'List of Kelas',
             'kelas' => $kelas
         ];
@@ -57,14 +58,16 @@ class KelasController extends Controller
         // Kelas check
         if(Kelas::where('name', $name)->first()) {
             $response = [
+                'status' => 'fail',
                 'msg' => 'Kelas is already exist',
             ];
 
-            return response()->json($response, 404);
+            return response()->json($response);
         }
 
         if($kelas->save()) {
             $response = [
+                'status' => 'success',
                 'msg' => 'Kelas created',
                 'kelas' => $kelas,
                 'link' => 'api/v1/kelas',
@@ -75,10 +78,11 @@ class KelasController extends Controller
         }
 
         $response = [
+            'status' => 'fail',
             'msg' => 'An Error occured'
         ];
 
-        return response()->json($response, 404);
+        return response()->json($response);
     }
 
     /**
@@ -92,7 +96,7 @@ class KelasController extends Controller
         $kelas = Kelas::find($id);
         
         if($kelas == '') {
-            return response()->json(['msg' => 'Kelas not found'], 200);
+            return response()->json(['status' => 'fail','msg' => 'Kelas not found'], 200);
         } else {
             $kelas->update = [
                 'link' => 'api/v1/kelas/' . $kelas->id,
@@ -101,6 +105,7 @@ class KelasController extends Controller
         }
 
         $response = [
+            'status' => 'success',
             'msg' => 'Detail kelas',
             'kelas' => $kelas
         ];
@@ -125,18 +130,20 @@ class KelasController extends Controller
         $kelas = Kelas::find($id);
 
         if($kelas == '') {
-            return response()->json(['msg' => 'Kelas not found'], 200);
+            return response()->json(['status' => 'fail','msg' => 'Kelas not found'], 200);
         } else {
             $kelas->name = $name;
         }
 
         if(!$kelas->update()) {
             return response()->json([
+                'status' => 'fail',
                 'msg' => 'Error during update'
-            ], 404);
+            ]);
         }
 
         $response = [
+            'status' => 'success',
             'msg' => 'Kelas updated',
             'kelas' => $kelas
         ];
@@ -155,16 +162,18 @@ class KelasController extends Controller
         $kelas = Kelas::find($id);
 
         if($kelas == '') {
-            return response()->json(['msg' => 'Kelas not found'], 200);
+            return response()->json(['status' => 'fail','msg' => 'Kelas not found'], 200);
         }
 
         if(!$kelas->delete()) {
             return response()->json([
+                'status' => 'fail',
                 'msg' => 'Delete failed'
-            ], 404);
+            ]);
         }
 
         $response = [
+            'status' => 'success',
             'msg' => 'Kelas deleted',
             'create' => [
                 'link' => 'api/v1/kelas',
