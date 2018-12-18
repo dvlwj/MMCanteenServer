@@ -103,8 +103,6 @@ class KelasController extends Controller
 
         if($kelas == '') {
             return response()->json(['status' => 0,'msg' => 'Kelas not found'], 200);
-        } elseif (Kelas::where('name', $name)->first()){
-            return response()->json(['status' => 0,'msg' => 'Kelas is already taken.']);
         } else {
             $kelas->name = $name;
         }

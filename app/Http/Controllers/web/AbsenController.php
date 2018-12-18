@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\web;
 
 use App\Absen;
+use App\Kelas;
+use App\TahunAjaran;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -19,7 +21,11 @@ class AbsenController extends Controller
      */
     public function index()
     {
-        return view('absen');
+        $bulan = array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
+        $absen = Absen::all();
+        $kelas = Kelas::all();
+        $thAjaran = TahunAjaran::all();
+        return view('absen', compact(['absen', 'kelas', 'thAjaran', 'bulan']));
     }
 
     /**

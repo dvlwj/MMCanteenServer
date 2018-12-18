@@ -148,7 +148,7 @@ class SiswaController extends Controller
 
         $siswa = Siswa::find($id);
         if ($siswa == '') {
-            return response()->json(['status' => 'fail','msg' => 'Siswa not found']);
+            return response()->json(['status' => 0,'msg' => 'Siswa not found']);
         } else {
             $siswa->nis = $nis;
             $siswa->name = $name;

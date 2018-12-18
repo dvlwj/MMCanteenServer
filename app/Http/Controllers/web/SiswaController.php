@@ -94,9 +94,14 @@ class SiswaController extends Controller
      * @param  \App\Siswa  $siswa
      * @return \Illuminate\Http\Response
      */
-    public function show(Siswa $siswa)
+    public function show($siswa)
     {
-        //
+        $data = Siswa::find($siswa);
+        if($data == '') {
+            return response()->json(['status' => 0,'msg' => 'Data not found']);
+        }else{
+            return response()->json($data, 200);
+        }
     }
 
     /**
@@ -106,9 +111,44 @@ class SiswaController extends Controller
      * @param  \App\Siswa  $siswa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Siswa $siswa)
+    public function update(Request $request, $siswa)
     {
-        //
+        $this->validate($request, [
+            'nis' => 'required', 
+            'name' => 'required', 
+            'kelas_id' => 'required', 
+            'th_ajaran_id' => 'required'
+        ]);
+
+        $nis = $request->input('nis');
+        $name = $request->input('name');
+        $kelas_id = $request->input('kelas_id');
+        $th_ajaran_id = $request->input('th_ajaran_id');
+
+        $data = Siswa::find($siswa);
+        if ($data == '') {
+            return response()->json(['status' => 0,'msg' => 'Siswa not found']);
+        } else {
+            $data->nis = $nis;
+            $data->name = $name;
+            $data->kelas_id = $kelas_id;
+            $data->th_ajaran_id = $th_ajaran_id;
+        }
+
+        if(!$data->update()) {
+            return response()->json([
+                'status' => 0,
+                'msg' => 'Error during update'
+            ]);
+        }
+
+        $response = [
+            'status' => 1,
+            'msg' => 'Siswa updated',
+            'siswa' => $data
+        ];
+
+        return response()->json($response, 200);
     }
 
     /**
@@ -117,8 +157,39 @@ class SiswaController extends Controller
      * @param  \App\Siswa  $siswa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Siswa $siswa)
+    public function destroy($siswa)
     {
-        //
+        $data = Siswa::find($siswa);
+        if($data == ''){
+            return response()->json(['status' => 0,'msg' => 'Delete Failed']);
+        }else{
+            $data->delete();
+            return response()->json(['status' => 0,'msg' => 'Data berhasil dihapus'], 201);
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function listSiswa($kelas_id, $th_ajaran_id)
+    {
+        //kelas, th_ajaran
+        $siswa = DB::table('siswas')->where('kelas_id', $kelas_id)->where('th_ajaran_id', $th_ajaran_id)->get();
+        foreach($siswa as $data) {
+            $data->detail_siswa = [
+                'link' => 'api/v1/siswa/' . $data->id,
+                'method' => 'GET'
+            ];   
+        }
+
+        $response = [
+            'status' => 1,
+            'msg' => 'List of Siswa',
+            'siswa' => $siswa,
+        ];
+
+        return response()->json($response, 200);
     }
 }

@@ -23,8 +23,21 @@
                           Tambah Siswa +
                         </button>
                         <hr>
+                        <select class="selectpicker" id="sortKelasID" data-size="5">
+                          <option value="">Kelas</option>
+                          @foreach($kelas as $k)
+                          <option value="{{ $k->id }}">{{$k->name}}</option>
+                          @endforeach
+                        </select>
+                        <select class="selectpicker" id="sortThAjaranID" data-size="5">
+                          <option value="">Tahun Ajaran</option>
+                          @foreach($thAjaran as $t)
+                          <option value="{{ $t->id }}">{{$t->tahun}}</option>
+                          @endforeach
+                        </select>
+                        <hr>
                     @endif
-                    
+
                     <table id="siswa" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
@@ -46,8 +59,10 @@
                                 <td>{{ $data->th_ajaran_name->tahun }}</td>
                                 @if(Auth::user()->role == 'admin')
                                     <td>
-                                        <button class="btn btn-warning">Edit</button>
-                                        <button class="btn btn-danger">Delete</button>
+                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editSiswa" onclick="getData('{{ $data->id }}')">
+                                          Edit
+                                        </button>
+                                        <button class="btn btn-danger" onclick="deleteData('{{ $data->id }}')">Delete</button>
                                     </td>
                                 @endif
                             </tr>
@@ -117,6 +132,7 @@
           </div>
           <div class="modal-body">
             <form>
+                <input type="hidden" class="form-control" id="editID">
                 <div class="form-group">
                     <label for="editNis" class="col-form-label">NIS</label>
                     <input type="text" class="form-control" id="editNis" placeholder="Nomor Induk Siswa">
@@ -161,9 +177,15 @@
 
     function getData(id) {
         $.get('http://localhost:8000/siswa/'+id, function(data) {
-            $('#editUsername').val(data.username);
-            $('#editRole').val(data.role);
-            $('#editID').val(data.id); 
+            if(data.status == 0){
+                alert('Data Not Found');
+            } else {
+                $('#editNis').val(data.nis);
+                $('#editNamaSiswa').val(data.name);
+                $('#editKelasID').val(data.kelas_id); 
+                $('#editThAjaranID').val(data.th_ajaran_id);
+                $('#editID').val(data.id); 
+            }
         });
     }
 
@@ -197,6 +219,51 @@
             });
         }
     });
+
+    // EDIT DATA Siswa
+    $('#saveEdit').click(function(e) {
+        e.preventDefault();
+
+        $.ajax({  
+            url: 'http://localhost:8000/siswa/'+$('#editID').val(),  
+            type: 'PATCH',  
+            dataType: 'json',  
+            data: {
+                nis: $('#editNis').val(),
+                name: $('#editNamaSiswa').val(),
+                kelas_id: $('#editKelasID').val(),
+                th_ajaran_id: $('#editThAjaranID').val()
+            },  
+            success: function (data) {
+                if(data.status == 0){
+                    alert(data.msg);
+                }else{
+                    alert('Data berhasil diedit.');
+                    $("#siswa").load(window.location + " #siswa");
+                }
+            }
+        });
+    });
+
+    // DELETE DATA SISWA
+    function deleteData(id) {
+        let conf = confirm("Apakah anda yakin data ini akan dihapus ?");
+        if(conf){
+            $.ajax({  
+                url: 'http://localhost:8000/siswa/'+id,  
+                type: 'DELETE',  
+                dataType: 'json', 
+                success: function (data) {
+                    if(data.status == 0){
+                        alert(data.msg);
+                    }else{
+                        alert('Data berhasil dihapus.');
+                        $("#siswa").load(window.location + " #siswa");
+                    }
+                }
+            });
+        }
+    }
 
     //REFRESH FORM
     function refreshForm() {
