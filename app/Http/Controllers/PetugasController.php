@@ -110,7 +110,7 @@ class PetugasController extends Controller
         }
         
         $response = [
-            'status' => 0,
+            'status' => 2,
             'msg' => 'An Error occured'
         ];
 
@@ -175,7 +175,7 @@ class PetugasController extends Controller
 
         if(!$user->update()) {
             return response()->json([
-                'status' => 0,
+                'status' => 2,
                 'msg' => 'Error during update'
             ]);
         }

@@ -62,7 +62,7 @@ class KelasController extends Controller
         }
 
         $response = [
-            'status' => 0,
+            'status' => 2,
             'msg' => 'An Error occured'
         ];
 
@@ -109,7 +109,7 @@ class KelasController extends Controller
 
         if(!$kelas->update()) {
             return response()->json([
-                'status' => 0,
+                'status' => 2,
                 'msg' => 'Error during update'
             ]);
         }

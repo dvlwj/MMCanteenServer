@@ -55,7 +55,8 @@ class SiswaController extends Controller
             'nis' => $nis,
             'name' => $name,
             'kelas_id' => $kelas_id,
-            'th_ajaran_id' => $th_ajaran_id
+            'th_ajaran_id' => $th_ajaran_id,
+            'status' => 'enable'
         ]);
 
         // Check NIS
@@ -81,7 +82,7 @@ class SiswaController extends Controller
         }
 
         $response = [
-            'status' => 0,
+            'status' => 2,
             'msg' => 'An Error occured'
         ];
 
@@ -117,13 +118,15 @@ class SiswaController extends Controller
             'nis' => 'required', 
             'name' => 'required', 
             'kelas_id' => 'required', 
-            'th_ajaran_id' => 'required'
+            'th_ajaran_id' => 'required',
+            'status' => 'required'
         ]);
 
         $nis = $request->input('nis');
         $name = $request->input('name');
         $kelas_id = $request->input('kelas_id');
         $th_ajaran_id = $request->input('th_ajaran_id');
+        $status = $request->input('status');
 
         $data = Siswa::find($siswa);
         if ($data == '') {
@@ -133,11 +136,12 @@ class SiswaController extends Controller
             $data->name = $name;
             $data->kelas_id = $kelas_id;
             $data->th_ajaran_id = $th_ajaran_id;
+            $data->status = $status;
         }
 
         if(!$data->update()) {
             return response()->json([
-                'status' => 0,
+                'status' => 2,
                 'msg' => 'Error during update'
             ]);
         }
@@ -164,7 +168,7 @@ class SiswaController extends Controller
             return response()->json(['status' => 0,'msg' => 'Delete Failed']);
         }else{
             $data->delete();
-            return response()->json(['status' => 0,'msg' => 'Data berhasil dihapus'], 201);
+            return response()->json(['status' => 1,'msg' => 'Data berhasil dihapus'], 201);
         }
     }
 

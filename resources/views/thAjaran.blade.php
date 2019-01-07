@@ -28,7 +28,6 @@
                             <tr>
                                 <th>No</th>
                                 <th>Tahun Ajaran</th>
-                                <th>ID</th>
                                 @if(Auth::user()->role == 'admin')
                                     <th>Action</th>
                                 @endif
@@ -40,7 +39,6 @@
                             <tr>
                                 <td>{{$n++}}</td>
                                 <td>{{ $data->tahun }}</td>
-                                <td>{{ $data->id }}</td>
                                 @if(Auth::user()->role == 'admin')
                                     <td>
                                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editTahunAjaran" onclick="getData('{{ $data->id }}')">

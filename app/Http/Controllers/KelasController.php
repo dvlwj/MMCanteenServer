@@ -137,7 +137,7 @@ class KelasController extends Controller
 
         if(!$kelas->update()) {
             return response()->json([
-                'status' => 0,
+                'status' => 2,
                 'msg' => 'Error during update'
             ]);
         }

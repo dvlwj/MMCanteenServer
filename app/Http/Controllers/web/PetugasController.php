@@ -66,7 +66,7 @@ class PetugasController extends Controller
         }
         
         $response = [
-            'status' => 0,
+            'status' => 2,
             'msg' => 'An Error occured'
         ];
 

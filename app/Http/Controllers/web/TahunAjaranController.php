@@ -60,7 +60,7 @@ class TahunAjaranController extends Controller
         }
 
         $response = [
-            'status' => 0,
+            'status' => 2,
             'msg' => 'An Error occured'
         ];
 
@@ -107,7 +107,7 @@ class TahunAjaranController extends Controller
 
         if(!$thAjaran->update()) {
             return response()->json([
-                'status' => 0,
+                'status' => 2,
                 'msg' => 'Error during update'
             ]);
         }
@@ -134,7 +134,7 @@ class TahunAjaranController extends Controller
             return response()->json(['status' => 0,'msg' => 'Delete Failed']);
         }else{
             $thAjaran->delete();
-            return response()->json(['status' => 0,'msg' => 'Data berhasil dihapus'], 201);
+            return response()->json(['status' => 1,'msg' => 'Data berhasil dihapus'], 201);
         }
     }
 }

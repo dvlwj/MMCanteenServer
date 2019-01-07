@@ -91,7 +91,7 @@ class SiswaController extends Controller
         }
 
         $response = [
-            'status' => 0,
+            'status' => 2,
             'msg' => 'An Error occured'
         ];
 
@@ -158,7 +158,7 @@ class SiswaController extends Controller
 
         if(!$siswa->update()) {
             return response()->json([
-                'status' => 0,
+                'status' => 2,
                 'msg' => 'Error during update'
             ]);
         }

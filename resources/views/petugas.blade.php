@@ -28,7 +28,6 @@
                             <tr>
                                 <th>No</th>
                                 <th>Username</th>
-                                <th>Password</th>
                                 <th>Role</th>
                                 @if(Auth::user()->role == 'admin')
                                     <th>Action</th>
@@ -41,8 +40,13 @@
                             <tr>
                                 <td>{{$n++}}</td>
                                 <td>{{ $data->username }}</td>
-                                <td>******</td>
-                                <td><span class="badge badge-pill badge-primary">{{ $data->role }}</span></td>
+                                <td>
+                                    @if($data->role == 'admin')
+                                    <span class="label label-danger">{{ $data->role }}</span>
+                                    @else
+                                    <span class="label label-primary">{{ $data->role }}</span>
+                                    @endif
+                                </td>
                                 @if(Auth::user()->role == 'admin')
                                     <td>
                                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editPetugas" onclick="getData('{{ $data->id }}')">

@@ -46,6 +46,7 @@
                                 <th>Nama Siswa</th>
                                 <th>Kelas</th>
                                 <th>Tahun Ajaran</th>
+                                <th>Status</th>
                                 @if(Auth::user()->role == 'admin')
                                     <th>Action</th>
                                 @endif
@@ -60,6 +61,7 @@
                                 <td>{{ $data->name }}</td>
                                 <td>{{ $data->kelas_name->name }}</td>
                                 <td>{{ $data->th_ajaran_name->tahun }}</td>
+                                <td>{{ $data->status }}</td>
                                 @if(Auth::user()->role == 'admin')
                                     <td>
                                         <a href="http://localhost:8000/siswa/qr/{{$data->id}}" type="button" class="btn btn-info">
@@ -161,6 +163,13 @@
                         @foreach($thAjaran as $th)
                             <option value="{{ $th->id }}">{{ $th->tahun }}</option>
                         @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editStatus">Status</label>
+                    <select id="editStatus" class="form-control">
+                        <option value="enable">enable</option>
+                        <option value="disable">disable</option>
                     </select>
                 </div>
             </form>

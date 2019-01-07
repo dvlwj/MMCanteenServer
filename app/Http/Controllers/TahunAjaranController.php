@@ -76,7 +76,7 @@ class TahunAjaranController extends Controller
         }
 
         $response = [
-            'status' => 0,
+            'status' => 2,
             'msg' => 'An Error occured'
         ];
 
@@ -134,7 +134,7 @@ class TahunAjaranController extends Controller
 
         if(!$th_ajaran->update()) {
             return response()->json([
-                'status' => 0,
+                'status' => 2,
                 'msg' => 'Error during update'
             ]);
         }
