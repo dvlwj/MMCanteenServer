@@ -97,24 +97,28 @@ class PetugasController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $petuga)
-    {
+    {   
+        $username = $request->input('username');
+        $password = $request->input('password');
+        $role = $request->input('role');
+
         $user = User::find($petuga);
-        if($request->password == '') {
+        if($password == '') {
             $user->password = $user->password;
         }else{
-            $user->password = bcrypt($request->password);
+            $user->password = bcrypt($password);
         }
 
-        if(User::where('username', $request->username)->first()) {
+        if($username == $user->username){
+            $user->username = $username;
+        }elseif(User::where('username', $username)->first()) {
             return response()->json([
                 'status' => 0,
                 'msg' => 'Username is already taken'
             ]);
-        } else {
-            $user->username = $request->username;
         }
 
-        $user->role = $request->role;
+        $user->role = $role;
 
         if($user->update()){
             return response()->json($user, 201);

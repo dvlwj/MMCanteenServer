@@ -17,8 +17,13 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    You are logged in!                    
+                    <div class="text-center">
+                        <img src="{{ asset('img/logo.png') }}" alt="maitreyawira_logo" width="350px" height="350px">
+                        <br>
+                        <h3>
+                            Welcome {{ Auth::user()->username }}
+                        </h3>
+                    </div>
                 </div>
             </div>
         </div>

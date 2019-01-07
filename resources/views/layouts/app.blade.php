@@ -10,6 +10,9 @@
 
     <title>{{ config('app.name', 'MMCanteen') }}|@yield('title')</title>
 
+    <!-- logo -->
+    <link rel="icon" type="image/ico" href="{{ asset('img/logo.png') }}" />
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
