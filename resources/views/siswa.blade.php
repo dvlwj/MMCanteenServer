@@ -62,6 +62,9 @@
                                 <td>{{ $data->th_ajaran_name->tahun }}</td>
                                 @if(Auth::user()->role == 'admin')
                                     <td>
+                                        <a href="http://localhost:8000/siswa/qr/{{$data->id}}" type="button" class="btn btn-info">
+                                          QR Code
+                                        </a>
                                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editSiswa" onclick="getData('{{ $data->id }}')">
                                           Edit
                                         </button>

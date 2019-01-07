@@ -192,4 +192,19 @@ class SiswaController extends Controller
 
         return response()->json($response, 200);
     }
+
+    /**
+    * Display a QR Code of Siswa
+    *
+    * @param  \App\Siswa  $siswa
+    * @return \Illuminate\Http\Response
+    */
+    public function qr($id)
+    {
+        $siswa = Siswa::find($id);
+        if($siswa == ''){
+            return redirect()->route('siswa.index');       
+        }
+        return view('qrcode', ['nis' => $siswa->nis, 'name' => $siswa->name]);
+    }
 }

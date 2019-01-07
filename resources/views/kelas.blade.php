@@ -28,6 +28,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Kelas</th>
+                                <th>Kelompok</th>
                                 @if(Auth::user()->role == 'admin')
                                     <th>Action</th>
                                 @endif
@@ -39,6 +40,7 @@
                             <tr>
                                 <td>{{$n++}}</td>
                                 <td>{{ $data->name }}</td>
+                                <td>{{ $data->harga_id}}</td>
                                 @if(Auth::user()->role == 'admin')
                                     <td>
                                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editKelas" onclick="getData('{{ $data->id }}')">

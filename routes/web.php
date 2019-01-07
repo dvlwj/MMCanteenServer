@@ -22,6 +22,7 @@ Route::resource('absen', 'web\AbsenController')->except(['edit', 'create']);
 
 //Route Siswa
 Route::resource('siswa', 'web\SiswaController')->except(['edit', 'create']);
+Route::get('siswa/qr/{id}', 'web\SiswaController@qr')->name('siswa.qrcode');
 
 //Route Tahun Ajaran
 Route::resource('th-ajaran', 'web\TahunAjaranController')->except(['edit', 'create']);
