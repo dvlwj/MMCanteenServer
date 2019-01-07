@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateKelasTable extends Migration
+class CreateHargasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateKelasTable extends Migration
      */
     public function up()
     {
-        Schema::create('kelas', function (Blueprint $table) {
+        Schema::create('hargas', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('harga_id')->unsigned();
-            $table->string('name');
+            $table->string('kel_kelas');
+            $table->string('harga');
             $table->timestamps();
         });
-
-        $table->foreign('harga_id')->references('id')->on('harga')->onDelete('cascade');
     }
 
     /**
@@ -30,6 +28,6 @@ class CreateKelasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kelas');
+        Schema::dropIfExists('hargas');
     }
 }

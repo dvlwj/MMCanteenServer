@@ -11,6 +11,9 @@ Route::get('/dashboard', 'web\IndexController@index')->name('home');
 //Route Petugas
 Route::resource('petugas', 'web\PetugasController')->except(['edit', 'create']);
 
+// Route Harga Makan
+Route::resource('harga', 'web\HargaController')->except(['edit', 'create']);
+
 //Route Kelas
 Route::resource('kelas', 'web\KelasController')->except(['edit', 'create']);
 

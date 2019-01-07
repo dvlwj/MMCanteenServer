@@ -26,6 +26,7 @@
                     <table id="petugas" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>Username</th>
                                 <th>Password</th>
                                 <th>Role</th>
@@ -35,8 +36,10 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php $n=1 @endphp
                             @foreach($petugas as $data)
                             <tr>
+                                <td>{{$n++}}</td>
                                 <td>{{ $data->username }}</td>
                                 <td>******</td>
                                 <td><span class="badge badge-pill badge-primary">{{ $data->role }}</span></td>

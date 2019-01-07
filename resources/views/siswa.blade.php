@@ -41,6 +41,7 @@
                     <table id="siswa" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>NIS</th>
                                 <th>Nama Siswa</th>
                                 <th>Kelas</th>
@@ -51,8 +52,10 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php $n=1 @endphp
                             @foreach($siswa as $data)
                             <tr>
+                                <td>{{$n++}}</td>
                                 <td>{{ $data->nis }}</td>
                                 <td>{{ $data->name }}</td>
                                 <td>{{ $data->kelas_name->name }}</td>

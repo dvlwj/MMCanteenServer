@@ -50,6 +50,7 @@
                         @else
                             @if(Auth::user()->role == 'admin')
                                 <li class="{{request()->path() == 'petugas' ? 'active' : ''}}"><a href="{{ route('petugas.index') }}">Petugas</a></li>
+                                <li class="{{request()->path() == 'harga' ? 'active' : ''}}"><a href="{{ route('harga.index') }}">Harga Makan</a></li>
                                 <li class="{{request()->path() == 'kelas' ? 'active' : ''}}"><a href="{{ route('kelas.index') }}">Kelas</a></li>
                                 <li class="{{request()->path() == 'th-ajaran' ? 'active' : ''}}"><a href="{{ route('th-ajaran.index') }}">Tahun Ajaran</a></li>
                             @endif

@@ -26,18 +26,21 @@
                     <table id="thAjaran" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>No</th>
                                 <th>Tahun Ajaran</th>
+                                <th>ID</th>
                                 @if(Auth::user()->role == 'admin')
                                     <th>Action</th>
                                 @endif
                             </tr>
                         </thead>
                         <tbody>
+                            @php $n=1 @endphp
                             @foreach($thAjaran as $data)
                             <tr>
-                                <td>{{ $data->id }}</td>
+                                <td>{{$n++}}</td>
                                 <td>{{ $data->tahun }}</td>
+                                <td>{{ $data->id }}</td>
                                 @if(Auth::user()->role == 'admin')
                                     <td>
                                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editTahunAjaran" onclick="getData('{{ $data->id }}')">

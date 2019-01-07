@@ -30,6 +30,7 @@
                       <option value="{{ $t->id }}">{{ $t->tahun }}</option>
                       @endforeach
                     </select>
+                    <hr>
                     <select class="selectpicker" id="sortBulan" data-size="5" onchange="getBulan()">
                       <option value="">Bulan</option>
                       @foreach($bulan as $a => $b)
@@ -40,11 +41,17 @@
                       <option value="">Tahun</option>
                       <option value=""></option>
                     </select>
+                    <select class="selectpicker" id="sortTime" data-size="5">
+                      <option value="">Waktu</option>
+                      <option value="pagi">Pagi</option>
+                      <option value="siang">Siang</option>
+                    </select>
                     <hr>
 
                     <table id="absen" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>NIS</th>
                                 <th>Nama Siswa</th>
                                 <th>Kelas</th>
@@ -57,6 +64,7 @@
                         </thead>
                         <tbody>
                             <tr>
+                                <td>1</td>
                                 <td>Tiger Nixon</td>
                                 <td>System Architect</td>
                                 <td>Edinburgh</td>

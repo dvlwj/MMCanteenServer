@@ -12,11 +12,16 @@ class Kelas extends Model
      * @var array
      */
     protected $fillable = [
-        'name'
+        'name', 'harga_id'
     ];
 
     public function siswa()
     {
         return $this->belongsToMany(Siswa::class);
+    }
+
+    public function harga()
+    {
+        return $this->belongsTo(Harga::class);
     }
 }
