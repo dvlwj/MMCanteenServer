@@ -30,7 +30,7 @@
         	<br>
         	<div class="row">
 		   		<p class="text-center">
-		   			<a href="http://localhost:8000/siswa" type="button" class="btn btn-danger">Back</a>
+		   			<a href="{{ route('siswa.index') }}" type="button" class="btn btn-danger">Back</a>
 		   			<button class="btn btn-success" onclick="printDiv('qrPrint')">Print</button>
 		   		</p>
         	</div>

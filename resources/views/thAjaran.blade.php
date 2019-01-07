@@ -119,7 +119,7 @@ $(document).ready(function() {
 
 // GET DATA TAHUN AJARAN
     function getData(id) {
-        $.get('http://localhost:8000/th-ajaran/'+id, function(data) {
+        $.get('{{ route("th-ajaran.index") }}/'+id, function(data) {
             $('#editTahun').val(data.tahun);
             $('#editID').val(data.id); 
         });
@@ -132,7 +132,7 @@ $(document).ready(function() {
             alert("Tahun Ajaran tidak boleh kosong!");
         } else {
             $.ajax({  
-                url: 'http://localhost:8000/th-ajaran',  
+                url: '{{ route("th-ajaran.index") }}',  
                 type: 'POST',  
                 dataType: 'json',  
                 data: {
@@ -156,7 +156,7 @@ $(document).ready(function() {
         e.preventDefault();
 
         $.ajax({  
-            url: 'http://localhost:8000/th-ajaran/'+$('#editID').val(),  
+            url: '{{ route("th-ajaran.index") }}/'+$('#editID').val(),  
             type: 'PATCH',  
             dataType: 'json',  
             data: {
@@ -178,7 +178,7 @@ $(document).ready(function() {
         let conf = confirm("Apakah anda yakin data ini akan dihapus ?");
         if(conf){
             $.ajax({  
-                url: 'http://localhost:8000/th-ajaran/'+id,  
+                url: '{{ route("th-ajaran.index") }}/'+id,  
                 type: 'DELETE',  
                 dataType: 'json', 
                 success: function (data) {

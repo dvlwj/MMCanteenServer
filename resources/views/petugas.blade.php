@@ -148,7 +148,7 @@
     });
 
     function getData(id) {
-        $.get('http://localhost:8000/petugas/'+id, function(data) {
+        $.get('{{ route("petugas.index") }}/'+id, function(data) {
             $('#editUsername').val(data.username);
             $('#editRole').val(data.role);
             $('#editID').val(data.id); 
@@ -161,7 +161,7 @@
             alert("Username atau Password tidak boleh kosong!");
         } else {
             $.ajax({  
-                url: 'http://localhost:8000/petugas',  
+                url: '{{ route("petugas.index") }}',  
                 type: 'POST',  
                 dataType: 'json',  
                 data: {
@@ -186,7 +186,7 @@
         e.preventDefault();
 
         $.ajax({  
-            url: 'http://localhost:8000/petugas/'+$('#editID').val(),  
+            url: '{{ route("petugas.index") }}/'+$('#editID').val(),  
             type: 'PATCH',  
             dataType: 'json',  
             data: {
@@ -209,7 +209,7 @@
         let conf = confirm("Apakah anda yakin data ini akan dihapus ?");
         if(conf){
             $.ajax({  
-                url: 'http://localhost:8000/petugas/'+id,  
+                url: '{{ route("petugas.index") }}/'+id,  
                 type: 'DELETE',  
                 dataType: 'json', 
                 success: function (data) {

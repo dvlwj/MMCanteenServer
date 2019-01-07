@@ -139,7 +139,7 @@
 
     // GET DATA KELAS
     function getData(id) {
-        $.get('http://localhost:8000/kelas/'+id, function(data) {
+        $.get('{{ route("kelas.index") }}/'+id, function(data) {
             $('#editName').val(data.name);
             $('#editKelompok').val(data.harga_id);
             $('#editID').val(data.id); 
@@ -154,7 +154,7 @@
             alert("Nama kelas tidak boleh kosong!");
         } else {
             $.ajax({  
-                url: 'http://localhost:8000/kelas',  
+                url: '{{ route("kelas.index") }}',  
                 type: 'POST',  
                 dataType: 'json',  
                 data: {
@@ -179,7 +179,7 @@
         e.preventDefault();
 
         $.ajax({  
-            url: 'http://localhost:8000/kelas/'+$('#editID').val(),  
+            url: '{{ route("kelas.index") }}/'+$('#editID').val(),  
             type: 'PATCH',  
             dataType: 'json',  
             data: {
@@ -202,7 +202,7 @@
         let conf = confirm("Apakah anda yakin data ini akan dihapus ?");
         if(conf){
             $.ajax({  
-                url: 'http://localhost:8000/kelas/'+id,  
+                url: '{{ route("kelas.index") }}/'+id,  
                 type: 'DELETE',  
                 dataType: 'json', 
                 success: function (data) {

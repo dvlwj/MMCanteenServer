@@ -70,7 +70,7 @@
                                 </td>
                                 @if(Auth::user()->role == 'admin')
                                     <td>
-                                        <a href="http://localhost:8000/siswa/qr/{{$data->id}}" type="button" class="btn btn-info">
+                                        <a href="{{ route('siswa.qrcode', ['id' => $data->id]) }}" type="button" class="btn btn-info">
                                           QR Code
                                         </a>
                                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editSiswa" onclick="getData('{{ $data->id }}')">
@@ -197,7 +197,7 @@
     } );
 
     function getData(id) {
-        $.get('http://localhost:8000/siswa/'+id, function(data) {
+        $.get('{{ route("siswa.index") }}/'+id, function(data) {
             if(data.status == 0){
                 alert('Data Not Found');
             } else {
@@ -220,7 +220,7 @@
             alert("NIS hasil berupa Nomor!");
         } else {
             $.ajax({  
-                url: 'http://localhost:8000/siswa',  
+                url: '{{ route("siswa.index") }}',  
                 type: 'POST',  
                 dataType: 'json',  
                 data: {
@@ -247,7 +247,7 @@
         e.preventDefault();
 
         $.ajax({  
-            url: 'http://localhost:8000/siswa/'+$('#editID').val(),  
+            url: '{{ route("siswa.index") }}/'+$('#editID').val(),  
             type: 'PATCH',  
             dataType: 'json',  
             data: {
@@ -273,7 +273,7 @@
         let conf = confirm("Apakah anda yakin data ini akan dihapus ?");
         if(conf){
             $.ajax({  
-                url: 'http://localhost:8000/siswa/'+id,  
+                url: '{{ route("siswa.index") }}/'+id,  
                 type: 'DELETE',  
                 dataType: 'json', 
                 success: function (data) {
