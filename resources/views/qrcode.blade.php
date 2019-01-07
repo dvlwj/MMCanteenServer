@@ -22,7 +22,7 @@
 				   			<br>
 				   			<b>{{strtoupper($name)}}</b>
 				   			<br><br>
-					   		property ini milik kantin maitreyawira, jika menemukan harap dikembalikan.
+					   		property ini milik kantin <b>maitreyawira</b>, jika menemukan harap dikembalikan.
 				   		</p>
 				   	</div>
 	   			</div>
