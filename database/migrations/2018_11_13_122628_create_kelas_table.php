@@ -18,9 +18,9 @@ class CreateKelasTable extends Migration
             $table->integer('harga_id')->unsigned();
             $table->string('name');
             $table->timestamps();
-        });
 
-        $table->foreign('harga_id')->references('id')->on('harga')->onDelete('cascade');
+            $table->foreign('harga_id')->references('id')->on('hargas')->onDelete('cascade');
+        });
     }
 
     /**

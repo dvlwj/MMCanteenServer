@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\web;
 
 use App\Kelas;
+use App\Harga;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -20,7 +21,11 @@ class KelasController extends Controller
     public function index()
     {
         $kelas = Kelas::all();
-        return view('kelas', compact('kelas'));
+        foreach($kelas as $k){
+            $k->kelompok = Harga::whereId($k->harga_id)->first();
+        }
+        $harga = Harga::all();
+        return view('kelas', compact('kelas', 'harga'));
     }
 
     /**
@@ -32,13 +37,16 @@ class KelasController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required'
+            'name' => 'required',
+            'harga_id' => 'required'
         ]);
 
         $name = $request->input('name');
-        
+        $harga_id = $request->input('harga_id');
+
         $kelas = new Kelas([
-            'name' => $name
+            'name' => $name,
+            'harga_id' => $harga_id
         ]);
 
         // Kelas check
@@ -95,16 +103,19 @@ class KelasController extends Controller
     public function update(Request $request, $kela)
     {
         $this->validate($request, [
-            'name' => 'required'
+            'name' => 'required',
+            'harga_id' => 'required'
         ]);
         
         $name = $request->input('name');
+        $harga_id = $request->input('harga_id');
         $kelas = Kelas::find($kela);
 
         if($kelas == '') {
             return response()->json(['status' => 0,'msg' => 'Kelas not found'], 200);
         } else {
             $kelas->name = $name;
+            $kelas->harga_id = $harga_id;
         }
 
         if(!$kelas->update()) {

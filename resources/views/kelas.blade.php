@@ -29,6 +29,7 @@
                                 <th>No</th>
                                 <th>Kelas</th>
                                 <th>Kelompok</th>
+                                <th>Harga</th>
                                 @if(Auth::user()->role == 'admin')
                                     <th>Action</th>
                                 @endif
@@ -40,7 +41,8 @@
                             <tr>
                                 <td>{{$n++}}</td>
                                 <td>{{ $data->name }}</td>
-                                <td>{{ $data->harga_id}}</td>
+                                <td>{{ $data->kelompok->kel_kelas}}</td>
+                                <td>{{ $data->kelompok->harga}}</td>
                                 @if(Auth::user()->role == 'admin')
                                     <td>
                                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editKelas" onclick="getData('{{ $data->id }}')">
@@ -74,6 +76,14 @@
                     <label for="name" class="col-form-label">Nama Kelas</label>
                     <input type="text" class="form-control" id="name">
                 </div>
+                <div class="form-group">
+                    <label for="kelompok">Kelompok Kelas</label>
+                    <select id="kelompok" class="form-control">
+                        @foreach($harga as $hrg)
+                            <option value="{{ $hrg->id }}">{{ $hrg->kel_kelas }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </form>
           </div>
           <div class="modal-footer">
@@ -101,6 +111,14 @@
                     <label for="editName" class="col-form-label">Nama Kelas</label>
                     <input type="text" class="form-control" id="editName">
                 </div>
+                <div class="form-group">
+                    <label for="editKelompok">Kelompok Kelas</label>
+                    <select id="editKelompok" class="form-control">
+                        @foreach($harga as $hrg)
+                            <option value="{{ $hrg->id }}">{{ $hrg->kel_kelas }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </form>
           </div>
           <div class="modal-footer">
@@ -123,6 +141,7 @@
     function getData(id) {
         $.get('http://localhost:8000/kelas/'+id, function(data) {
             $('#editName').val(data.name);
+            $('#editKelompok').val(data.harga_id);
             $('#editID').val(data.id); 
         });
     }
@@ -139,7 +158,8 @@
                 type: 'POST',  
                 dataType: 'json',  
                 data: {
-                    name: $('#name').val()
+                    name: $('#name').val(),
+                    harga_id: $('#kelompok').val()
                 },  
                 success: function (data) {
                     if(data.status == 0) {
@@ -163,7 +183,8 @@
             type: 'PATCH',  
             dataType: 'json',  
             data: {
-                name: $('#editName').val()
+                name: $('#editName').val(),
+                harga_id: $('#editKelompok').val()
             },  
             success: function (data) {
                 if(data.status == 0){
@@ -198,6 +219,7 @@
 
     function refreshForm() {
         $('#name').val('');
+        $('#kelompok').val('');
     }
 </script>
 @endsection

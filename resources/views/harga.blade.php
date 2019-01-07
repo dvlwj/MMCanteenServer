@@ -27,7 +27,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Jenis</th>
+                                <th>Kelompok</th>
                                 <th>Harga</th>
                                 @if(Auth::user()->role == 'admin')
                                     <th>Action</th>
