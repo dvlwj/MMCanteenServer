@@ -61,7 +61,13 @@
                                 <td>{{ $data->name }}</td>
                                 <td>{{ $data->kelas_name->name }}</td>
                                 <td>{{ $data->th_ajaran_name->tahun }}</td>
-                                <td>{{ $data->status }}</td>
+                                <td>
+                                    @if($data->status == 'enable')
+                                    <span class="label label-success">{{ $data->status }}</span>
+                                    @else
+                                    <span class="label label-danger">{{ $data->status }}</span>
+                                    @endif
+                                </td>
                                 @if(Auth::user()->role == 'admin')
                                     <td>
                                         <a href="http://localhost:8000/siswa/qr/{{$data->id}}" type="button" class="btn btn-info">
@@ -199,6 +205,7 @@
                 $('#editNamaSiswa').val(data.name);
                 $('#editKelasID').val(data.kelas_id); 
                 $('#editThAjaranID').val(data.th_ajaran_id);
+                $('#editStatus').val(data.status);
                 $('#editID').val(data.id); 
             }
         });
@@ -247,7 +254,8 @@
                 nis: $('#editNis').val(),
                 name: $('#editNamaSiswa').val(),
                 kelas_id: $('#editKelasID').val(),
-                th_ajaran_id: $('#editThAjaranID').val()
+                th_ajaran_id: $('#editThAjaranID').val(),
+                status: $('#editStatus').val()
             },  
             success: function (data) {
                 if(data.status == 0){
