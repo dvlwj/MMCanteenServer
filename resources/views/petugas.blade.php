@@ -159,6 +159,8 @@
         } else {
             if($('#username').val().length < 5){
                 alert('Username minimal 5 karakter!');
+            }else if($('#username').val().includes(' ') == true){
+                alert('Username tidak boleh menggunakan sepasi!');
             }else{
                 $.ajax({  
                     url: '{{ route("petugas.index") }}',  
