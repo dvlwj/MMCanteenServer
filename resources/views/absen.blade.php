@@ -46,6 +46,7 @@
                       <option value="pagi">Pagi</option>
                       <option value="siang">Siang</option>
                     </select>
+                    <button class="btn btn-primary" id="sort">Sortir</button>
                     <hr>
 
                     <table id="absen" class="table table-striped table-bordered" style="width:100%">

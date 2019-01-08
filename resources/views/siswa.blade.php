@@ -35,6 +35,7 @@
                           <option value="{{ $t->id }}">{{$t->tahun}}</option>
                           @endforeach
                         </select>
+                        <button class="btn btn-primary" id="sort">Sortir</button>
                         <hr>
                     @endif
 
