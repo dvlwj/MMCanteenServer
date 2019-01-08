@@ -194,7 +194,14 @@
 <script>
     $(document).ready(function() {
         $('#siswa').DataTable();
-    } );
+
+        $(window).keydown(function(event){
+            if(event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+    });
 
     function getData(id) {
         $.get('{{ route("siswa.index") }}/'+id, function(data) {
@@ -217,7 +224,7 @@
         if($('#nis').val() == '' || $('#namaSiswa').val() == '' || $('#kelasID').val() == '' || $('#thAjaranID').val() == '') {
             alert("Data tidak boleh ada yang kosong!");
         } else if (isNaN($('#nis').val())){
-            alert("NIS hasil berupa Nomor!");
+            alert("NIS harus berupa angka!");
         } else {
             $.ajax({  
                 url: '{{ route("siswa.index") }}',  
@@ -246,26 +253,32 @@
     $('#saveEdit').click(function(e) {
         e.preventDefault();
 
-        $.ajax({  
-            url: '{{ route("siswa.index") }}/'+$('#editID').val(),  
-            type: 'PATCH',  
-            dataType: 'json',  
-            data: {
-                nis: $('#editNis').val(),
-                name: $('#editNamaSiswa').val(),
-                kelas_id: $('#editKelasID').val(),
-                th_ajaran_id: $('#editThAjaranID').val(),
-                status: $('#editStatus').val()
-            },  
-            success: function (data) {
-                if(data.status == 0){
-                    alert(data.msg);
-                }else{
-                    alert('Data berhasil diedit.');
-                    $("#siswa").load(window.location + " #siswa");
+        if($('#editNis').val() == '' || $('#editNamaSiswa').val() == '') {
+            alert("Data tidak boleh ada yang kosong!");
+        } else if (isNaN($('#editNis').val())){
+            alert("NIS harus berupa angka!");
+        } else {
+            $.ajax({  
+                url: '{{ route("siswa.index") }}/'+$('#editID').val(),  
+                type: 'PATCH',  
+                dataType: 'json',  
+                data: {
+                    nis: $('#editNis').val(),
+                    name: $('#editNamaSiswa').val(),
+                    kelas_id: $('#editKelasID').val(),
+                    th_ajaran_id: $('#editThAjaranID').val(),
+                    status: $('#editStatus').val()
+                },  
+                success: function (data) {
+                    if(data.status == 0){
+                        alert(data.msg);
+                    }else{
+                        alert('Data berhasil diedit.');
+                        $("#siswa").load(window.location + " #siswa");
+                    }
                 }
-            }
-        });
+            });
+        }
     });
 
     // DELETE DATA SISWA

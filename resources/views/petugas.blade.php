@@ -147,6 +147,13 @@
 <script>
     $(document).ready(function() {
         $('#petugas').DataTable();
+
+        $(window).keydown(function(event){
+            if(event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
     });
 
     function getData(id) {
@@ -164,31 +171,29 @@
         } else {
             if($('#username').val().length < 5){
                 alert('Username minimal 5 karakter!');
-            }
-
-            if($('#password').val().length < 6){
-                alert('Username minimal 6 karakter!');
-            }
-
-            $.ajax({  
-                url: '{{ route("petugas.index") }}',  
-                type: 'POST',  
-                dataType: 'json',  
-                data: {
-                    username: $('#username').val(),
-                    password: $('#password').val(),
-                    role: $('#role').val()
-                },  
-                success: function (data) {
-                    if(data.status == 0) {
-                        alert(data.msg);
-                    } else {
-                        alert('Data berhasil ditambah.');
-                        refreshForm();
-                        $("#petugas").load(window.location + " #petugas");
+            }else if($('#password').val().length < 6){
+                alert('Password minimal 6 karakter!');
+            }else{
+                $.ajax({  
+                    url: '{{ route("petugas.index") }}',  
+                    type: 'POST',  
+                    dataType: 'json',  
+                    data: {
+                        username: $('#username').val(),
+                        password: $('#password').val(),
+                        role: $('#role').val()
+                    },  
+                    success: function (data) {
+                        if(data.status == 0) {
+                            alert(data.msg);
+                        } else {
+                            alert('Data berhasil ditambah.');
+                            refreshForm();
+                            $("#petugas").load(window.location + " #petugas");
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     });
 
@@ -197,30 +202,28 @@
 
         if($('#editUsername').val().length < 5){
             alert('Username minimal 5 karakter!');
-        }
-
-        if($('#editPassword').val().length < 6){
-                alert('Username minimal 6 karakter!');
-            }
-
-        $.ajax({  
-            url: '{{ route("petugas.index") }}/'+$('#editID').val(),  
-            type: 'PATCH',  
-            dataType: 'json',  
-            data: {
-                username: $('#editUsername').val(),
-                password: $('#editPassword').val(),
-                role: $('#editRole').val()
-            },  
-            success: function (data) {
-                if(data.status == 0){
-                    alert(data.msg);
-                }else{
-                    alert('Data berhasil diedit.');
-                    $("#petugas").load(window.location + " #petugas");
+        }else if($('#editPassword').val() != "" && $('#editPassword').val().length < 6){
+            alert('Password minimal 6 karakter!');
+        }else{
+            $.ajax({  
+                url: '{{ route("petugas.index") }}/'+$('#editID').val(),  
+                type: 'PATCH',  
+                dataType: 'json',  
+                data: {
+                    username: $('#editUsername').val(),
+                    password: $('#editPassword').val(),
+                    role: $('#editRole').val()
+                },  
+                success: function (data) {
+                    if(data.status == 0){
+                        alert(data.msg);
+                    }else{
+                        alert('Data berhasil diedit.');
+                        $("#petugas").load(window.location + " #petugas");
+                    }
                 }
-            }
-        });
+            });
+        }
     });
 
     function deleteData(id) {

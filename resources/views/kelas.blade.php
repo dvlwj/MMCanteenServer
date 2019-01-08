@@ -135,7 +135,14 @@
 <script>
     $(document).ready(function() {
         $('#kelas').DataTable();
-    } );
+
+        $(window).keydown(function(event){
+            if(event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+    });
 
     // GET DATA KELAS
     function getData(id) {

@@ -76,7 +76,7 @@
                 </div>
                 <div class="form-group">
                     <label for="addHargaMakan" class="col-form-label">Harga</label>
-                    <input type="text" class="form-control" id="addHargaMakan">
+                    <input type="number" class="form-control" id="addHargaMakan">
                 </div>
             </form>
           </div>
@@ -107,7 +107,7 @@
                 </div>
                 <div class="form-group">
                     <label for="editHargaMakan" class="col-form-label">Harga</label>
-                    <input type="text" class="form-control" id="editHargaMakan">
+                    <input type="number" class="form-control" id="editHargaMakan">
                 </div>
             </form>
           </div>
@@ -125,7 +125,14 @@
 <script>
     $(document).ready(function() {
         $('#harga').DataTable();
-    } );
+
+        $(window).keydown(function(event){
+            if(event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+    });
 
     // GET DATA KELAS
     function getData(id) {
@@ -142,6 +149,8 @@
         
         if($('#kelKelas').val() == '' || $('#addHargaMakan').val() == '') {
             alert("Kelompok Kelas atau Harga Makan tidak boleh kosong!");
+        } else if ($('#addHargaMakan').val() != '' && isNaN($('#addHargaMakan').val())){
+            alert("Harga harus berupa angka!");
         } else {
             $.ajax({  
                 url: '{{ route("harga.index") }}',  
@@ -168,28 +177,32 @@
     $('#saveEdit').click(function(e) {
         e.preventDefault();
 
-        $.ajax({  
-            url: '{{ route("harga.index") }}/'+$('#editID').val(),  
-            type: 'PATCH',  
-            dataType: 'json',  
-            data: {
-                kel_kelas: $('#editKelKelas').val(),
-                harga: $('#editHargaMakan').val()
-            },  
-            success: function (data) {
-                if(data.status == 0){
-                    alert(data.msg);
-                }else{
-                    alert('Data berhasil diedit.');
-                    $("#harga").load(window.location + " #harga");
+        if($('#editHargaMakan').val() != '' && isNaN($('#editHargaMakan').val())){
+            alert("Harga harus berupa angka!");
+        } else {
+            $.ajax({  
+                url: '{{ route("harga.index") }}/'+$('#editID').val(),  
+                type: 'PATCH',  
+                dataType: 'json',  
+                data: {
+                    kel_kelas: $('#editKelKelas').val(),
+                    harga: $('#editHargaMakan').val()
+                },  
+                success: function (data) {
+                    if(data.status == 0){
+                        alert(data.msg);
+                    }else{
+                        alert('Data berhasil diedit.');
+                        $("#harga").load(window.location + " #harga");
+                    }
                 }
-            }
-        });
+            });
+        }
     });
 
     // DELETE DATA KELAS
     function deleteData(id) {
-        let conf = confirm("Apakah anda yakin data ini akan dihapus ?");
+        let conf = confirm("Jika anda menghapus data ini, maka data kelas dan siswa yang terhubung dengan kelompok harga ini akan terhapus. Apakah anda yakin data ini akan dihapus ?");
         if(conf){
             $.ajax({  
                 url: '{{ route("harga.index") }}/'+id,  

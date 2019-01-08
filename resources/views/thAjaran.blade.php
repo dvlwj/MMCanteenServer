@@ -115,7 +115,14 @@
 <script>
 $(document).ready(function() {
     $('#thAjaran').DataTable();
-} );
+
+    $(window).keydown(function(event){
+        if(event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+        }
+    });
+});
 
 // GET DATA TAHUN AJARAN
     function getData(id) {
