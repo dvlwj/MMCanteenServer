@@ -26,15 +26,18 @@
                     <table id="thAjaran" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>No</th>
                                 <th>Tahun Ajaran</th>
-                                <th>Action</th>
+                                @if(Auth::user()->role == 'admin')
+                                    <th>Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
+                            @php $n=1 @endphp
                             @foreach($thAjaran as $data)
                             <tr>
-                                <td>{{ $data->id }}</td>
+                                <td>{{$n++}}</td>
                                 <td>{{ $data->tahun }}</td>
                                 @if(Auth::user()->role == 'admin')
                                     <td>
@@ -116,7 +119,7 @@ $(document).ready(function() {
 
 // GET DATA TAHUN AJARAN
     function getData(id) {
-        $.get('http://localhost:8000/th-ajaran/'+id, function(data) {
+        $.get('{{ route("th-ajaran.index") }}/'+id, function(data) {
             $('#editTahun').val(data.tahun);
             $('#editID').val(data.id); 
         });
@@ -129,14 +132,14 @@ $(document).ready(function() {
             alert("Tahun Ajaran tidak boleh kosong!");
         } else {
             $.ajax({  
-                url: 'http://localhost:8000/th-ajaran',  
+                url: '{{ route("th-ajaran.index") }}',  
                 type: 'POST',  
                 dataType: 'json',  
                 data: {
                     tahun: $('#tahun').val()
                 },  
                 success: function (data) {
-                    if(data.status == 'fail') {
+                    if(data.status == 0) {
                         alert(data.msg);
                     } else {
                         alert('Data berhasil ditambah.');
@@ -153,14 +156,14 @@ $(document).ready(function() {
         e.preventDefault();
 
         $.ajax({  
-            url: 'http://localhost:8000/th-ajaran/'+$('#editID').val(),  
+            url: '{{ route("th-ajaran.index") }}/'+$('#editID').val(),  
             type: 'PATCH',  
             dataType: 'json',  
             data: {
                 tahun: $('#editTahun').val()
             },  
             success: function (data) {
-                if(data.status == 'fail'){
+                if(data.status == 0){
                     alert(data.msg);
                 }else{
                     alert('Data berhasil diedit.');
@@ -175,11 +178,11 @@ $(document).ready(function() {
         let conf = confirm("Apakah anda yakin data ini akan dihapus ?");
         if(conf){
             $.ajax({  
-                url: 'http://localhost:8000/th-ajaran/'+id,  
+                url: '{{ route("th-ajaran.index") }}/'+id,  
                 type: 'DELETE',  
                 dataType: 'json', 
                 success: function (data) {
-                    if(data.status == 'fail'){
+                    if(data.status == 0){
                         alert(data.msg);
                     }else{
                         console.log(window.location);

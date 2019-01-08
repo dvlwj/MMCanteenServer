@@ -26,16 +26,23 @@
                     <table id="kelas" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>Kelas</th>
-                                <th>ID</th>
-                                <th>Action</th>
+                                <th>Kelompok</th>
+                                <th>Harga</th>
+                                @if(Auth::user()->role == 'admin')
+                                    <th>Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
+                            @php $n=1 @endphp
                             @foreach($kelas as $data)
                             <tr>
+                                <td>{{$n++}}</td>
                                 <td>{{ $data->name }}</td>
-                                <td>{{ $data->id }}</td>
+                                <td>{{ $data->kelompok->kel_kelas}}</td>
+                                <td>{{ $data->kelompok->harga}}</td>
                                 @if(Auth::user()->role == 'admin')
                                     <td>
                                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editKelas" onclick="getData('{{ $data->id }}')">
@@ -69,6 +76,14 @@
                     <label for="name" class="col-form-label">Nama Kelas</label>
                     <input type="text" class="form-control" id="name">
                 </div>
+                <div class="form-group">
+                    <label for="kelompok">Kelompok Kelas</label>
+                    <select id="kelompok" class="form-control">
+                        @foreach($harga as $hrg)
+                            <option value="{{ $hrg->id }}">{{ $hrg->kel_kelas }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </form>
           </div>
           <div class="modal-footer">
@@ -96,6 +111,14 @@
                     <label for="editName" class="col-form-label">Nama Kelas</label>
                     <input type="text" class="form-control" id="editName">
                 </div>
+                <div class="form-group">
+                    <label for="editKelompok">Kelompok Kelas</label>
+                    <select id="editKelompok" class="form-control">
+                        @foreach($harga as $hrg)
+                            <option value="{{ $hrg->id }}">{{ $hrg->kel_kelas }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </form>
           </div>
           <div class="modal-footer">
@@ -116,8 +139,9 @@
 
     // GET DATA KELAS
     function getData(id) {
-        $.get('http://localhost:8000/kelas/'+id, function(data) {
+        $.get('{{ route("kelas.index") }}/'+id, function(data) {
             $('#editName').val(data.name);
+            $('#editKelompok').val(data.harga_id);
             $('#editID').val(data.id); 
         });
     }
@@ -130,14 +154,15 @@
             alert("Nama kelas tidak boleh kosong!");
         } else {
             $.ajax({  
-                url: 'http://localhost:8000/kelas',  
+                url: '{{ route("kelas.index") }}',  
                 type: 'POST',  
                 dataType: 'json',  
                 data: {
-                    name: $('#name').val()
+                    name: $('#name').val(),
+                    harga_id: $('#kelompok').val()
                 },  
                 success: function (data) {
-                    if(data.status == 'fail') {
+                    if(data.status == 0) {
                         alert(data.msg);
                     } else {
                         alert('Data berhasil ditambah.');
@@ -154,14 +179,15 @@
         e.preventDefault();
 
         $.ajax({  
-            url: 'http://localhost:8000/kelas/'+$('#editID').val(),  
+            url: '{{ route("kelas.index") }}/'+$('#editID').val(),  
             type: 'PATCH',  
             dataType: 'json',  
             data: {
-                name: $('#editName').val()
+                name: $('#editName').val(),
+                harga_id: $('#editKelompok').val()
             },  
             success: function (data) {
-                if(data.status == 'fail'){
+                if(data.status == 0){
                     alert(data.msg);
                 }else{
                     alert('Data berhasil diedit.');
@@ -176,11 +202,11 @@
         let conf = confirm("Apakah anda yakin data ini akan dihapus ?");
         if(conf){
             $.ajax({  
-                url: 'http://localhost:8000/kelas/'+id,  
+                url: '{{ route("kelas.index") }}/'+id,  
                 type: 'DELETE',  
                 dataType: 'json', 
                 success: function (data) {
-                    if(data.status == 'fail'){
+                    if(data.status == 0){
                         alert(data.msg);
                     }else{
                         alert('Data berhasil dihapus.');
@@ -193,6 +219,7 @@
 
     function refreshForm() {
         $('#name').val('');
+        $('#kelompok').val('');
     }
 </script>
 @endsection

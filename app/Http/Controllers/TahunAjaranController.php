@@ -29,7 +29,7 @@ class TahunAjaranController extends Controller
         }
 
         $response = [
-            'status' => 'success',
+            'status' => 1,
             'msg' => 'List of Tahun Ajaran',
             'data' => $th_ajarans
         ];
@@ -58,14 +58,14 @@ class TahunAjaranController extends Controller
         //Check Tahun Ajaran
         if (TahunAjaran::where('tahun', $tahun)->first()){
             return response()->json([
-                'status' => 'fail',
+                'status' => 0,
                 'msg' => 'Tahun is already created'
             ], 200);
         }
 
         if($th_ajaran->save()) {
             $response = [
-                'status' => 'success',
+                'status' => 1,
                 'msg' => 'Tahun Ajaran created',
                 'th_ajaran' => $th_ajaran,
                 'link' => 'api/v1/th-ajaran',
@@ -76,7 +76,7 @@ class TahunAjaranController extends Controller
         }
 
         $response = [
-            'status' => 'fail',
+            'status' => 2,
             'msg' => 'An Error occured'
         ];
 
@@ -93,7 +93,7 @@ class TahunAjaranController extends Controller
     {
         $th_ajaran = TahunAjaran::find($id);
         if($th_ajaran == '') {
-            return response()->json(['status' => 'fail','msg' => 'Tahun ajaran not found'], 200);
+            return response()->json(['status' => 0,'msg' => 'Tahun ajaran not found'], 200);
         } else {
             $th_ajaran->update = [
                 'link' => 'api/v1/th-ajaran/' . $th_ajaran->id,
@@ -102,7 +102,7 @@ class TahunAjaranController extends Controller
         }
 
         $response = [
-            'status' => 'success',
+            'status' => 1,
             'msg' => 'Detail Tahun Ajaran',
             'data' => $th_ajaran
         ];
@@ -127,20 +127,20 @@ class TahunAjaranController extends Controller
         $th_ajaran = TahunAjaran::find($id);
         
         if($th_ajaran == '') {
-            return response()->json(['status' => 'fail','msg' => 'Tahun ajaran not found'], 200);
+            return response()->json(['status' => 0,'msg' => 'Tahun ajaran not found'], 200);
         } else {
             $th_ajaran->tahun = $tahun;
         }
 
         if(!$th_ajaran->update()) {
             return response()->json([
-                'status' => 'fail',
+                'status' => 2,
                 'msg' => 'Error during update'
             ]);
         }
 
         $response = [
-            'status' => 'success',
+            'status' => 1,
             'msg' => 'Tahun Ajaran updated',
             'th_ajaran' => $th_ajaran
         ];
@@ -159,18 +159,18 @@ class TahunAjaranController extends Controller
         $th_ajaran = TahunAjaran::find($id);
         
         if($th_ajaran == '') {
-            return response()->json(['status' => 'fail','msg' => 'Tahun ajaran not found'], 200);
+            return response()->json(['status' => 0,'msg' => 'Tahun ajaran not found'], 200);
         }
 
         if(!$th_ajaran->delete()) {
             return response()->json([
-                'status' => 'fail',
+                'status' => 0,
                 'msg' => 'Delete failed'
             ]);
         }
 
         $response = [
-            'status' => 'success',
+            'status' => 1,
             'msg' => 'Tahun Ajaran deleted',
             'create' => [
                 'link' => 'api/v1/th-ajaran',

@@ -30,7 +30,7 @@ class PetugasController extends Controller
         }
 
         $response = [
-            'status' => 'success',
+            'status' => 1,
             'msg' => 'List of Petugas',
             'users' => $users
         ];
@@ -71,7 +71,7 @@ class PetugasController extends Controller
         //Check User
         if (User::where('username', $username)->first()){
             return response()->json([
-                'status' => 'fail',
+                'status' => 0,
                 'msg' => 'Username is already taken'
             ], 200);
         } 
@@ -82,13 +82,13 @@ class PetugasController extends Controller
             try {
                 if(!$token = JWTAuth::attempt($credentials)) {
                     return response()->json([
-                        'status' => 'fail',
+                        'status' => 0,
                         'msg' => 'Username or Password are incorrect',
                     ]);
                 }
             } catch (JWTAuthException $e) {
                 return response()->json([
-                    'status' => 'fail',
+                    'status' => 0,
                     'msg' => 'failed_to_create_token',
                 ]);
             }
@@ -100,7 +100,7 @@ class PetugasController extends Controller
             ];
 
             $response = [
-                'status' => 'success',
+                'status' => 1,
                 'msg' => 'Petugas created',
                 'user' => $user,
                 'token' => $token
@@ -110,7 +110,7 @@ class PetugasController extends Controller
         }
         
         $response = [
-            'status' => 'fail',
+            'status' => 2,
             'msg' => 'An Error occured'
         ];
 
@@ -127,7 +127,7 @@ class PetugasController extends Controller
     {
         $user = User::find($id);
         if($user == '') {
-            return response()->json(['status' => 'fail','msg' => 'Petugas not found'], 200);
+            return response()->json(['status' => 0,'msg' => 'Petugas not found'], 200);
         } else {
             $user->update = [
                 'link' => 'api/v1/petugas/' . $user->id,
@@ -136,7 +136,7 @@ class PetugasController extends Controller
         }
 
         $response = [
-            'status' => 'success',
+            'status' => 1,
             'msg' => 'Detail petugas',
             'user' => $user
         ];
@@ -166,7 +166,7 @@ class PetugasController extends Controller
         $user = User::find($id);
 
         if($user == '') {
-            return response()->json(['status' => 'fail','msg' => 'Petugas not found'], 200);
+            return response()->json(['status' => 0,'msg' => 'Petugas not found'], 200);
         } else {
             $user->username = $username;
             $user->password = $password;
@@ -175,13 +175,13 @@ class PetugasController extends Controller
 
         if(!$user->update()) {
             return response()->json([
-                'status' => 'fail',
+                'status' => 2,
                 'msg' => 'Error during update'
             ]);
         }
 
         $response = [
-            'status' => 'success',
+            'status' => 1,
             'msg' => 'Petugas updated',
             'user' => $user
         ];
@@ -200,18 +200,18 @@ class PetugasController extends Controller
         $user = User::find($id);
 
         if($user == '') {
-            return response()->json(['status' => 'fail','msg' => 'Petugas not found'], 200);
+            return response()->json(['status' => 0,'msg' => 'Petugas not found'], 200);
         }
 
         if(!$user->delete()) {
             return response()->json([
-                'status' => 'fail',
+                'status' => 0,
                 'msg' => 'Delete failed'
             ]);
         }
 
         $response = [
-            'status' => 'success',
+            'status' => 1,
             'msg' => 'Petugas deleted',
             'create' => [
                 'link' => 'api/v1/petugas',

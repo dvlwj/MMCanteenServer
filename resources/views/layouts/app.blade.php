@@ -10,9 +10,13 @@
 
     <title>{{ config('app.name', 'MMCanteen') }}|@yield('title')</title>
 
+    <!-- logo -->
+    <link rel="icon" type="image/ico" href="{{ asset('img/logo.png') }}" />
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-select.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -49,6 +53,7 @@
                         @else
                             @if(Auth::user()->role == 'admin')
                                 <li class="{{request()->path() == 'petugas' ? 'active' : ''}}"><a href="{{ route('petugas.index') }}">Petugas</a></li>
+                                <li class="{{request()->path() == 'harga' ? 'active' : ''}}"><a href="{{ route('harga.index') }}">Harga Makan</a></li>
                                 <li class="{{request()->path() == 'kelas' ? 'active' : ''}}"><a href="{{ route('kelas.index') }}">Kelas</a></li>
                                 <li class="{{request()->path() == 'th-ajaran' ? 'active' : ''}}"><a href="{{ route('th-ajaran.index') }}">Tahun Ajaran</a></li>
                             @endif
@@ -85,6 +90,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/jquery-3.3.1.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
     <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script>
     <script>

@@ -18,28 +18,64 @@
                         </div>
                     @endif
                     
+                    <select class="selectpicker" id="sortKelasID" data-size="5">
+                      <option value="">Kelas</option>
+                      @foreach($kelas as $k)
+                      <option value="{{ $k->id }}">{{ $k->name }}</option>
+                      @endforeach
+                    </select>
+                    <select class="selectpicker" id="sortThAjaranID" data-size="5">
+                      <option value="">Tahun Ajaran</option>
+                      @foreach($thAjaran as $t)
+                      <option value="{{ $t->id }}">{{ $t->tahun }}</option>
+                      @endforeach
+                    </select>
+                    <hr>
+                    <select class="selectpicker" id="sortBulan" data-size="5" onchange="getBulan()">
+                      <option value="">Bulan</option>
+                      @foreach($bulan as $a => $b)
+                      <option value="{{ $a+1 }}">{{ $b }}</option>
+                      @endforeach
+                    </select>
+                    <select class="selectpicker" id="sortTahun" data-size="5">
+                      <option value="">Tahun</option>
+                      <option value=""></option>
+                    </select>
+                    <select class="selectpicker" id="sortTime" data-size="5">
+                      <option value="">Waktu</option>
+                      <option value="pagi">Pagi</option>
+                      <option value="siang">Siang</option>
+                    </select>
+                    <hr>
+
                     <table id="absen" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>No</th>
+                                <th>NIS</th>
+                                <th>Nama Siswa</th>
+                                <th>Kelas</th>
+                                <th>Tahun Ajaran</th>
+                                <th>Time</th>
+                                @if(Auth::user()->role == 'admin')
+                                    <th>Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
+                                <td>1</td>
                                 <td>Tiger Nixon</td>
                                 <td>System Architect</td>
                                 <td>Edinburgh</td>
                                 <td>61</td>
                                 <td>2011/04/25</td>
-                                <td>
-                                    <button class="btn btn-warning">Edit</button>
-                                    <button class="btn btn-danger">Delete</button>
-                                </td>
+                                @if(Auth::user()->role == 'admin')
+                                    <td>
+                                        <button class="btn btn-warning">Edit</button>
+                                        <button class="btn btn-danger">Delete</button>
+                                    </td>
+                                @endif
                             </tr>
                         </tbody>
                     </table>
@@ -55,5 +91,9 @@
     $(document).ready(function() {
         $('#absen').DataTable();
     } );
+
+    function getBulan(){
+        console.log($('#sortBulan').val());
+    }
 </script>
 @endsection

@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Petugas</div>
+                <div class="panel-heading">Harga</div>
 
                 <div class="panel-body">
                     @if (session('status'))
@@ -18,17 +18,17 @@
                         </div>
                     @endif
 
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPetugas">
-                      Tambah Petugas +
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addHarga">
+                      Tambah Harga +
                     </button>
                     <hr>
-                    
-                    <table id="petugas" class="table table-striped table-bordered" style="width:100%">
+
+                    <table id="harga" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Username</th>
-                                <th>Role</th>
+                                <th>Kelompok</th>
+                                <th>Harga</th>
                                 @if(Auth::user()->role == 'admin')
                                     <th>Action</th>
                                 @endif
@@ -36,20 +36,14 @@
                         </thead>
                         <tbody>
                             @php $n=1 @endphp
-                            @foreach($petugas as $data)
+                            @foreach($harga as $data)
                             <tr>
                                 <td>{{$n++}}</td>
-                                <td>{{ $data->username }}</td>
-                                <td>
-                                    @if($data->role == 'admin')
-                                    <span class="label label-danger">{{ $data->role }}</span>
-                                    @else
-                                    <span class="label label-primary">{{ $data->role }}</span>
-                                    @endif
-                                </td>
+                                <td>{{ $data->kel_kelas }}</td>
+                                <td>{{ $data->harga }}</td>
                                 @if(Auth::user()->role == 'admin')
                                     <td>
-                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editPetugas" onclick="getData('{{ $data->id }}')">
+                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editHarga" onclick="getData('{{ $data->id }}')">
                                           Edit
                                         </button>
                                         <button class="btn btn-danger" onclick="deleteData('{{ $data->id }}')">Delete</button>
@@ -63,33 +57,26 @@
             </div>
         </div>
     </div>
-    
-    <!-- ADD MODAL -->
-    <div class="modal fade" id="addPetugas" tabindex="-1" role="dialog" aria-labelledby="addPetugasCenterTitle" aria-hidden="true">
+
+    <!-- MODAL ADD -->
+    <div class="modal fade" id="addHarga" tabindex="-1" role="dialog" aria-labelledby="addHargaCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="addPetugasCenterTitle">Form Tambah Data Petugas</h5>
+            <h5 class="modal-title" id="addHargaCenterTitle">Form Tambah Data Harga</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <form id="form_add">
+            <form>
                 <div class="form-group">
-                    <label for="username" class="col-form-label">Username</label>
-                    <input type="text" class="form-control" id="username" placeholder="Username">
+                    <label for="kelKelas" class="col-form-label">Kelompok Kelas</label>
+                    <input type="text" class="form-control" id="kelKelas">
                 </div>
                 <div class="form-group">
-                    <label for="password" class="col-form-label">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password">
-                </div>
-                <div class="form-group">
-                    <label for="role">Role</label>
-                    <select id="role" class="form-control">
-                        <option value="petugas">Petugas</option>
-                        <option value="admin">Admin</option>
-                    </select>
+                    <label for="addHargaMakan" class="col-form-label">Harga</label>
+                    <input type="text" class="form-control" id="addHargaMakan">
                 </div>
             </form>
           </div>
@@ -101,33 +88,26 @@
       </div>
     </div>
 
-    <!-- EDIT MODAL -->
-    <div class="modal fade" id="editPetugas" tabindex="-1" role="dialog" aria-labelledby="editPetugasCenterTitle" aria-hidden="true">
+    <!-- MODAL EDIT -->
+    <div class="modal fade" id="editHarga" tabindex="-1" role="dialog" aria-labelledby="editHargaCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="editPetugasCenterTitle">Form Edit Data Petugas</h5>
+            <h5 class="modal-title" id="editHargaCenterTitle">Form Edit Data Harga</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <form id="form_edit">
-                <input type="hidden" class="form-control" id="editID">
+            <form>
                 <div class="form-group">
-                    <label for="editUsername" class="col-form-label">Username</label>
-                    <input type="text" class="form-control" id="editUsername" placeholder="Username">
+                    <input type="hidden" class="form-control" id="editID">
+                    <label for="editKelKelas" class="col-form-label">Kelompok Kelas</label>
+                    <input type="text" class="form-control" id="editKelKelas">
                 </div>
                 <div class="form-group">
-                    <label for="editPassword" class="col-form-label">Password</label>
-                    <input type="password" class="form-control" id="editPassword" placeholder="Password">
-                </div>
-                <div class="form-group">
-                    <label for="editRole">Role</label>
-                    <select id="editRole" class="form-control">
-                        <option value="petugas">Petugas</option>
-                        <option value="admin">Admin</option>
-                    </select>
+                    <label for="editHargaMakan" class="col-form-label">Harga</label>
+                    <input type="text" class="form-control" id="editHargaMakan">
                 </div>
             </form>
           </div>
@@ -144,30 +124,32 @@
 @section('script')
 <script>
     $(document).ready(function() {
-        $('#petugas').DataTable();
-    });
+        $('#harga').DataTable();
+    } );
 
+    // GET DATA KELAS
     function getData(id) {
-        $.get('{{ route("petugas.index") }}/'+id, function(data) {
-            $('#editUsername').val(data.username);
-            $('#editRole').val(data.role);
+        $.get('{{ route("harga.index") }}/'+id, function(data) {
+            $('#editKelKelas').val(data.kel_kelas);
+            $('#editHargaMakan').val(data.harga);
             $('#editID').val(data.id); 
         });
     }
 
+    // ADD DATA KELAS
     $('#saveAdd').click(function(e) {
         e.preventDefault();
-        if($('#username').val() == '' || $('#password').val() == '') {
-            alert("Username atau Password tidak boleh kosong!");
+        
+        if($('#kelKelas').val() == '' || $('#addHargaMakan').val() == '') {
+            alert("Kelompok Kelas atau Harga Makan tidak boleh kosong!");
         } else {
             $.ajax({  
-                url: '{{ route("petugas.index") }}',  
+                url: '{{ route("harga.index") }}',  
                 type: 'POST',  
                 dataType: 'json',  
                 data: {
-                    username: $('#username').val(),
-                    password: $('#password').val(),
-                    role: $('#role').val()
+                    kel_kelas: $('#kelKelas').val(),
+                    harga: $('#addHargaMakan').val()
                 },  
                 success: function (data) {
                     if(data.status == 0) {
@@ -175,41 +157,42 @@
                     } else {
                         alert('Data berhasil ditambah.');
                         refreshForm();
-                        $("#petugas").load(window.location + " #petugas");
+                        $("#harga").load(window.location + " #harga");
                     }
                 }
             });
         }
     });
 
+    // EDIT DATA KELAS
     $('#saveEdit').click(function(e) {
         e.preventDefault();
 
         $.ajax({  
-            url: '{{ route("petugas.index") }}/'+$('#editID').val(),  
+            url: '{{ route("harga.index") }}/'+$('#editID').val(),  
             type: 'PATCH',  
             dataType: 'json',  
             data: {
-                username: $('#editUsername').val(),
-                password: $('#editPassword').val(),
-                role: $('#editRole').val()
+                kel_kelas: $('#editKelKelas').val(),
+                harga: $('#editHargaMakan').val()
             },  
             success: function (data) {
                 if(data.status == 0){
                     alert(data.msg);
                 }else{
                     alert('Data berhasil diedit.');
-                    $("#petugas").load(window.location + " #petugas");
+                    $("#harga").load(window.location + " #harga");
                 }
             }
         });
     });
 
+    // DELETE DATA KELAS
     function deleteData(id) {
         let conf = confirm("Apakah anda yakin data ini akan dihapus ?");
         if(conf){
             $.ajax({  
-                url: '{{ route("petugas.index") }}/'+id,  
+                url: '{{ route("harga.index") }}/'+id,  
                 type: 'DELETE',  
                 dataType: 'json', 
                 success: function (data) {
@@ -217,7 +200,7 @@
                         alert(data.msg);
                     }else{
                         alert('Data berhasil dihapus.');
-                        $("#petugas").load(window.location + " #petugas");
+                        $("#harga").load(window.location + " #harga");
                     }
                 }
             });
@@ -225,9 +208,8 @@
     }
 
     function refreshForm() {
-        $('#username').val('');
-        $('#password').val('');
-        $('#role').val('petugas');
+        $('#kelKelas').val('');
+        $('#addHargaMakan').val('');
     }
 </script>
 @endsection

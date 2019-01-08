@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\web;
 
-use App\Kelas;
 use App\Harga;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class KelasController extends Controller
+class HargaController extends Controller
 {
     public function __construct(){
         $this->middleware(['auth', 'isAdminWeb']); 
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -20,12 +19,8 @@ class KelasController extends Controller
      */
     public function index()
     {
-        $kelas = Kelas::all();
-        foreach($kelas as $k){
-            $k->kelompok = Harga::whereId($k->harga_id)->first();
-        }
         $harga = Harga::all();
-        return view('kelas', compact('kelas', 'harga'));
+        return view('harga', compact('harga'));
     }
 
     /**
@@ -36,34 +31,34 @@ class KelasController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'harga_id' => 'required'
+        $this->validate($request,[
+            'kel_kelas' => 'required',
+            'harga' => 'required'
         ]);
 
-        $name = $request->input('name');
-        $harga_id = $request->input('harga_id');
+        $kel_kelas = $request->input('kel_kelas');
+        $harga = $request->input('harga');
 
-        $kelas = new Kelas([
-            'name' => $name,
-            'harga_id' => $harga_id
+        $addHarga = New Harga([
+            'kel_kelas' => $kel_kelas,
+            'harga' => $harga
         ]);
 
-        // Kelas check
-        if(Kelas::where('name', $name)->first()) {
+        // kel_kelas check
+        if(Harga::where('kel_kelas', $kel_kelas)->first()) {
             $response = [
                 'status' => 0,
-                'msg' => 'Kelas is already exist',
+                'msg' => 'Kelompok Kelas is already exist',
             ];
 
             return response()->json($response);
         }
 
-        if($kelas->save()) {
+        if($addHarga->save()) {
             $response = [
                 'status' => 1,
-                'msg' => 'Kelas created',
-                'kelas' => $kelas
+                'msg' => 'Harga created',
+                'harga' => $addHarga
             ];
 
             return response()->json($response, 201);
@@ -80,12 +75,12 @@ class KelasController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Kelas  $kelas
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($kela)
+    public function show($id)
     {
-        $data = Kelas::find($kela);
+        $data = Harga::find($id);
         if($data == '') {
             return response()->json(['status' => 0,'msg' => 'Data not found']);
         }else{
@@ -97,28 +92,28 @@ class KelasController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Kelas  $kelas
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $kela)
+    public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'harga_id' => 'required'
+            'kel_kelas' => 'required',
+            'harga' => 'required'
         ]);
         
-        $name = $request->input('name');
-        $harga_id = $request->input('harga_id');
-        $kelas = Kelas::find($kela);
+        $kel_kelas = $request->input('kel_kelas');
+        $harga = $request->input('harga');
+        $editHarga = Harga::find($id);
 
-        if($kelas == '') {
-            return response()->json(['status' => 0,'msg' => 'Kelas not found'], 200);
+        if($editHarga == '') {
+            return response()->json(['status' => 0,'msg' => 'Kelompok Kelas not found'], 200);
         } else {
-            $kelas->name = $name;
-            $kelas->harga_id = $harga_id;
+            $editHarga->kel_kelas = $kel_kelas;
+            $editHarga->harga = $harga;
         }
 
-        if(!$kelas->update()) {
+        if(!$editHarga->update()) {
             return response()->json([
                 'status' => 2,
                 'msg' => 'Error during update'
@@ -127,8 +122,8 @@ class KelasController extends Controller
 
         $response = [
             'status' => 1,
-            'msg' => 'Kelas updated',
-            'kelas' => $kelas
+            'msg' => 'Kelompok Kelas updated',
+            'harga' => $editHarga
         ];
 
         return response()->json($response, 200);
@@ -137,16 +132,16 @@ class KelasController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Kelas  $kelas
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($kela)
+    public function destroy($id)
     {
-        $kelas = Kelas::find($kela);
-        if($kelas == ''){
+        $harga = Harga::find($id);
+        if($harga == ''){
             return response()->json(['status' => 0,'msg' => 'Delete Failed']);
         }else{
-            $kelas->delete();
+            $harga->delete();
             return response()->json(['status' => 1,'msg' => 'Data berhasil dihapus'], 201);
         }
     }
