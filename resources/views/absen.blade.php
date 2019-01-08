@@ -57,6 +57,7 @@
                                 <th>Kelas</th>
                                 <th>Tahun Ajaran</th>
                                 <th>Time</th>
+                                <th>Status</th>
                                 @if(Auth::user()->role == 'admin')
                                     <th>Action</th>
                                 @endif
@@ -65,11 +66,33 @@
                         <tbody>
                             <tr>
                                 <td>1</td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
+                                <td>10923872309</td>
+                                <td>Ari Purwoto</td>
+                                <td>1A</td>
+                                <td>2018</td>
                                 <td>2011/04/25</td>
+                                <td>
+                                  <!-- <span class="label label-success">pagi</span> -->
+                                  <span class="label label-warning">siang</span>
+                                </td>
+                                @if(Auth::user()->role == 'admin')
+                                    <td>
+                                        <button class="btn btn-warning">Edit</button>
+                                        <button class="btn btn-danger">Delete</button>
+                                    </td>
+                                @endif
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>10923872303</td>
+                                <td>Gunawan Handoko </td>
+                                <td>1B</td>
+                                <td>2018</td>
+                                <td>2011/04/26</td>
+                                <td>
+                                  <span class="label label-success">pagi</span>
+                                  <!-- <span class="label label-warning">siang</span> -->
+                                </td>
                                 @if(Auth::user()->role == 'admin')
                                     <td>
                                         <button class="btn btn-warning">Edit</button>

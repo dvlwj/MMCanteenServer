@@ -41,21 +41,21 @@
                                 @if($data->username != 'system')
                                     <td>{{$n++}}</td>
                                     <td>{{ $data->username }}</td>
-                                @endif
-                                <td>
-                                    @if($data->role == 'admin')
-                                    <span class="label label-danger">{{ $data->role }}</span>
-                                    @else
-                                    <span class="label label-primary">{{ $data->role }}</span>
-                                    @endif
-                                </td>
-                                @if(Auth::user()->role == 'admin')
                                     <td>
-                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editPetugas" onclick="getData('{{ $data->id }}')">
-                                          Edit
-                                        </button>
-                                        <button class="btn btn-danger" onclick="deleteData('{{ $data->id }}')">Delete</button>
+                                        @if($data->role == 'admin')
+                                        <span class="label label-danger">{{ $data->role }}</span>
+                                        @else
+                                        <span class="label label-primary">{{ $data->role }}</span>
+                                        @endif
                                     </td>
+                                    @if(Auth::user()->role == 'admin')
+                                        <td>
+                                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editPetugas" onclick="getData('{{ $data->id }}')">
+                                              Edit
+                                            </button>
+                                            <button class="btn btn-danger" onclick="deleteData('{{ $data->id }}')">Delete</button>
+                                        </td>
+                                    @endif
                                 @endif
                             </tr>
                             @endforeach
@@ -165,6 +165,11 @@
             if($('#username').val().length < 5){
                 alert('Username minimal 5 karakter!');
             }
+
+            if($('#password').val().length < 6){
+                alert('Username minimal 6 karakter!');
+            }
+
             $.ajax({  
                 url: '{{ route("petugas.index") }}',  
                 type: 'POST',  
@@ -190,9 +195,13 @@
     $('#saveEdit').click(function(e) {
         e.preventDefault();
 
-        if($('#username').val().length < 5){
+        if($('#editUsername').val().length < 5){
             alert('Username minimal 5 karakter!');
         }
+
+        if($('#editPassword').val().length < 6){
+                alert('Username minimal 6 karakter!');
+            }
 
         $.ajax({  
             url: '{{ route("petugas.index") }}/'+$('#editID').val(),  
