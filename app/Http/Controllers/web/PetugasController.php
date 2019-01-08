@@ -34,7 +34,7 @@ class PetugasController extends Controller
         $this->validate($request, [
             'username' => 'required|min:5',
             'password' => 'required|min:6',
-            'role' => 'required|nullable'
+            'role' => 'required'
         ]);
 
         $username = $request->input('username');

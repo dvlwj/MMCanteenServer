@@ -160,6 +160,9 @@
         if($('#username').val() == '' || $('#password').val() == '') {
             alert("Username atau Password tidak boleh kosong!");
         } else {
+            if($('#username').val().length < 6){
+                alert('Username minimal 6 karakter!');
+            }
             $.ajax({  
                 url: '{{ route("petugas.index") }}',  
                 type: 'POST',  
