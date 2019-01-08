@@ -26,10 +26,10 @@
                     <table id="thAjaran" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Tahun Ajaran</th>
+                                <th class="text-center">No</th>
+                                <th class="text-center">Tahun Ajaran</th>
                                 @if(Auth::user()->role == 'admin')
-                                    <th>Action</th>
+                                    <th class="text-center">Action</th>
                                 @endif
                             </tr>
                         </thead>
@@ -37,11 +37,11 @@
                             @php $n=1 @endphp
                             @foreach($thAjaran as $data)
                             <tr>
-                                <td>{{$n++}}</td>
-                                <td>{{ $data->tahun }}</td>
+                                <td class="text-center">{{$n++}}</td>
+                                <td class="text-center">{{ $data->tahun }}</td>
                                 @if(Auth::user()->role == 'admin')
-                                    <td>
-                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editTahunAjaran" onclick="getData('{{ $data->id }}')">
+                                    <td class="text-center">
+                                        <button class="btn btn-warning" data-toggle="modal" data-target="#editTahunAjaran" onclick="getData('{{ $data->id }}')">
                                           Edit
                                         </button>
                                         <button class="btn btn-danger" onclick="deleteData('{{ $data->id }}')">Delete</button>
@@ -182,7 +182,7 @@ $(document).ready(function() {
 
 // DELETE DATA KELAS
     function deleteData(id) {
-        let conf = confirm("Apakah anda yakin data ini akan dihapus ?");
+        let conf = confirm("Jika data ini dihapus, maka data Siswa yang terhubung dengan data ini akan terhapus. Apakah Anda yakin data ini akan dihapus ?");
         if(conf){
             $.ajax({  
                 url: '{{ route("th-ajaran.index") }}/'+id,  

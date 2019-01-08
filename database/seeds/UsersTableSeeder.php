@@ -12,7 +12,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = ['system','admin', 'petugas'];
+        $users = ['admin', 'petugas'];
         foreach($users as $user){
             DB::table('users')->insert([
                 'username' => $user,
@@ -22,5 +22,13 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => date("Y-m-d H:i:s") 
             ]);
         }
+
+        DB::table('users')->insert([
+            'username' => 'system',
+            'password' => bcrypt('password'),
+            'role' => 'admin',
+            'created_at' => date("Y-m-d H:i:s"),
+            'updated_at' => date("Y-m-d H:i:s") 
+        ]);
     }
 }

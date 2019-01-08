@@ -26,11 +26,11 @@
                     <table id="harga" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Kelompok</th>
-                                <th>Harga</th>
+                                <th class="text-center">No</th>
+                                <th class="text-center">Kelompok</th>
+                                <th class="text-center">Harga</th>
                                 @if(Auth::user()->role == 'admin')
-                                    <th>Action</th>
+                                    <th class="text-center">Action</th>
                                 @endif
                             </tr>
                         </thead>
@@ -38,12 +38,12 @@
                             @php $n=1 @endphp
                             @foreach($harga as $data)
                             <tr>
-                                <td>{{$n++}}</td>
-                                <td>{{ $data->kel_kelas }}</td>
+                                <td class="text-center">{{$n++}}</td>
+                                <td class="text-center">{{ $data->kel_kelas }}</td>
                                 <td>{{ $data->harga }}</td>
                                 @if(Auth::user()->role == 'admin')
-                                    <td>
-                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editHarga" onclick="getData('{{ $data->id }}')">
+                                    <td class="text-center">
+                                        <button class="btn btn-warning" data-toggle="modal" data-target="#editHarga" onclick="getData('{{ $data->id }}')">
                                           Edit
                                         </button>
                                         <button class="btn btn-danger" onclick="deleteData('{{ $data->id }}')">Delete</button>
@@ -202,7 +202,7 @@
 
     // DELETE DATA KELAS
     function deleteData(id) {
-        let conf = confirm("Jika anda menghapus data ini, maka data kelas dan siswa yang terhubung dengan kelompok harga ini akan terhapus. Apakah anda yakin data ini akan dihapus ?");
+        let conf = confirm("Jika anda menghapus data ini, maka data Kelas dan Siswa yang terhubung dengan kelompok harga ini akan terhapus. Apakah Anda yakin data ini akan dihapus ?");
         if(conf){
             $.ajax({  
                 url: '{{ route("harga.index") }}/'+id,  

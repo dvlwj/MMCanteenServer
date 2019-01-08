@@ -26,12 +26,12 @@
                     <table id="kelas" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Kelas</th>
-                                <th>Kelompok</th>
-                                <th>Harga</th>
+                                <th class="text-center">No</th>
+                                <th class="text-center">Kelas</th>
+                                <th class="text-center">Kelompok</th>
+                                <th class="text-center">Harga</th>
                                 @if(Auth::user()->role == 'admin')
-                                    <th>Action</th>
+                                    <th class="text-center">Action</th>
                                 @endif
                             </tr>
                         </thead>
@@ -39,13 +39,13 @@
                             @php $n=1 @endphp
                             @foreach($kelas as $data)
                             <tr>
-                                <td>{{$n++}}</td>
-                                <td>{{ $data->name }}</td>
-                                <td>{{ $data->kelompok->kel_kelas}}</td>
+                                <td class="text-center">{{$n++}}</td>
+                                <td class="text-center">{{ $data->name }}</td>
+                                <td class="text-center">{{ $data->kelompok->kel_kelas}}</td>
                                 <td>{{ $data->kelompok->harga}}</td>
                                 @if(Auth::user()->role == 'admin')
-                                    <td>
-                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editKelas" onclick="getData('{{ $data->id }}')">
+                                    <td class="text-center">
+                                        <button class="btn btn-warning" data-toggle="modal" data-target="#editKelas" onclick="getData('{{ $data->id }}')">
                                           Edit
                                         </button>
                                         <button class="btn btn-danger" onclick="deleteData('{{ $data->id }}')">Delete</button>
@@ -206,7 +206,7 @@
 
     // DELETE DATA KELAS
     function deleteData(id) {
-        let conf = confirm("Apakah anda yakin data ini akan dihapus ?");
+        let conf = confirm("Jika data ini dihapus, maka data Siswa yang terhubung dengan data ini akan terhapus. Apakah Anda yakin data ini akan dihapus ?");
         if(conf){
             $.ajax({  
                 url: '{{ route("kelas.index") }}/'+id,  

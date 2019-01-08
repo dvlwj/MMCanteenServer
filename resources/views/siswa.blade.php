@@ -41,14 +41,14 @@
                     <table id="siswa" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>NIS</th>
-                                <th>Nama Siswa</th>
-                                <th>Kelas</th>
-                                <th>Tahun Ajaran</th>
-                                <th>Status</th>
+                                <th class="text-center">No</th>
+                                <th class="text-center">NIS</th>
+                                <th class="text-center">Nama Siswa</th>
+                                <th class="text-center">Kelas</th>
+                                <th class="text-center">Tahun Ajaran</th>
+                                <th class="text-center">Status</th>
                                 @if(Auth::user()->role == 'admin')
-                                    <th>Action</th>
+                                    <th class="text-center">Action</th>
                                 @endif
                             </tr>
                         </thead>
@@ -56,12 +56,12 @@
                             @php $n=1 @endphp
                             @foreach($siswa as $data)
                             <tr>
-                                <td>{{$n++}}</td>
+                                <td class="text-center">{{$n++}}</td>
                                 <td>{{ $data->nis }}</td>
                                 <td>{{ $data->name }}</td>
-                                <td>{{ $data->kelas_name->name }}</td>
-                                <td>{{ $data->th_ajaran_name->tahun }}</td>
-                                <td>
+                                <td class="text-center">{{ $data->kelas_name->name }}</td>
+                                <td class="text-center">{{ $data->th_ajaran_name->tahun }}</td>
+                                <td class="text-center">
                                     @if($data->status == 'enable')
                                     <span class="label label-success">{{ $data->status }}</span>
                                     @else
@@ -69,11 +69,11 @@
                                     @endif
                                 </td>
                                 @if(Auth::user()->role == 'admin')
-                                    <td>
+                                    <td class="text-center">
                                         <a href="{{ route('siswa.qrcode', ['id' => $data->id]) }}" type="button" class="btn btn-info">
                                           QR Code
                                         </a>
-                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editSiswa" onclick="getData('{{ $data->id }}')">
+                                        <button class="btn btn-warning" data-toggle="modal" data-target="#editSiswa" onclick="getData('{{ $data->id }}')">
                                           Edit
                                         </button>
                                         <button class="btn btn-danger" onclick="deleteData('{{ $data->id }}')">Delete</button>

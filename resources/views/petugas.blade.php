@@ -26,11 +26,11 @@
                     <table id="petugas" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Username</th>
-                                <th>Role</th>
+                                <th class="text-center">No</th>
+                                <th class="text-center">Username</th>
+                                <th class="text-center">Role</th>
                                 @if(Auth::user()->role == 'admin')
-                                    <th>Action</th>
+                                    <th class="text-center">Action</th>
                                 @endif
                             </tr>
                         </thead>
@@ -39,9 +39,9 @@
                             @foreach($petugas as $data)
                             <tr>
                                 @if($data->username != 'system')
-                                    <td>{{$n++}}</td>
+                                    <td class="text-center">{{$n++}}</td>
                                     <td>{{ $data->username }}</td>
-                                    <td>
+                                    <td class="text-center">
                                         @if($data->role == 'admin')
                                         <span class="label label-danger">{{ $data->role }}</span>
                                         @else
@@ -49,9 +49,11 @@
                                         @endif
                                     </td>
                                     @if(Auth::user()->role == 'admin')
-                                        <td>
-                                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editPetugas" onclick="getData('{{ $data->id }}')">
-                                              Edit
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editPetugas" onclick="getData('{{ $data->id }}')">Change Username</button>
+                                            <button class="btn btn-info" onclick="changeRole('{{ $data->id }}','{{ $data->role }}')">Change Role</button>
+                                            <button class="btn btn-warning" onclick="resetPassword('{{ $data->id }}')">
+                                              Reset Password
                                             </button>
                                             <button class="btn btn-danger" onclick="deleteData('{{ $data->id }}')">Delete</button>
                                         </td>
@@ -83,10 +85,6 @@
                     <input type="text" class="form-control" id="username" placeholder="Username">
                 </div>
                 <div class="form-group">
-                    <label for="password" class="col-form-label">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password">
-                </div>
-                <div class="form-group">
                     <label for="role">Role</label>
                     <select id="role" class="form-control">
                         <option value="petugas">Petugas</option>
@@ -103,33 +101,22 @@
       </div>
     </div>
 
-    <!-- EDIT MODAL -->
+    <!-- ADD MODAL -->
     <div class="modal fade" id="editPetugas" tabindex="-1" role="dialog" aria-labelledby="editPetugasCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="editPetugasCenterTitle">Form Edit Data Petugas</h5>
+            <h5 class="modal-title" id="EditPetugasCenterTitle">Form Edit Username Petugas</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <form id="form_edit">
-                <input type="hidden" class="form-control" id="editID">
+            <form id="form_add">
                 <div class="form-group">
+                    <input type="hidden" class="form-control" id="editID">
                     <label for="editUsername" class="col-form-label">Username</label>
                     <input type="text" class="form-control" id="editUsername" placeholder="Username">
-                </div>
-                <div class="form-group">
-                    <label for="editPassword" class="col-form-label">Password</label>
-                    <input type="password" class="form-control" id="editPassword" placeholder="Password">
-                </div>
-                <div class="form-group">
-                    <label for="editRole">Role</label>
-                    <select id="editRole" class="form-control">
-                        <option value="petugas">Petugas</option>
-                        <option value="admin">Admin</option>
-                    </select>
                 </div>
             </form>
           </div>
@@ -140,6 +127,7 @@
         </div>
       </div>
     </div>
+
 </div>
 @endsection
 
@@ -156,23 +144,21 @@
         });
     });
 
+    // GET DATA PETUGAS
     function getData(id) {
         $.get('{{ route("petugas.index") }}/'+id, function(data) {
             $('#editUsername').val(data.username);
-            $('#editRole').val(data.role);
             $('#editID').val(data.id); 
         });
     }
 
     $('#saveAdd').click(function(e) {
         e.preventDefault();
-        if($('#username').val() == '' || $('#password').val() == '') {
-            alert("Username atau Password tidak boleh kosong!");
+        if($('#username').val() == '') {
+            alert("Username tidak boleh kosong!");
         } else {
             if($('#username').val().length < 5){
                 alert('Username minimal 5 karakter!');
-            }else if($('#password').val().length < 6){
-                alert('Password minimal 6 karakter!');
             }else{
                 $.ajax({  
                     url: '{{ route("petugas.index") }}',  
@@ -180,7 +166,6 @@
                     dataType: 'json',  
                     data: {
                         username: $('#username').val(),
-                        password: $('#password').val(),
                         role: $('#role').val()
                     },  
                     success: function (data) {
@@ -197,37 +182,74 @@
         }
     });
 
+    // EDIT DATA PETUGAS
     $('#saveEdit').click(function(e) {
         e.preventDefault();
 
-        if($('#editUsername').val().length < 5){
-            alert('Username minimal 5 karakter!');
-        }else if($('#editPassword').val() != "" && $('#editPassword').val().length < 6){
-            alert('Password minimal 6 karakter!');
-        }else{
-            $.ajax({  
-                url: '{{ route("petugas.index") }}/'+$('#editID').val(),  
-                type: 'PATCH',  
-                dataType: 'json',  
-                data: {
-                    username: $('#editUsername').val(),
-                    password: $('#editPassword').val(),
-                    role: $('#editRole').val()
-                },  
-                success: function (data) {
-                    if(data.status == 0){
-                        alert(data.msg);
+        $.ajax({  
+            url: '{{ route("petugas.index") }}/'+$('#editID').val(),  
+            type: 'PATCH',  
+            dataType: 'json',  
+            data: {
+                username: $('#editUsername').val()
+            },  
+            success: function (data) {
+                if(data.status == 0){
+                    alert(data.msg);
+                }else{
+                    alert('Data berhasil diedit.');
+                    $("#petugas").load(window.location + " #petugas");
+                }
+            }
+        });
+    });
+
+    function resetPassword(id){
+        $.ajax({  
+            url: '{{ route("petugas.index") }}/'+id,  
+            type: 'PATCH',  
+            dataType: 'json',  
+            data: {
+                reset: true
+            },  
+            success: function (data) {
+                if(data.status == 0){
+                    alert(data.msg);
+                }else{
+                    alert('Password berhasil direset.');
+                    $("#petugas").load(window.location + " #petugas");
+                }
+            }
+        });
+    }
+
+    function changeRole(id, roleName){
+        $.ajax({  
+            url: '{{ route("petugas.index") }}/'+id,  
+            type: 'PATCH',  
+            dataType: 'json',  
+            data: {
+                role: roleName
+            },  
+            success: function (data) {
+                if(data.status == 0){
+                    alert(data.msg);
+                }else{
+                    alert('Role berhasil diganti.');
+                    window.location.reload();
+                    let userRole = '{{Auth::user()->role}}';
+                    if( userRole == 'petugas'){
+                        window.location.href='{{ route("home") }}';
                     }else{
-                        alert('Data berhasil diedit.');
                         $("#petugas").load(window.location + " #petugas");
                     }
                 }
-            });
-        }
-    });
+            }
+        });
+    }
 
     function deleteData(id) {
-        let conf = confirm("Apakah anda yakin data ini akan dihapus ?");
+        let conf = confirm("Jika data Petugas dihapus, maka data di Absen yang terhubung akan terhapus. Apakah Anda yakin data ini akan dihapus ?");
         if(conf){
             $.ajax({  
                 url: '{{ route("petugas.index") }}/'+id,  
@@ -247,7 +269,6 @@
 
     function refreshForm() {
         $('#username').val('');
-        $('#password').val('');
         $('#role').val('petugas');
     }
 </script>
