@@ -38,8 +38,10 @@
                             @php $n=1 @endphp
                             @foreach($petugas as $data)
                             <tr>
-                                <td>{{$n++}}</td>
-                                <td>{{ $data->username }}</td>
+                                @if($data->username != 'system')
+                                    <td>{{$n++}}</td>
+                                    <td>{{ $data->username }}</td>
+                                @endif
                                 <td>
                                     @if($data->role == 'admin')
                                     <span class="label label-danger">{{ $data->role }}</span>
@@ -160,8 +162,8 @@
         if($('#username').val() == '' || $('#password').val() == '') {
             alert("Username atau Password tidak boleh kosong!");
         } else {
-            if($('#username').val().length < 6){
-                alert('Username minimal 6 karakter!');
+            if($('#username').val().length < 5){
+                alert('Username minimal 5 karakter!');
             }
             $.ajax({  
                 url: '{{ route("petugas.index") }}',  
@@ -187,6 +189,10 @@
 
     $('#saveEdit').click(function(e) {
         e.preventDefault();
+
+        if($('#username').val().length < 5){
+            alert('Username minimal 5 karakter!');
+        }
 
         $.ajax({  
             url: '{{ route("petugas.index") }}/'+$('#editID').val(),  
