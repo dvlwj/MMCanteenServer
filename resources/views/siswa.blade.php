@@ -195,13 +195,18 @@
 <script>
     $(document).ready(function() {
         $('#siswa').DataTable();
+    });
 
-        $(window).keydown(function(event){
-            if(event.keyCode == 13) {
-                event.preventDefault();
-                return false;
-            }
-        });
+    $('#addSiswa').bind('keydown', function(e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+        }
+    });
+
+    $('#editSiswa').bind('keydown', function(e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+        }
     });
 
     function getData(id) {

@@ -125,13 +125,18 @@
 <script>
     $(document).ready(function() {
         $('#harga').DataTable();
+    });
 
-        $(window).keydown(function(event){
-            if(event.keyCode == 13) {
-                event.preventDefault();
-                return false;
-            }
-        });
+    $('#addHarga').bind('keydown', function(e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+        }
+    });
+
+    $('#editHarga').bind('keydown', function(e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+        }
     });
 
     // GET DATA KELAS

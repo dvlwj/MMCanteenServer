@@ -113,16 +113,21 @@
 
 @section('script')
 <script>
-$(document).ready(function() {
-    $('#thAjaran').DataTable();
+    $(document).ready(function() {
+        $('#thAjaran').DataTable();
+    });
 
-    $(window).keydown(function(event){
-        if(event.keyCode == 13) {
-            event.preventDefault();
-            return false;
+    $('#addTahunAjaran').bind('keydown', function(e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
         }
     });
-});
+
+    $('#editTahunAjaran').bind('keydown', function(e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+        }
+    });
 
 // GET DATA TAHUN AJARAN
     function getData(id) {

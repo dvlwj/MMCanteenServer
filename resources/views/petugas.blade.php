@@ -135,13 +135,6 @@
 <script>
     $(document).ready(function() {
         $('#petugas').DataTable();
-
-        $(window).keydown(function(event){
-            if(event.keyCode == 13) {
-                event.preventDefault();
-                return false;
-            }
-        });
     });
 
     // GET DATA PETUGAS
@@ -151,6 +144,18 @@
             $('#editID').val(data.id); 
         });
     }
+
+    $('#addPetugas').bind('keydown', function(e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+        }
+    });
+
+    $('#editPetugas').bind('keydown', function(e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+        }
+    });
 
     $('#saveAdd').click(function(e) {
         e.preventDefault();
