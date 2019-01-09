@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 class PetugasController extends Controller
 {
     public function __construct(){
-        $this->middleware(['auth', 'isAdminWeb']); 
+        $this->middleware(['auth', 'isAdminWeb'])->except('update'); 
     }
 
     /**
@@ -136,6 +136,24 @@ class PetugasController extends Controller
                 $user->username = $user->username;
             }else{
                 $user->username = $username;
+            }
+
+            if($user->update()){
+                return response()->json($user, 201);
+            }else{
+                return response()->json(['status' => 0,'msg' => 'Update Failed']);
+            }
+        }
+
+        $password = $request->input('password');
+
+        if($password != ''){
+            $user = User::find($petuga);
+
+            if($password == $user->password){
+                $user->password = $user->password;
+            }else{
+                $user->password = bcrypt($password);
             }
 
             if($user->update()){
