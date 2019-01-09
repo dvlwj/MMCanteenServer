@@ -61,34 +61,34 @@
                                 <th class="text-center">Tahun Ajaran</th>
                                 <th class="text-center">Waktu</th>
                                 <th class="text-center">Status</th>
-                                @if(Auth::user()->role == 'admin')
+                                <!-- @if(Auth::user()->role == 'admin')
                                     <th class="text-center">Action</th>
-                                @endif
+                                @endif -->
                             </tr>
                         </thead>
                         <tbody>
                           @php $n=1 @endphp
                           @foreach($absen as $data)
                             <tr>
-                                <td>{{$n++}}</td>
-                                <td>{{ $data->siswa->nis }}</td>
+                                <td class="text-center">{{$n++}}</td>
+                                <td class="text-center">{{ $data->siswa->nis }}</td>
                                 <td>{{ $data->siswa->name }}</td>
-                                <td>{{ $data->kelas->name }}</td>
-                                <td>{{ $data->thAjaran->tahun }}</td>
-                                <td>{{ $data->time }}</td>
-                                <td>
+                                <td class="text-center">{{ $data->kelas->name }}</td>
+                                <td class="text-center">{{ $data->thAjaran->tahun }}</td>
+                                <td class="text-center">{{ $data->time }}</td>
+                                <td class="text-center">
                                   @if($data->status == 'pagi')
                                     <span class="label label-success">pagi</span>
                                   @else
                                     <span class="label label-warning">siang</span>
                                   @endif
                                 </td>
-                                @if(Auth::user()->role == 'admin')
+                                <!-- @if(Auth::user()->role == 'admin')
                                     <td>
                                         <button class="btn btn-warning">Edit</button>
                                         <button class="btn btn-danger">Delete</button>
                                     </td>
-                                @endif
+                                @endif -->
                             </tr>
                           @endforeach
                         </tbody>
