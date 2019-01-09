@@ -28,8 +28,8 @@ class AbsenController extends Controller
         $thAjaran = TahunAjaran::all();
 
         foreach($absen as $a){
-            $a->siswa = Siswa::find($a->siswa_id)->first();
-            $a->kelas = Kelas::find($a->siswa->kelas_id)->first();
+            $a->siswa = Siswa::where('id',$a->siswa_id)->first();
+            $a->kelas = Kelas::where('id',$a->siswa->kelas_id)->first();
             $a->thAjaran = TahunAjaran::find($a->siswa->th_ajaran_id)->first();
         }
 

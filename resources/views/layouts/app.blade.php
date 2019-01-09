@@ -132,7 +132,10 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
         });
-
+    </script>
+    
+    @if(Auth::user())
+    <script>
         $('#changePassword').bind('keydown', function(e) {
             if (e.keyCode == 13) {
                 e.preventDefault();
@@ -165,6 +168,8 @@
             }
         }
     </script>
+    @endif
+    
     @yield('script')
 </body>
 </html>

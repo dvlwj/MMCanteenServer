@@ -59,7 +59,7 @@
                                 <th class="text-center">Nama Siswa</th>
                                 <th class="text-center">Kelas</th>
                                 <th class="text-center">Tahun Ajaran</th>
-                                <th class="text-center">Time</th>
+                                <th class="text-center">Waktu</th>
                                 <th class="text-center">Status</th>
                                 @if(Auth::user()->role == 'admin')
                                     <th class="text-center">Action</th>
