@@ -31,7 +31,7 @@
                       @endforeach
                     </select>
                     <hr>
-                    <select class="selectpicker" id="sortBulan" data-size="5" onchange="getBulan()">
+                    <select class="selectpicker" id="sortBulan" data-size="5">
                       <option value="">Bulan</option>
                       @foreach($bulan as $a => $b)
                       <option value="{{ $a+1 }}">{{ $b }}</option>

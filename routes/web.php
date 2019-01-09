@@ -18,7 +18,7 @@ Route::resource('harga', 'web\HargaController')->except(['edit', 'create']);
 Route::resource('kelas', 'web\KelasController')->except(['edit', 'create']);
 
 //Route Absen
-Route::resource('absen', 'web\AbsenController')->except(['edit', 'create']);
+Route::get('absen', 'web\AbsenController@index')->name('absen.index');
 
 //Route Siswa
 Route::resource('siswa', 'web\SiswaController')->except(['edit', 'create']);
