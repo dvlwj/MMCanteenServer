@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 class PetugasController extends Controller
 {
     public function __construct(){
-        $this->middleware(['auth', 'isAdminWeb']); 
+        $this->middleware(['auth', 'isAdminWeb'])->except('update'); 
     }
 
     /**
@@ -33,17 +33,15 @@ class PetugasController extends Controller
     {
         $this->validate($request, [
             'username' => 'required|min:5',
-            'password' => 'required|min:6',
-            'role' => 'required|nullable'
+            'role' => 'required'
         ]);
 
         $username = $request->input('username');
-        $password = $request->input('password');
         $role = $request->input('role');
         
         $user = new User([
             'username' => $username,
-            'password' => bcrypt($password),
+            'password' => bcrypt("password"),
             'role' => $role
         ]);
 
@@ -98,32 +96,71 @@ class PetugasController extends Controller
      */
     public function update(Request $request, $petuga)
     {   
-        $username = $request->input('username');
-        $password = $request->input('password');
+        $reset = $request->input('reset');
+
+        if($reset == true){
+            $user = User::find($petuga);
+            $user->password = bcrypt("password");
+
+            if($user->update()){
+                return response()->json($user, 201);
+            }else{
+                return response()->json(['status' => 0,'msg' => 'Update Failed']);
+            }
+        }
+
         $role = $request->input('role');
 
-        $user = User::find($petuga);
-        if($password == '') {
-            $user->password = $user->password;
-        }else{
-            $user->password = bcrypt($password);
+        if($role != ''){
+            $user = User::find($petuga);
+
+            if($role == 'admin'){
+                $user->role = 'petugas';
+            }else{
+                $user->role = 'admin';
+            }
+
+            if($user->update()){
+                return response()->json($user, 201);
+            }else{
+                return response()->json(['status' => 0,'msg' => 'Update Failed']);
+            }
         }
 
-        if($username == $user->username){
-            $user->username = $username;
-        }elseif(User::where('username', $username)->first()) {
-            return response()->json([
-                'status' => 0,
-                'msg' => 'Username is already taken'
-            ]);
+        $username = $request->input('username');
+
+        if($username != ''){
+            $user = User::find($petuga);
+
+            if($username == $user->username){
+                $user->username = $user->username;
+            }else{
+                $user->username = $username;
+            }
+
+            if($user->update()){
+                return response()->json($user, 201);
+            }else{
+                return response()->json(['status' => 0,'msg' => 'Update Failed']);
+            }
         }
 
-        $user->role = $role;
+        $password = $request->input('password');
 
-        if($user->update()){
-            return response()->json($user, 201);
-        }else{
-            return response()->json(['status' => 0,'msg' => 'Update Failed']);
+        if($password != ''){
+            $user = User::find($petuga);
+
+            if($password == $user->password){
+                $user->password = $user->password;
+            }else{
+                $user->password = bcrypt($password);
+            }
+
+            if($user->update()){
+                return response()->json($user, 201);
+            }else{
+                return response()->json(['status' => 0,'msg' => 'Update Failed']);
+            }
         }
     }
 

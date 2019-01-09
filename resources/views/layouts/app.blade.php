@@ -76,6 +76,11 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
+                                    @if(Auth::user())
+                                    <li>
+                                        <a href="#" data-toggle="modal" data-target="#changePassword">Change Password</a>
+                                    </li>
+                                    @endif
                                 </ul>
                             </li>
                         @endguest
@@ -85,6 +90,34 @@
         </nav>
 
         @yield('content')
+        
+        @if(Auth::user())
+        <!-- MODAL EDIT -->
+        <div class="modal fade" id="changePassword" tabindex="-1" role="dialog" aria-labelledby="changePasswordCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="changePasswordCenterTitle">Form Change Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="newPassword" class="col-form-label">New Password</label>
+                        <input type="password" class="form-control" id="newPassword">
+                    </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="changePassword('{{ Auth::user()->id }}')">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        @endif
     </div>
 
     <!-- Scripts -->
@@ -100,6 +133,43 @@
           }
         });
     </script>
+    
+    @if(Auth::user())
+    <script>
+        $('#changePassword').bind('keydown', function(e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+            }
+        });
+
+        // GET DATA PETUGAS
+        function changePassword(id) {
+            if($('#newPassword').val() == ''){
+                alert('Password tidak boleh kosong');
+            }else if($('#newPassword').val().length < 6){
+                alert('Password tidak boleh kurang dari 6 karakter!');
+            }else{
+                $.ajax({  
+                    url: '{{ route("petugas.index") }}/'+id,  
+                    type: 'PATCH',  
+                    dataType: 'json',  
+                    data: {
+                        password: $('#newPassword').val()
+                    },  
+                    success: function (data) {
+                        if(data.status == 0){
+                            alert(data.msg);
+                        }else{
+                            alert('Password berhasil diubah.');
+                            window.location.href="{{ route('home') }}";
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+    @endif
+    
     @yield('script')
 </body>
 </html>

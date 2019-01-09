@@ -26,11 +26,11 @@
                     <table id="harga" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Kelompok</th>
-                                <th>Harga</th>
+                                <th class="text-center">No</th>
+                                <th class="text-center">Kelompok</th>
+                                <th class="text-center">Harga</th>
                                 @if(Auth::user()->role == 'admin')
-                                    <th>Action</th>
+                                    <th class="text-center">Action</th>
                                 @endif
                             </tr>
                         </thead>
@@ -38,12 +38,12 @@
                             @php $n=1 @endphp
                             @foreach($harga as $data)
                             <tr>
-                                <td>{{$n++}}</td>
-                                <td>{{ $data->kel_kelas }}</td>
+                                <td class="text-center">{{$n++}}</td>
+                                <td class="text-center">{{ $data->kel_kelas }}</td>
                                 <td>{{ $data->harga }}</td>
                                 @if(Auth::user()->role == 'admin')
-                                    <td>
-                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editHarga" onclick="getData('{{ $data->id }}')">
+                                    <td class="text-center">
+                                        <button class="btn btn-warning" data-toggle="modal" data-target="#editHarga" onclick="getData('{{ $data->id }}')">
                                           Edit
                                         </button>
                                         <button class="btn btn-danger" onclick="deleteData('{{ $data->id }}')">Delete</button>
@@ -76,7 +76,7 @@
                 </div>
                 <div class="form-group">
                     <label for="addHargaMakan" class="col-form-label">Harga</label>
-                    <input type="text" class="form-control" id="addHargaMakan">
+                    <input type="number" class="form-control" id="addHargaMakan">
                 </div>
             </form>
           </div>
@@ -107,7 +107,7 @@
                 </div>
                 <div class="form-group">
                     <label for="editHargaMakan" class="col-form-label">Harga</label>
-                    <input type="text" class="form-control" id="editHargaMakan">
+                    <input type="number" class="form-control" id="editHargaMakan">
                 </div>
             </form>
           </div>
@@ -125,7 +125,19 @@
 <script>
     $(document).ready(function() {
         $('#harga').DataTable();
-    } );
+    });
+
+    $('#addHarga').bind('keydown', function(e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+        }
+    });
+
+    $('#editHarga').bind('keydown', function(e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+        }
+    });
 
     // GET DATA KELAS
     function getData(id) {
@@ -142,6 +154,8 @@
         
         if($('#kelKelas').val() == '' || $('#addHargaMakan').val() == '') {
             alert("Kelompok Kelas atau Harga Makan tidak boleh kosong!");
+        } else if ($('#addHargaMakan').val() != '' && isNaN($('#addHargaMakan').val())){
+            alert("Harga harus berupa angka!");
         } else {
             $.ajax({  
                 url: '{{ route("harga.index") }}',  
@@ -168,28 +182,32 @@
     $('#saveEdit').click(function(e) {
         e.preventDefault();
 
-        $.ajax({  
-            url: '{{ route("harga.index") }}/'+$('#editID').val(),  
-            type: 'PATCH',  
-            dataType: 'json',  
-            data: {
-                kel_kelas: $('#editKelKelas').val(),
-                harga: $('#editHargaMakan').val()
-            },  
-            success: function (data) {
-                if(data.status == 0){
-                    alert(data.msg);
-                }else{
-                    alert('Data berhasil diedit.');
-                    $("#harga").load(window.location + " #harga");
+        if($('#editHargaMakan').val() != '' && isNaN($('#editHargaMakan').val())){
+            alert("Harga harus berupa angka!");
+        } else {
+            $.ajax({  
+                url: '{{ route("harga.index") }}/'+$('#editID').val(),  
+                type: 'PATCH',  
+                dataType: 'json',  
+                data: {
+                    kel_kelas: $('#editKelKelas').val(),
+                    harga: $('#editHargaMakan').val()
+                },  
+                success: function (data) {
+                    if(data.status == 0){
+                        alert(data.msg);
+                    }else{
+                        alert('Data berhasil diedit.');
+                        $("#harga").load(window.location + " #harga");
+                    }
                 }
-            }
-        });
+            });
+        }
     });
 
     // DELETE DATA KELAS
     function deleteData(id) {
-        let conf = confirm("Apakah anda yakin data ini akan dihapus ?");
+        let conf = confirm("Jika anda menghapus data ini, maka data Kelas dan Siswa yang terhubung dengan kelompok harga ini akan terhapus. Apakah Anda yakin data ini akan dihapus ?");
         if(conf){
             $.ajax({  
                 url: '{{ route("harga.index") }}/'+id,  

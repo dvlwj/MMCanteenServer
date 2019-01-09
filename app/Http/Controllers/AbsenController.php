@@ -58,19 +58,29 @@ class AbsenController extends Controller
         $user = JWTAuth::toUser($request->header('token'));
         $user_id = $user->id;
         $nis = $request->input('nis');
+        $status = $request->input('status');
 
         $siswa = Siswa::where('nis', $nis)->first();
-        $kelas = Kelas::where('id', $siswa->kelas_id)->first();
-        $th_ajaran = TahunAjaran::where('id', $siswa->th_ajaran_id)->first();
-        $time = date('Y-m-d H:i:s');
+        $time = date('Y-m-d');
         
-        $absen = new Absen([
-            'user_id' => $user_id,
-            'siswa_id' => $siswa->id,
-            'kelas' => $kelas->name,
-            'th_ajaran' => $th_ajaran->tahun,
-            'time' => $time
-        ]);
+        //Check Absen
+        $absen = Absen::where('siswa_id',$siswa->id)->where('status',$status)->whereDate('time',$time)->first();
+
+        if($absen != null){
+            $response = [
+                'status' => 0,
+                'msg' => 'Siswa is already present',
+            ];
+
+            return response()->json($response);            
+        }else{
+            $absen = new Absen([
+                'user_id' => $user_id,
+                'siswa_id' => $siswa->id,
+                'time' => $time,
+                'status' => $status
+            ]);
+        }
 
         if ($absen->save()) {
             $response = [

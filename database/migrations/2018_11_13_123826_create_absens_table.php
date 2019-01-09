@@ -15,11 +15,10 @@ class CreateAbsensTable extends Migration
     {
         Schema::create('absens', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('time');
             $table->integer('user_id')->unsigned();
             $table->integer('siswa_id')->unsigned();
-            $table->string('kelas');
-            $table->string('th_ajaran');
+            $table->date('time');
+            $table->enum('status', ['pagi', 'siang']);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
