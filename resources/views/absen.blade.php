@@ -39,7 +39,9 @@
                     </select>
                     <select class="selectpicker" id="sortTahun" data-size="5">
                       <option value="">Tahun</option>
-                      <option value=""></option>
+                      @foreach($absen as $data)
+                      <option value="{{ $data->thAjaran->id }}">{{ $data->thAjaran->tahun }}</option>
+                      @endforeach
                     </select>
                     <select class="selectpicker" id="sortTime" data-size="5">
                       <option value="">Waktu</option>
@@ -52,29 +54,34 @@
                     <table id="absen" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>NIS</th>
-                                <th>Nama Siswa</th>
-                                <th>Kelas</th>
-                                <th>Tahun Ajaran</th>
-                                <th>Time</th>
-                                <th>Status</th>
+                                <th class="text-center">No</th>
+                                <th class="text-center">NIS</th>
+                                <th class="text-center">Nama Siswa</th>
+                                <th class="text-center">Kelas</th>
+                                <th class="text-center">Tahun Ajaran</th>
+                                <th class="text-center">Time</th>
+                                <th class="text-center">Status</th>
                                 @if(Auth::user()->role == 'admin')
-                                    <th>Action</th>
+                                    <th class="text-center">Action</th>
                                 @endif
                             </tr>
                         </thead>
                         <tbody>
+                          @php $n=1 @endphp
+                          @foreach($absen as $data)
                             <tr>
-                                <td>1</td>
-                                <td>10923872309</td>
-                                <td>Ari Purwoto</td>
-                                <td>1A</td>
-                                <td>2018</td>
-                                <td>2011/04/25</td>
+                                <td>{{$n++}}</td>
+                                <td>{{ $data->siswa->nis }}</td>
+                                <td>{{ $data->siswa->name }}</td>
+                                <td>{{ $data->kelas->name }}</td>
+                                <td>{{ $data->thAjaran->tahun }}</td>
+                                <td>{{ $data->time }}</td>
                                 <td>
-                                  <!-- <span class="label label-success">pagi</span> -->
-                                  <span class="label label-warning">siang</span>
+                                  @if($data->status == 'pagi')
+                                    <span class="label label-success">pagi</span>
+                                  @else
+                                    <span class="label label-warning">siang</span>
+                                  @endif
                                 </td>
                                 @if(Auth::user()->role == 'admin')
                                     <td>
@@ -83,24 +90,7 @@
                                     </td>
                                 @endif
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>10923872303</td>
-                                <td>Gunawan Handoko </td>
-                                <td>1B</td>
-                                <td>2018</td>
-                                <td>2011/04/26</td>
-                                <td>
-                                  <span class="label label-success">pagi</span>
-                                  <!-- <span class="label label-warning">siang</span> -->
-                                </td>
-                                @if(Auth::user()->role == 'admin')
-                                    <td>
-                                        <button class="btn btn-warning">Edit</button>
-                                        <button class="btn btn-danger">Delete</button>
-                                    </td>
-                                @endif
-                            </tr>
+                          @endforeach
                         </tbody>
                     </table>
                 </div>

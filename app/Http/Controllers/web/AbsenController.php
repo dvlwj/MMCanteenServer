@@ -4,6 +4,7 @@ namespace App\Http\Controllers\web;
 
 use App\Absen;
 use App\Kelas;
+use App\Siswa;
 use App\TahunAjaran;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,7 +12,7 @@ use App\Http\Controllers\Controller;
 class AbsenController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth'); 
+        $this->middleware(['auth','isAdminWeb'])->except('index'); 
     }
     
     /**
@@ -25,6 +26,13 @@ class AbsenController extends Controller
         $absen = Absen::all();
         $kelas = Kelas::all();
         $thAjaran = TahunAjaran::all();
+
+        foreach($absen as $a){
+            $a->siswa = Siswa::find($a->siswa_id)->first();
+            $a->kelas = Kelas::find($a->siswa->kelas_id)->first();
+            $a->thAjaran = TahunAjaran::find($a->siswa->th_ajaran_id)->first();
+        }
+
         return view('absen', compact(['absen', 'kelas', 'thAjaran', 'bulan']));
     }
 

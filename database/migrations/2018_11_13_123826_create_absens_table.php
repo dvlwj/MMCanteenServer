@@ -18,7 +18,7 @@ class CreateAbsensTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('siswa_id')->unsigned();
             $table->date('time');
-            $table->string('status');
+            $table->enum('status', ['pagi', 'siang']);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
