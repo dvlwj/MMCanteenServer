@@ -23,7 +23,7 @@ class AbsenController extends Controller
     public function index()
     {
         $bulan = array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
-        $absen = Absen::all();
+        $absen = Absen::orderBy('siswa_id', 'asc')->get();
         $kelas = Kelas::all();
         $thAjaran = TahunAjaran::all();
 

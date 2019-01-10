@@ -62,7 +62,6 @@ class AbsenController extends Controller
 
         $siswa = Siswa::where('nis', $nis)->first();
         $time = date('Y-m-d');
-        $ket = 'tidak makan';
         
         //Check Absen
         $absen = Absen::where('siswa_id',$siswa->id)->where('status',$status)->whereDate('time',$time)->first();
@@ -80,7 +79,7 @@ class AbsenController extends Controller
                 'siswa_id' => $siswa->id,
                 'time' => $time,
                 'status' => $status,
-                'keterangan' => $ket
+                'keterangan' => 'tidak makan'
             ]);
         }
 

@@ -62,9 +62,6 @@
                                 <th class="text-center">Waktu</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Keterangan</th>
-                                <!-- @if(Auth::user()->role == 'admin')
-                                    <th class="text-center">Action</th>
-                                @endif -->
                             </tr>
                         </thead>
                         <tbody>
@@ -91,12 +88,6 @@
                                     <span class="label label-danger">Tidak Makan</span>
                                   @endif
                                 </td>
-                                <!-- @if(Auth::user()->role == 'admin')
-                                    <td>
-                                        <button class="btn btn-warning">Edit</button>
-                                        <button class="btn btn-danger">Delete</button>
-                                    </td>
-                                @endif -->
                             </tr>
                           @endforeach
                         </tbody>

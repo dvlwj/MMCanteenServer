@@ -56,7 +56,7 @@ class SiswaController extends Controller
             'name' => $name,
             'kelas_id' => $kelas_id,
             'th_ajaran_id' => $th_ajaran_id,
-            'status' => 'enable'
+            'status' => 'aktif'
         ]);
 
         // Check NIS
