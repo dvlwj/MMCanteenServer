@@ -61,6 +61,7 @@
                                 <th class="text-center">Tahun Ajaran</th>
                                 <th class="text-center">Waktu</th>
                                 <th class="text-center">Status</th>
+                                <th class="text-center">Keterangan</th>
                                 <!-- @if(Auth::user()->role == 'admin')
                                     <th class="text-center">Action</th>
                                 @endif -->
@@ -81,6 +82,13 @@
                                     <span class="label label-success">pagi</span>
                                   @else
                                     <span class="label label-warning">siang</span>
+                                  @endif
+                                </td>
+                                <td class="text-center">
+                                  @if($data->keterangan == 'makan')
+                                    <span class="label label-success">Makan</span>
+                                  @else
+                                    <span class="label label-danger">Tidak Makan</span>
                                   @endif
                                 </td>
                                 <!-- @if(Auth::user()->role == 'admin')

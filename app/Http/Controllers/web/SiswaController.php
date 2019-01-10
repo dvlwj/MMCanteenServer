@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 class SiswaController extends Controller
 {
     public function __construct(){
-        $this->middleware(['auth', 'isAdminWeb'])->except('index'); 
+        $this->middleware('isAdminWeb')->except('index'); 
     }
     
     /**

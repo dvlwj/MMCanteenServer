@@ -12,7 +12,7 @@ class Absen extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'siswa_id', 'time', 'status',
+        'user_id', 'siswa_id', 'time', 'status', 'ket'
     ];
 
     public function users()

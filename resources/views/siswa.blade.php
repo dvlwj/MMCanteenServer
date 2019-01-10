@@ -63,7 +63,7 @@
                                 <td class="text-center">{{ $data->kelas_name->name }}</td>
                                 <td class="text-center">{{ $data->th_ajaran_name->tahun }}</td>
                                 <td class="text-center">
-                                    @if($data->status == 'enable')
+                                    @if($data->status == 'aktif')
                                     <span class="label label-success">{{ $data->status }}</span>
                                     @else
                                     <span class="label label-danger">{{ $data->status }}</span>
@@ -175,8 +175,8 @@
                 <div class="form-group">
                     <label for="editStatus">Status</label>
                     <select id="editStatus" class="form-control">
-                        <option value="enable">enable</option>
-                        <option value="disable">disable</option>
+                        <option value="aktif">Aktif</option>
+                        <option value="non aktif">Non Aktif</option>
                     </select>
                 </div>
             </form>

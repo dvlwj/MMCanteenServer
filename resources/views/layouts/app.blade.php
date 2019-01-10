@@ -65,6 +65,11 @@
                                 </a>
 
                                 <ul class="dropdown-menu">
+                                    @if(Auth::user())
+                                    <li>
+                                        <a href="#" data-toggle="modal" data-target="#changePassword">Change Password</a>
+                                    </li>
+                                    @endif
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
@@ -76,11 +81,6 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
-                                    @if(Auth::user())
-                                    <li>
-                                        <a href="#" data-toggle="modal" data-target="#changePassword">Change Password</a>
-                                    </li>
-                                    @endif
                                 </ul>
                             </li>
                         @endguest
