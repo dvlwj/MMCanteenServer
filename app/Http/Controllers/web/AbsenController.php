@@ -26,6 +26,7 @@ class AbsenController extends Controller
         $absen = Absen::orderBy('siswa_id', 'asc')->get();
         $kelas = Kelas::all();
         $thAjaran = TahunAjaran::all();
+        $tahun = Absen::distinct()->get(['time']);
 
         foreach($absen as $a){
             $a->siswa = Siswa::where('id',$a->siswa_id)->first();
@@ -33,6 +34,6 @@ class AbsenController extends Controller
             $a->thAjaran = TahunAjaran::find($a->siswa->th_ajaran_id)->first();
         }
 
-        return view('absen', compact(['absen', 'kelas', 'thAjaran', 'bulan']));
+        return view('absen', compact(['absen', 'kelas', 'thAjaran', 'bulan', 'tahun']));
     }
 }
