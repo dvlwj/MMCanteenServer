@@ -87,8 +87,7 @@
                                 </td>
                                 @if(Auth::user()->role == 'admin')
                                   <td>
-                                      <button class="btn btn-warning" data-toggle="modal" data-target="#editSiswa">Edit</button>
-                                      <button class="btn btn-danger">Delete</button>
+                                      <button class="btn btn-danger" onclick="deleteData('{{ $data->id }}')">Delete</button>
                                   </td>
                                 @endif
                             </tr>
@@ -110,6 +109,26 @@
 
     function getBulan(){
         console.log($('#sortBulan').val());
+    }
+
+    // DELETE DATA ABSEN
+    function deleteData(id) {
+        let conf = confirm("Apakah anda yakin data ini akan dihapus ?");
+        if(conf){
+            $.ajax({  
+                url: '{{ route("absen.index") }}/'+id,  
+                type: 'DELETE',  
+                dataType: 'json', 
+                success: function (data) {
+                    if(data.status == 0){
+                        alert(data.msg);
+                    }else{
+                        alert('Data berhasil dihapus.');
+                        $("#absen").load(window.location + " #absen");
+                    }
+                }
+            });
+        }
     }
 </script>
 @endsection

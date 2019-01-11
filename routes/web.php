@@ -19,6 +19,7 @@ Route::resource('kelas', 'web\KelasController')->except(['edit', 'create']);
 
 //Route Absen
 Route::get('absen', 'web\AbsenController@index')->name('absen.index');
+Route::delete('absen/{id}', 'web\AbsenController@destroy')->name('absen.destroy')->middleware('auth');
 
 //Route Siswa
 Route::resource('siswa', 'web\SiswaController')->except(['edit', 'create'])->middleware('auth');

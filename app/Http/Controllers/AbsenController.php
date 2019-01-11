@@ -14,11 +14,6 @@ use Illuminate\Support\Facades\DB;
 
 class AbsenController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('jwt.auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -59,29 +54,39 @@ class AbsenController extends Controller
         $user_id = $user->id;
         $nis = $request->input('nis');
         $status = $request->input('status');
-
-        $siswa = Siswa::where('nis', $nis)->first();
         $time = date('Y-m-d');
-        
-        //Check Absen
-        $absen = Absen::where('siswa_id',$siswa->id)->where('status',$status)->whereDate('time',$time)->first();
+        $siswa = Siswa::where('nis', $nis)->where('status', 'aktif')->first();
 
-        if($absen != null){
+        if($siswa == null)
+        {
             $response = [
-                'status' => 0,
-                'msg' => 'Siswa is already present',
-            ];
+                    'status' => 0,
+                    'msg' => 'Status Siswa tidak aktif',
+                ];
 
-            return response()->json($response);            
+                return response()->json($response);  
         }else{
-            $absen = new Absen([
-                'user_id' => $user_id,
-                'siswa_id' => $siswa->id,
-                'time' => $time,
-                'status' => $status,
-                'keterangan' => 'tidak makan'
-            ]);
+            //Check Absen
+            $absen = Absen::where('siswa_id',$siswa->id)->where('status',$status)->whereDate('time',$time)->first();
+
+            if($absen != null){
+                $response = [
+                    'status' => 0,
+                    'msg' => 'Data siswa telah di scan',
+                ];
+
+                return response()->json($response);            
+            }else{
+                $absen = new Absen([
+                    'user_id' => $user_id,
+                    'siswa_id' => $siswa->id,
+                    'time' => $time,
+                    'status' => $status,
+                    'keterangan' => 'tidak makan'
+                ]);
+            }
         }
+        
 
         if ($absen->save()) {
             $response = [

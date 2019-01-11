@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 class AbsenController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth'); 
+        $this->middleware('isAdminWeb')->except('index'); 
     }
     
     /**
@@ -35,5 +35,22 @@ class AbsenController extends Controller
         }
 
         return view('absen', compact(['absen', 'kelas', 'thAjaran', 'bulan', 'tahun']));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Absen  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $data = Absen::find($id);
+        if($data == ''){
+            return response()->json(['status' => 0,'msg' => 'Delete Failed']);
+        }else{
+            $data->delete();
+            return response()->json(['status' => 1,'msg' => 'Data berhasil dihapus'], 201);
+        }
     }
 }
