@@ -16,26 +16,23 @@ class PetugasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
+        $user = JWTAuth::toUser($request->header('token'));
+        $id = $user->id;
+
         $this->validate($request, [
-            'username' => 'required|min:5',
-            'password' => 'required|min:6',
-            'role' => 'required'
+            'password' => 'required|min:6'
         ]);
 
-        $username = $request->input('username');
         $password = $request->input('password');
-        $role = $request->input('role');
         
         $user = User::find($id);
 
         if($user == '') {
             return response()->json(['status' => 0,'msg' => 'Petugas not found'], 200);
         } else {
-            $user->username = $username;
-            $user->password = $password;
-            $user->role = $role;
+            $user->password = bcrypt($password);
         }
 
         if(!$user->update()) {
@@ -47,7 +44,7 @@ class PetugasController extends Controller
 
         $response = [
             'status' => 1,
-            'msg' => 'Petugas updated',
+            'msg' => 'Password updated',
             'user' => $user
         ];
 
