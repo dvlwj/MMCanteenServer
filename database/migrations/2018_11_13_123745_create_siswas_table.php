@@ -19,7 +19,7 @@ class CreateSiswasTable extends Migration
             $table->string('name');
             $table->integer('kelas_id')->unsigned();
             $table->integer('th_ajaran_id')->unsigned();
-            $table->enum('status', ['enable', 'disable']);
+            $table->enum('status', ['aktif', 'non aktif']);
             $table->timestamps();
 
             $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('cascade');

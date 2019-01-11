@@ -19,32 +19,26 @@
                     @endif
                     
                     <select class="selectpicker" id="sortKelasID" data-size="5">
-                      <option value="">Kelas</option>
+                      <option value="">Pilih Kelas</option>
                       @foreach($kelas as $k)
                       <option value="{{ $k->id }}">{{ $k->name }}</option>
                       @endforeach
                     </select>
                     <select class="selectpicker" id="sortThAjaranID" data-size="5">
-                      <option value="">Tahun Ajaran</option>
+                      <option value="">Pilih Tahun Ajaran</option>
                       @foreach($thAjaran as $t)
                       <option value="{{ $t->id }}">{{ $t->tahun }}</option>
                       @endforeach
                     </select>
                     <hr>
-                    <select class="selectpicker" id="sortBulan" data-size="5">
-                      <option value="">Bulan</option>
-                      @foreach($bulan as $a => $b)
-                      <option value="{{ $a+1 }}">{{ $b }}</option>
-                      @endforeach
-                    </select>
-                    <select class="selectpicker" id="sortTahun" data-size="5">
-                      <option value="">Tahun</option>
-                      @foreach($absen as $data)
-                      <option value="{{ $data->thAjaran->id }}">{{ $data->thAjaran->tahun }}</option>
+                    <select class="selectpicker" id="sortTime" data-size="5">
+                      <option value="">Pilih Tanggal</option>
+                      @foreach($tahun as $data)
+                      <option value="{{ $data->time }}">{{ $data->time }}</option>
                       @endforeach
                     </select>
                     <select class="selectpicker" id="sortTime" data-size="5">
-                      <option value="">Waktu</option>
+                      <option value="">Pilih Waktu</option>
                       <option value="pagi">Pagi</option>
                       <option value="siang">Siang</option>
                     </select>
@@ -61,9 +55,10 @@
                                 <th class="text-center">Tahun Ajaran</th>
                                 <th class="text-center">Waktu</th>
                                 <th class="text-center">Status</th>
-                                <!-- @if(Auth::user()->role == 'admin')
-                                    <th class="text-center">Action</th>
-                                @endif -->
+                                <th class="text-center">Keterangan</th>
+                                @if(Auth::user()->role == 'admin')
+                                  <th class="text-center">Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -83,12 +78,18 @@
                                     <span class="label label-warning">siang</span>
                                   @endif
                                 </td>
-                                <!-- @if(Auth::user()->role == 'admin')
-                                    <td>
-                                        <button class="btn btn-warning">Edit</button>
-                                        <button class="btn btn-danger">Delete</button>
-                                    </td>
-                                @endif -->
+                                <td class="text-center">
+                                  @if($data->keterangan == 'makan')
+                                    <span class="label label-success">Makan</span>
+                                  @else
+                                    <span class="label label-danger">Tidak Makan</span>
+                                  @endif
+                                </td>
+                                @if(Auth::user()->role == 'admin')
+                                  <td>
+                                      <button class="btn btn-danger" onclick="deleteData('{{ $data->id }}')">Delete</button>
+                                  </td>
+                                @endif
                             </tr>
                           @endforeach
                         </tbody>
@@ -108,6 +109,26 @@
 
     function getBulan(){
         console.log($('#sortBulan').val());
+    }
+
+    // DELETE DATA ABSEN
+    function deleteData(id) {
+        let conf = confirm("Apakah anda yakin data ini akan dihapus ?");
+        if(conf){
+            $.ajax({  
+                url: '{{ route("absen.index") }}/'+id,  
+                type: 'DELETE',  
+                dataType: 'json', 
+                success: function (data) {
+                    if(data.status == 0){
+                        alert(data.msg);
+                    }else{
+                        alert('Data berhasil dihapus.');
+                        $("#absen").load(window.location + " #absen");
+                    }
+                }
+            });
+        }
     }
 </script>
 @endsection

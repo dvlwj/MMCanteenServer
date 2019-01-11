@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 class SiswaController extends Controller
 {
     public function __construct(){
-        $this->middleware(['auth', 'isAdminWeb'])->except('index'); 
+        $this->middleware('isAdminWeb')->except('index'); 
     }
     
     /**
@@ -56,7 +56,7 @@ class SiswaController extends Controller
             'name' => $name,
             'kelas_id' => $kelas_id,
             'th_ajaran_id' => $th_ajaran_id,
-            'status' => 'enable'
+            'status' => 'aktif'
         ]);
 
         // Check NIS

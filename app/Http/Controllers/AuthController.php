@@ -10,6 +10,10 @@ use App\User;
 
 class AuthController extends Controller
 {
+    public function __construct(){
+        $this->middleware('cors'); 
+    }
+
     /**
      * signin a user
      */
