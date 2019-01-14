@@ -18,7 +18,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors', 'jwt.auth']], function(
     Route::patch('petugas', 'PetugasController@update')->name('petugas.update');
 
     // Siswa
-    Route::resource('siswa', 'SiswaController')->except(['index', 'create', 'edit']);
+    Route::patch('siswa/{id}', 'SiswaController@update')->name('siswa.update');
     Route::get('siswa/{kelas_id}/{th_ajaran_id}', 'SiswaController@listSiswa')->name('siswa.listSiswa');
 
     // Absen
