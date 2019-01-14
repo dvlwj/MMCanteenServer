@@ -56,19 +56,25 @@ class AbsenController extends Controller
                     ON d.id = c.id WHERE d.id is null;"));
 
         $user = User::select('id')->where('username','system')->first();
+        $check = $makan != null ? $makan : 'kosong';
 
-        foreach($makan as $m)
+        if($check != 'kosong')
         {
-            $absen = new Absen([
-                'user_id' => $user->id,
-                'siswa_id' => $m->siswa_id,
-                'time' => $m->_date,
-                'status' => $m->status,
-                'keterangan' => 'makan'
-            ]);
+            foreach($makan as $m)
+            {
+                $absen = new Absen([
+                    'user_id' => $user->id,
+                    'siswa_id' => $m->siswa_id,
+                    'time' => $m->_date,
+                    'status' => $m->status,
+                    'keterangan' => 'makan'
+                ]);
 
-            $absen->save();
+                $absen->save();
+            }
         }
+
+        return $check;
     }
 
     /**
