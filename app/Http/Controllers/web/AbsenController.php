@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\web;
 
+use App\User;
 use App\Absen;
 use App\Kelas;
 use App\Siswa;
 use App\TahunAjaran;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -38,20 +40,44 @@ class AbsenController extends Controller
         return view('absen', compact(['absen', 'kelas', 'thAjaran', 'bulan', 'tahun']));
     }
 
-    public function makan()
+    public function makan($status)
     {
         $time = date('Y-m-d');
-        $makan = DB::select(DB::raw("SELECT c.id, c.name, 'makan' AS keterangan, 
-                    '2019-01-14' AS _date, 'pagi' as status, 
-                    d.id AS must_be_null FROM siswas AS c LEFT JOIN 
-                    (SELECT a.id, a.name, b.keterangan, b.time
-                    FROM siswas AS a LEFT JOIN absens AS b
+        $makan = DB::select(DB::raw("SELECT c.id AS siswa_id, c.name AS siswa_name, 'makan' AS keterangan, 
+                    '".$time."' AS _date, '".$status."' as status, 
+                    d.id AS is_null 
+                    FROM siswas AS c 
+                    LEFT JOIN (SELECT a.id, a.name, b.keterangan, b.time
+                    FROM siswas AS a 
+                    LEFT JOIN absens AS b
                     ON a.id = b.siswa_id
-                    WHERE b.time = '2019-01-14'
-                    AND b.status = 'pagi') AS d
-                    ON d.id = c.id;"));
+                    WHERE b.time = '".$time."'
+                    AND b.status = '".$status."') AS d
+                    ON d.id = c.id WHERE d.id is null;"));
 
-        return $makan;
+        // $dataSet = [];
+        $user = User::select('id')->where('username','system')->first();
+
+        foreach($makan as $m)
+        {
+            // $dataSet[] = [
+            //     'user_id' => $user->id,
+            //     'siswa_id' => $m->siswa_id,
+            //     'time' => $m->_date,
+            //     'status' => $m->status,
+            //     'keterangan' => 'makan'
+            // ];
+
+            $absen = new Absen([
+                'user_id' => $user->id,
+                'siswa_id' => $m->siswa_id,
+                'time' => $m->_date,
+                'status' => $m->status,
+                'keterangan' => 'makan'
+            ]);
+
+            $absen->save();
+        }
     }
 
     /**
