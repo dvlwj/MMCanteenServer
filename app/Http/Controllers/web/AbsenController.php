@@ -55,19 +55,10 @@ class AbsenController extends Controller
                     AND b.status = '".$status."') AS d
                     ON d.id = c.id WHERE d.id is null;"));
 
-        // $dataSet = [];
         $user = User::select('id')->where('username','system')->first();
 
         foreach($makan as $m)
         {
-            // $dataSet[] = [
-            //     'user_id' => $user->id,
-            //     'siswa_id' => $m->siswa_id,
-            //     'time' => $m->_date,
-            //     'status' => $m->status,
-            //     'keterangan' => 'makan'
-            // ];
-
             $absen = new Absen([
                 'user_id' => $user->id,
                 'siswa_id' => $m->siswa_id,
