@@ -6,6 +6,7 @@ use App\Absen;
 use App\Kelas;
 use App\Siswa;
 use App\TahunAjaran;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -23,7 +24,7 @@ class AbsenController extends Controller
     public function index()
     {
         $bulan = array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
-        $absen = Absen::orderBy('siswa_id', 'asc')->get();
+        $absen = Absen::orderBy('time', 'desc')->get();
         $kelas = Kelas::all();
         $thAjaran = TahunAjaran::all();
         $tahun = Absen::distinct()->get(['time']);
@@ -35,6 +36,22 @@ class AbsenController extends Controller
         }
 
         return view('absen', compact(['absen', 'kelas', 'thAjaran', 'bulan', 'tahun']));
+    }
+
+    public function makan()
+    {
+        $time = date('Y-m-d');
+        $makan = DB::select(DB::raw("SELECT c.id, c.name, 'makan' AS keterangan, 
+                    '2019-01-14' AS _date, 'pagi' as status, 
+                    d.id AS must_be_null FROM siswas AS c LEFT JOIN 
+                    (SELECT a.id, a.name, b.keterangan, b.time
+                    FROM siswas AS a LEFT JOIN absens AS b
+                    ON a.id = b.siswa_id
+                    WHERE b.time = '2019-01-14'
+                    AND b.status = 'pagi') AS d
+                    ON d.id = c.id;"));
+
+        return $makan;
     }
 
     /**
