@@ -21,33 +21,39 @@ class PetugasController extends Controller
         $user = JWTAuth::toUser($request->header('token'));
         $id = $user->id;
 
-        $this->validate($request, [
-            'password' => 'required|min:6'
-        ]);
-
         $password = $request->input('password');
         
-        $user = User::find($id);
-
-        if($user == '') {
-            return response()->json(['status' => 0,'msg' => 'Petugas not found'], 200);
-        } else {
-            $user->password = bcrypt($password);
-        }
-
-        if(!$user->update()) {
-            return response()->json([
+        if(strlen($password) < 6)
+        {
+            $response = [
                 'status' => 2,
-                'msg' => 'Error during update'
-            ]);
+                'msg' => 'Password minimal 6 digit!'
+            ];
+
+            return response()->json($response, 200);
+        } else {
+            $user = User::find($id);
+
+            if($user == '') {
+                return response()->json(['status' => 0,'msg' => 'Petugas not found'], 200);
+            } else {
+                $user->password = bcrypt($password);
+            }
+
+            if(!$user->update()) {
+                return response()->json([
+                    'status' => 2,
+                    'msg' => 'Error during update'
+                ]);
+            }
+
+            $response = [
+                'status' => 1,
+                'msg' => 'Password updated',
+                'user' => $user
+            ];
+
+            return response()->json($response, 200);
         }
-
-        $response = [
-            'status' => 1,
-            'msg' => 'Password updated',
-            'user' => $user
-        ];
-
-        return response()->json($response, 200);
     }
 }
