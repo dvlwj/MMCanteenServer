@@ -73,4 +73,40 @@ class SiswaController extends Controller
 
         return response()->json($response, 200);
     }
+
+    /**
+     * List of Kelas.
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function listKelas()
+    {
+        $kelas = Kelas::select('id','name')->get();
+
+        $response = [
+            'status' => 1,
+            'msg' => 'List of Kelas',
+            'kelas' => $kelas
+        ];
+
+        return response()->json($response, 200);
+    }
+
+    /**
+     * List of Tahun Ajaran.
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function listTahunAjaran()
+    {
+        $TahunAjaran = TahunAjaran::select('id','tahun')->get();
+
+        $response = [
+            'status' => 1,
+            'msg' => 'List of Tahun Ajaran',
+            'th_ajaran' => $TahunAjaran
+        ];
+
+        return response()->json($response, 200);
+    }
 }

@@ -125,6 +125,66 @@ result :
         }
     }
 
+**Get Data Kelas**
+URL : `localhost:8000/api/v1/siswa/kelas`  
+method : `GET`  
+params : -
+header : `application/json` and `token`  
+result : 
+
+    {
+        "status": 1,
+        "msg": "List of Kelas",
+        "kelas": [
+            {
+                "id": 1,
+                "name": "1A"
+            },
+            {
+                "id": 2,
+                "name": "2A"
+            },
+            {
+                "id": 3,
+                "name": "3A"
+            },
+            {
+                "id": 4,
+                "name": "4A"
+            },
+            {
+                "id": 5,
+                "name": "5A"
+            },
+            {
+                "id": 6,
+                "name": "6A"
+            }
+        ]
+    }
+
+**Get Data Tahun Ajaran**
+URL : `localhost:8000/api/v1/siswa/th-ajaran`  
+method : `GET`
+params : -
+header : `application/json` and `token`  
+result : 
+
+    {
+        "status": 1,
+        "msg": "List of Tahun Ajaran",
+        "th_ajaran": [
+            {
+                "id": 1,
+                "tahun": "2018"
+            },
+            {
+                "id": 2,
+                "tahun": "2019"
+            }
+        ]
+    }
+
 ### Absen
 **Create/Add Data**  
 URL : `localhost:8000/api/v1/absen`  

@@ -26,7 +26,7 @@ class PetugasController extends Controller
         if(strlen($password) < 6)
         {
             $response = [
-                'status' => 1,
+                'status' => 2,
                 'msg' => 'Password minimal 6 digit!'
             ];
 
