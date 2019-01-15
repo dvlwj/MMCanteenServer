@@ -18,15 +18,18 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function() {
 	//Route Kelas
 	Route::resource('kelas', 'web\KelasController')->except(['edit', 'create']);
 
-	//Route Absen
-	Route::get('absen', 'web\AbsenController@index')->name('absen.index');
-	Route::get('absen/makan/{status}', 'web\AbsenController@makan')->name('absen.makan');
-	Route::delete('absen/{id}', 'web\AbsenController@destroy')->name('absen.destroy');
-
 	//Route Siswa
 	Route::resource('siswa', 'web\SiswaController')->except(['edit', 'create']);
 	Route::get('siswa/qr/{id}', 'web\SiswaController@qr')->name('siswa.qrcode');
 
 	//Route Tahun Ajaran
 	Route::resource('th-ajaran', 'web\TahunAjaranController')->except(['edit', 'create']);
+	
+	//Route Absen
+	Route::get('absen', 'web\AbsenController@index')->name('absen.index');
+	Route::get('absen/makan/{status}', 'web\AbsenController@makan')->name('absen.makan');
+	Route::delete('absen/{id}', 'web\AbsenController@destroy')->name('absen.destroy');
+
+	//Route Report
+	Route::get('report/{nis}', 'web\ReportController@index')->name('report.index');
 });

@@ -31,7 +31,7 @@
                       @endforeach
                     </select>
                     <hr>
-                    <select class="selectpicker" id="sortTime" data-size="5">
+                    <select class="selectpicker" id="sortDate" data-size="5">
                       <option value="">Pilih Tanggal</option>
                       @foreach($tahun as $data)
                       <option value="{{ $data->time }}">{{ $data->time }}</option>

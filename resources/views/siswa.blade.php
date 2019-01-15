@@ -85,6 +85,9 @@
                                         <button class="btn btn-warning" data-toggle="modal" data-target="#editSiswa" onclick="getData('{{ $data->id }}')">
                                           Edit
                                         </button>
+                                        <a href="{{route('report.index',$data->nis)}}" class="btn btn-success">
+                                          Report
+                                        </a>
                                         <button class="btn btn-danger" onclick="deleteData('{{ $data->id }}')">Delete</button>
                                     </td>
                                 @endif
@@ -100,7 +103,7 @@
     <!-- MODAL ADD -->
     <div class="modal fade" id="addSiswa" tabindex="-1" role="dialog" aria-labelledby="addSiswaCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+        <div class="modal-content"> 
           <div class="modal-header">
             <h5 class="modal-title" id="addSiswaCenterTitle">Form Tambah Data Siswa</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
