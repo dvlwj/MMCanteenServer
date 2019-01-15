@@ -53,7 +53,7 @@ class AbsenController extends Controller
                     ON a.id = b.siswa_id
                     WHERE b.time = '".$time."'
                     AND b.status = '".$status."') AS d
-                    ON d.id = c.id WHERE d.id is null;"));
+                    ON d.id = c.id WHERE d.id is null AND c.status = 'aktif';"));
 
         $user = User::select('id')->where('username','system')->first();
         $check = $makan != null ? $makan : 'kosong';
