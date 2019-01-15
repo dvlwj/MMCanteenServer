@@ -47,7 +47,8 @@
                                 <th class="text-center">Nama Siswa</th>
                                 <th class="text-center">Kelas</th>
                                 <th class="text-center">Tahun Ajaran</th>
-                                <th class="text-center">Status</th>
+                                <th class="text-center">Pagi</th>
+                                <th class="text-center">Siang</th>
                                 @if(Auth::user()->role == 'admin')
                                     <th class="text-center">Action</th>
                                 @endif
@@ -63,10 +64,17 @@
                                 <td class="text-center">{{ $data->kelas_name->name }}</td>
                                 <td class="text-center">{{ $data->th_ajaran_name->tahun }}</td>
                                 <td class="text-center">
-                                    @if($data->status == 'aktif')
-                                    <span class="label label-success">{{ $data->status }}</span>
+                                    @if($data->pagi == 'aktif')
+                                    <span class="label label-success">{{ $data->pagi }}</span>
                                     @else
-                                    <span class="label label-danger">{{ $data->status }}</span>
+                                    <span class="label label-danger">{{ $data->pagi }}</span>
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    @if($data->siang == 'aktif')
+                                    <span class="label label-success">{{ $data->siang }}</span>
+                                    @else
+                                    <span class="label label-danger">{{ $data->siang }}</span>
                                     @endif
                                 </td>
                                 @if(Auth::user()->role == 'admin')
@@ -125,6 +133,20 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="statusPagi">Pagi</label>
+                    <select id="statusPagi" class="form-control">
+                        <option value="aktif">Aktif</option>
+                        <option value="non aktif">Non Aktif</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="statusSiang">Siang</label>
+                    <select id="statusSiang" class="form-control">
+                        <option value="aktif">Aktif</option>
+                        <option value="non aktif">Non Aktif</option>
+                    </select>
+                </div>
             </form>
           </div>
           <div class="modal-footer">
@@ -173,8 +195,15 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="editStatus">Status</label>
-                    <select id="editStatus" class="form-control">
+                    <label for="editStatusPagi">Pagi</label>
+                    <select id="editStatusPagi" class="form-control">
+                        <option value="aktif">Aktif</option>
+                        <option value="non aktif">Non Aktif</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editStatusSiang">Siang</label>
+                    <select id="editStatusSiang" class="form-control">
                         <option value="aktif">Aktif</option>
                         <option value="non aktif">Non Aktif</option>
                     </select>
@@ -218,7 +247,8 @@
                 $('#editNamaSiswa').val(data.name);
                 $('#editKelasID').val(data.kelas_id); 
                 $('#editThAjaranID').val(data.th_ajaran_id);
-                $('#editStatus').val(data.status);
+                $('#editStatusPagi').val(data.pagi);
+                $('#editStatusSiang').val(data.siang);
                 $('#editID').val(data.id); 
             }
         });
@@ -240,7 +270,9 @@
                     nis: $('#nis').val(),
                     name: $('#namaSiswa').val(),
                     kelas_id: $('#kelasID').val(),
-                    th_ajaran_id: $('#thAjaranID').val()
+                    th_ajaran_id: $('#thAjaranID').val(),
+                    pagi: $('#statusPagi').val(),
+                    siang: $('#statusSiang').val()
                 },  
                 success: function (data) {
                     if(data.status == 0) {
@@ -273,7 +305,8 @@
                     name: $('#editNamaSiswa').val(),
                     kelas_id: $('#editKelasID').val(),
                     th_ajaran_id: $('#editThAjaranID').val(),
-                    status: $('#editStatus').val()
+                    pagi: $('#editStatusPagi').val(),
+                    siang: $('#editStatusSiang').val()
                 },  
                 success: function (data) {
                     if(data.status == 0){
@@ -313,6 +346,8 @@
         $('#namaSiswa').val('');
         $('#kelasID').val('');
         $('#thAjaranID').val('');
+        $('#statusPagi').val('');
+        $('#statusSiang').val('');
     }
 </script>
 @endsection

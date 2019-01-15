@@ -55,13 +55,13 @@ class AbsenController extends Controller
         $nis = $request->input('nis');
         $status = $request->input('status');
         $time = date('Y-m-d');
-        $siswa = Siswa::where('nis', $nis)->where('status', 'aktif')->first();
+        $siswa = Siswa::where('nis', $nis)->where($status, 'aktif')->first();
 
         if($siswa == null)
         {
             $response = [
                     'status' => 0,
-                    'msg' => 'Status Siswa tidak aktif',
+                    'msg' => 'Status Makan Siswa diwaktu '.$status.' non aktif atau tidak ditemukan',
                 ];
 
                 return response()->json($response);  

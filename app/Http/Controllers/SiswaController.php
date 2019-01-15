@@ -43,19 +43,22 @@ class SiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $nis)
     {
         $this->validate($request, [
-            'status' => 'required'
+            'pagi' => 'required',
+            'siang' => 'required'
         ]);
 
-        $status = $request->input('status');
+        $pagi = $request->input('pagi');
+        $siang = $request->input('siang');
 
-        $siswa = Siswa::find($id);
+        $siswa = Siswa::where('nis', $nis)->first();
         if ($siswa == '') {
             return response()->json(['status' => 0,'msg' => 'Siswa not found']);
         } else {
-            $siswa->status = $status;
+            $siswa->pagi = $pagi;
+            $siswa->siang = $siang;
         }
 
         if(!$siswa->update()) {
