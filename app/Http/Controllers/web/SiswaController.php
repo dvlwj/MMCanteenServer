@@ -43,20 +43,25 @@ class SiswaController extends Controller
             'nis' => 'required', 
             'name' => 'required', 
             'kelas_id' => 'required', 
-            'th_ajaran_id' => 'required'
+            'th_ajaran_id' => 'required',
+            'pagi' => 'required',
+            'siang' => 'required'
         ]);
 
         $nis = $request->input('nis');
         $name = $request->input('name');
         $kelas_id = $request->input('kelas_id');
         $th_ajaran_id = $request->input('th_ajaran_id');
+        $pagi = $request->input('pagi');
+        $siang = $request->input('siang');
 
         $siswa = new Siswa([
             'nis' => $nis,
             'name' => $name,
             'kelas_id' => $kelas_id,
             'th_ajaran_id' => $th_ajaran_id,
-            'status' => 'aktif'
+            'pagi' => $pagi,
+            'siang' => $siang
         ]);
 
         // Check NIS
@@ -119,14 +124,16 @@ class SiswaController extends Controller
             'name' => 'required', 
             'kelas_id' => 'required', 
             'th_ajaran_id' => 'required',
-            'status' => 'required'
+            'pagi' => 'required',
+            'siang' => 'required'
         ]);
 
         $nis = $request->input('nis');
         $name = $request->input('name');
         $kelas_id = $request->input('kelas_id');
         $th_ajaran_id = $request->input('th_ajaran_id');
-        $status = $request->input('status');
+        $pagi = $request->input('pagi');
+        $siang = $request->input('siang');
 
         $data = Siswa::find($siswa);
         if ($data == '') {
@@ -136,7 +143,8 @@ class SiswaController extends Controller
             $data->name = $name;
             $data->kelas_id = $kelas_id;
             $data->th_ajaran_id = $th_ajaran_id;
-            $data->status = $status;
+            $data->pagi = $pagi;
+            $data->siang = $siang;
         }
 
         if(!$data->update()) {

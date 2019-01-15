@@ -104,9 +104,9 @@ result :
     }
 
 **Edit Data**  
-URL : `localhost:8000/api/v1/siswa/{id}`  
+URL : `localhost:8000/api/v1/siswa/{nis}`  
 method : `PATCH`   
-params : `status(aktif, non aktif)`  
+params : `pagi(aktif, non aktif)` and `siang(aktif, non aktif)` 
 header : `application/json` and `token`  
 result : 
 
@@ -114,14 +114,15 @@ result :
         "status": 1,
         "msg": "Siswa updated",
         "siswa": {
-            "id": 2,
-            "nis": "002",
-            "name": "Abdul",
+            "id": 1,
+            "nis": "001",
+            "name": "Andi",
             "kelas_id": 1,
             "th_ajaran_id": 1,
-            "status": "aktif",
-            "created_at": "2019-01-10 19:58:27",
-            "updated_at": "2019-01-11 13:44:24"
+            "pagi": "non aktif",
+            "siang": "non aktif",
+            "created_at": "2019-01-15 17:12:17",
+            "updated_at": "2019-01-15 17:19:38"
         }
     }
 
