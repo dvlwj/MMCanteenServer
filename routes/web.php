@@ -31,5 +31,5 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function() {
 	Route::delete('absen/{id}', 'web\AbsenController@destroy')->name('absen.destroy');
 
 	//Route Report
-	Route::get('report/{nis}', 'web\ReportController@index')->name('report.index');
+	Route::get('report/{nis}/{bulan?}/{tahun?}', 'web\ReportController@index')->name('report.index');
 });
