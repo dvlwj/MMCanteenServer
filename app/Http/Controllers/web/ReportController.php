@@ -21,7 +21,7 @@ class ReportController extends Controller
     {
     	$siswa = Siswa::where('nis', $nis)->first();
     	$kelas = Kelas::find($siswa->kelas_id)->first();
-    	$tahun = Absen::select('time')->where('siswa_id',$siswa->id)->distinct()->get();
+    	$tahun = DB::select(DB::raw("SELECT DISTINCT YEAR(time) AS tahun FROM absens WHERE siswa_id = '".$siswa->id."' "));
     	$thAjaran = TahunAjaran::find($siswa->th_ajaran_id)->first();
     	$bulan = array('January','February','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember');
     	
@@ -36,7 +36,7 @@ class ReportController extends Controller
 	    	$harga = DB::select(DB::raw("SELECT h.harga AS harga
 			    		FROM siswas AS s, kelas AS k, hargas as h
 			    		WHERE s.kelas_id = k.id AND h.id = k.harga_id AND s.nis = '".$siswa->nis."'"));
-	    	$periode = $bulan[$bl+1]." ".date('Y', strtotime($tahun[0]->time));
+	    	$periode = $bulan[$bl+1]." ".date('Y', strtotime($tahun[0]->tahun));
 	    	$total = count($report) * $harga[0]->harga;
     	}
 

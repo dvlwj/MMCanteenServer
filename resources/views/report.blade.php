@@ -18,7 +18,7 @@
               <select class="selectpicker" id="tahun" data-size="5">
                 <option value="">Pilih Tahun</option>
                 @foreach($tahun as $t)
-                <option value="{{ date('Y', strtotime($t->time)) }}">{{ date('Y', strtotime($t->time)) }}</option>
+                <option value="{{ $t->tahun }}">{{ $t->tahun }}</option>
                 @endforeach
               </select>
               <button class="btn btn-primary" onclick="checkReport()">Check</button>
