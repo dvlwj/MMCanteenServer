@@ -23,20 +23,6 @@
                           Tambah Siswa +
                         </button>
                         <hr>
-                        <select class="selectpicker" id="sortKelasID" data-size="5">
-                          <option value="">Pilih Kelas</option>
-                          @foreach($kelas as $k)
-                          <option value="{{ $k->id }}">{{$k->name}}</option>
-                          @endforeach
-                        </select>
-                        <select class="selectpicker" id="sortThAjaranID" data-size="5">
-                          <option value="">Pilih Tahun Ajaran</option>
-                          @foreach($thAjaran as $t)
-                          <option value="{{ $t->id }}">{{$t->tahun}}</option>
-                          @endforeach
-                        </select>
-                        <button class="btn btn-primary" id="sort">Sortir</button>
-                        <hr>
                     @endif
 
                     <table id="siswa" class="table table-striped table-bordered" style="width:100%">
@@ -85,6 +71,9 @@
                                         <button class="btn btn-warning" data-toggle="modal" data-target="#editSiswa" onclick="getData('{{ $data->id }}')">
                                           Edit
                                         </button>
+                                        <a href="{{route('report.index',$data->nis)}}" class="btn btn-success">
+                                          Report
+                                        </a>
                                         <button class="btn btn-danger" onclick="deleteData('{{ $data->id }}')">Delete</button>
                                     </td>
                                 @endif
@@ -100,7 +89,7 @@
     <!-- MODAL ADD -->
     <div class="modal fade" id="addSiswa" tabindex="-1" role="dialog" aria-labelledby="addSiswaCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+        <div class="modal-content"> 
           <div class="modal-header">
             <h5 class="modal-title" id="addSiswaCenterTitle">Form Tambah Data Siswa</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">

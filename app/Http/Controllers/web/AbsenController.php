@@ -25,7 +25,6 @@ class AbsenController extends Controller
      */
     public function index()
     {
-        $bulan = array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
         $absen = Absen::orderBy('time', 'desc')->get();
         $kelas = Kelas::all();
         $thAjaran = TahunAjaran::all();
@@ -37,7 +36,7 @@ class AbsenController extends Controller
             $a->thAjaran = TahunAjaran::find($a->siswa->th_ajaran_id)->first();
         }
 
-        return view('absen', compact(['absen', 'kelas', 'thAjaran', 'bulan', 'tahun']));
+        return view('absen', compact(['absen', 'kelas', 'thAjaran', 'tahun']));
     }
 
     public function makan($status)

@@ -40,7 +40,7 @@
                             <tr>
                                 <td class="text-center">{{$n++}}</td>
                                 <td class="text-center">{{ $data->kel_kelas }}</td>
-                                <td>{{ $data->harga }}</td>
+                                <td class="text-center"> Rp {{ number_format($data->harga, 2, ",", ".") }}</td>
                                 @if(Auth::user()->role == 'admin')
                                     <td class="text-center">
                                         <button class="btn btn-warning" data-toggle="modal" data-target="#editHarga" onclick="getData('{{ $data->id }}')">

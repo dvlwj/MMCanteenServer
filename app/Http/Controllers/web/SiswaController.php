@@ -28,6 +28,7 @@ class SiswaController extends Controller
         }
         $kelas = Kelas::all();
         $thAjaran = TahunAjaran::all();
+
         return view('siswa', compact(['siswa', 'kelas', 'thAjaran']));
     }
 

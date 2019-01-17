@@ -45,10 +45,6 @@ class SiswaController extends Controller
      */
     public function update(Request $request, $nis)
     {
-        $this->validate($request, [
-            'pagi' => 'required',
-            'siang' => 'required'
-        ]);
 
         $pagi = $request->input('pagi');
         $siang = $request->input('siang');
@@ -57,8 +53,11 @@ class SiswaController extends Controller
         if ($siswa == '') {
             return response()->json(['status' => 0,'msg' => 'Siswa not found']);
         } else {
-            $siswa->pagi = $pagi;
-            $siswa->siang = $siang;
+            if($pagi != ''){
+                $siswa->pagi = $pagi;
+            } elseif($siang != '') {
+                $siswa->siang = $siang;
+            }
         }
 
         if(!$siswa->update()) {
