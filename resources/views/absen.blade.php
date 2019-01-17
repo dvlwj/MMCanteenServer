@@ -17,33 +17,6 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    
-                    <select class="selectpicker" id="sortKelasID" data-size="5">
-                      <option value="">Pilih Kelas</option>
-                      @foreach($kelas as $k)
-                      <option value="{{ $k->id }}">{{ $k->name }}</option>
-                      @endforeach
-                    </select>
-                    <select class="selectpicker" id="sortThAjaranID" data-size="5">
-                      <option value="">Pilih Tahun Ajaran</option>
-                      @foreach($thAjaran as $t)
-                      <option value="{{ $t->id }}">{{ $t->tahun }}</option>
-                      @endforeach
-                    </select>
-                    <hr>
-                    <select class="selectpicker" id="sortDate" data-size="5">
-                      <option value="">Pilih Tanggal</option>
-                      @foreach($tahun as $data)
-                      <option value="{{ $data->time }}">{{ $data->time }}</option>
-                      @endforeach
-                    </select>
-                    <select class="selectpicker" id="sortTime" data-size="5">
-                      <option value="">Pilih Waktu</option>
-                      <option value="pagi">Pagi</option>
-                      <option value="siang">Siang</option>
-                    </select>
-                    <button class="btn btn-primary" id="sort">Sortir</button>
-                    <hr>
 
                     <table id="absen" class="table table-striped table-bordered" style="width:100%">
                         <thead>

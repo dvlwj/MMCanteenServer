@@ -24,6 +24,7 @@
               <button class="btn btn-primary" onclick="checkReport()">Check</button>
           </div>
           <br>
+          @if($total != 0)
           <div class="row" id="report" style="border: solid 2px black; border-radius: 5px;">
             <div class="col-sm-5">
               <br>
@@ -60,16 +61,17 @@
                       <td>{{$n++}}</td>
                       <td>{{ $r->time }}</td>
                       <td>{{ $r->status }}</td>
-                      <td>Rp.{{ $harga[0]->harga }}</td>
+                      <td>Rp {{ number_format($harga[0]->harga, 2, ",", ".") }}</td>
                     </tr>
                   @endforeach
                   <tr align="right">
-                    <td colspan="4"><b>Total : Rp.{{ $total }}</b></td>
+                    <td colspan="4"><b>Total : Rp {{ number_format($total, 2, ",", ".") }}</b></td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
+          @endif
           <br>
           <div class="row">
           <p class="text-center">
@@ -95,7 +97,11 @@
     function checkReport(){
       let bulan = $('#bulan').val();
       let tahun = $('#tahun').val();
-      window.location = "http://"+window.location.hostname+"/report/{{$siswa->nis}}/"+bulan+"/"+tahun;
+      if(bulan == '' || tahun == ''){
+        alert('Silahkan pilih Bulan dan Tahun terlebih dahulu!')
+      }else{
+        window.location = "http://"+window.location.hostname+"/report/{{$siswa->nis}}/"+bulan+"/"+tahun;
+      }
     }
 </script>
 @endsection
