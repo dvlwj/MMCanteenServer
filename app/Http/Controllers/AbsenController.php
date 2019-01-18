@@ -60,7 +60,7 @@ class AbsenController extends Controller
         if($siswa == null)
         {
             $response = [
-                    'status' => 0,
+                    'status' => 3,
                     'msg' => 'Status Makan Siswa diwaktu '.$status.' non aktif atau tidak ditemukan',
                 ];
 
