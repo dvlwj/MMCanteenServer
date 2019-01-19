@@ -25,7 +25,10 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors', 'jwt.auth']], function(
 
     // Absen
     Route::post('absen', 'AbsenController@store')->name('absen.store');
-    Route::get('absen/{kelas}/{th_ajaran}/{bulan}/{tahun}', 'AbsenController@listAbsen')->name('absen.listAbsen'); 
+    Route::get('absen/{kelas}/{th_ajaran}/{bulan}/{tahun}', 'AbsenController@listAbsen')->name('absen.listAbsen');
+
+    //Report
+    Route::post('report', 'ReportController@index')->name('report.index');
 });
 
     // Auth User    

@@ -18,6 +18,16 @@
                         </div>
                     @endif
 
+                    @if(Auth::user()->role == 'admin')
+                    <select class="selectpicker" id="waktu" data-size="5">
+                        <option value="">Pilih Waktu</option>
+                        <option value="pagi">Pagi</option>
+                        <option value="siang">Siang</option>
+                    </select>
+                    <button class="btn btn-success" onclick="generateAbsen()">Generate Absen</button>
+                    <hr>
+                    @endif
+
                     <table id="absen" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
@@ -80,8 +90,22 @@
         $('#absen').DataTable();
     } );
 
-    function getBulan(){
-        console.log($('#sortBulan').val());
+    function generateAbsen(){
+        if($('#waktu').val() == '')
+        {
+            alert('Silahkan pilih waktu terlebih dahulu!');
+        }else{
+            let waktu = $('#waktu').val();
+            $.get("http://mmcanteenserver.test/absen/makan/"+waktu, function (data){
+                if(data == 'kosong'){
+                    alert('Absen Makan hari ini sudah digenerate!');
+                    $("#absen").load(window.location + " #absen");
+                }else{
+                    alert('Absen Makan hari ini berhasil digenerate!');
+                    $("#absen").load(window.location + " #absen");
+                }
+            });
+        }
     }
 
     // DELETE DATA ABSEN
