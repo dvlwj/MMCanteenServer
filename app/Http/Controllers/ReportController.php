@@ -48,6 +48,10 @@ class ReportController extends Controller
 		    	$harga = DB::select(DB::raw("SELECT h.harga AS harga
 				    		FROM siswas AS s, kelas AS k, hargas as h
 				    		WHERE s.kelas_id = k.id AND h.id = k.harga_id AND s.nis = '".$siswa->nis."'"));
+		    	foreach($report as $r)
+	    		{
+	    			$r->harga = $harga[0]->harga; 
+	    		}
 		    	$periode = $bl[$bulan-1]." ".$tahun;
 		    	$total = count($report) * $harga[0]->harga;
 
@@ -55,7 +59,6 @@ class ReportController extends Controller
 	    			'status' => 1,
 	    			'msg' => 'Data Report',
 	    			'report' => $report,
-			    	'harga' => $harga,
 			    	'periode' => $periode,
 			    	'total' => $total
 	    		];
