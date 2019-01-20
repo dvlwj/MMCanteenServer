@@ -96,13 +96,17 @@
             alert('Silahkan pilih waktu terlebih dahulu!');
         }else{
             let waktu = $('#waktu').val();
-            $.get("http://mmcanteenserver.test/absen/makan/"+waktu, function (data){
-                if(data == 'kosong'){
-                    alert('Absen Makan hari ini sudah digenerate!');
-                    $("#absen").load(window.location + " #absen");
-                }else{
-                    alert('Absen Makan hari ini berhasil digenerate!');
-                    $("#absen").load(window.location + " #absen");
+            $.ajax({
+                url: '{{ route("absen.index") }}/makan/'+waktu,
+                type: 'GET',
+                success: function (data) {
+                    if(data == 'kosong'){
+                        alert('Absen Makan hari ini sudah digenerate!');
+                        $("#absen").load(window.location + " #absen");
+                    }else{
+                        alert('Absen Makan hari ini berhasil digenerate!');
+                        $("#absen").load(window.location + " #absen");
+                    }
                 }
             });
         }
