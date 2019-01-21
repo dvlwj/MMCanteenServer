@@ -29,7 +29,7 @@ class ReportController extends Controller
     	{
 	    	$report = [];
 	    	$harga = [];
-	    	$periode = '-------';
+            $periode = '-------';
 	    	$total = 0;	
     	}else{
     		$report = Absen::where('siswa_id',$siswa->id)->where('keterangan', 'makan')->whereMonth('time',$bl)->whereYear('time',$th)->get();

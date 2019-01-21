@@ -17,6 +17,7 @@ class CreateSiswasTable extends Migration
             $table->increments('id');
             $table->string('nis');
             $table->string('name');
+            $table->string('no_hp');
             $table->integer('kelas_id')->unsigned();
             $table->integer('th_ajaran_id')->unsigned();
             $table->enum('pagi', ['aktif', 'non aktif']);

@@ -74,7 +74,7 @@
             <form>
                 <div class="form-group">
                     <label for="name" class="col-form-label">Nama Kelas</label>
-                    <input type="text" class="form-control" id="name">
+                    <input type="text" class="form-control" id="name" placeholder="cth: 1A">
                 </div>
                 <div class="form-group">
                     <label for="kelompok">Kelompok Kelas</label>

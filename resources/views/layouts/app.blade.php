@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'MMCanteen') }}|@yield('title')</title>
+    <title>{{ config('app.name', 'Kantin Maitreya') }}|@yield('title')</title>
 
     <!-- logo -->
     <link rel="icon" type="image/ico" href="{{ asset('img/logo.png') }}" />
@@ -35,7 +35,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'MMCanteen') }}
+                        {{ config('app.name', 'Kantin Maitreya') }}
                     </a>
                 </div>
 

@@ -70,7 +70,7 @@
             <form>
                 <div class="form-group">
                     <label for="tahun" class="col-form-label">Tahun Ajaran</label>
-                    <input type="text" class="form-control" id="tahun" onkeypress="yearValidation(this.value,event)" oninput="checkNumberFieldLength(this);">
+                    <input type="text" class="form-control" id="tahun" onkeypress="yearValidation(this.value,event)" oninput="checkNumberFieldLength(this);" placeholder="cth: 2015/2016">
                 </div>
             </form>
           </div>
