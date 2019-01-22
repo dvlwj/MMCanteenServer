@@ -18,6 +18,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors', 'jwt.auth']], function(
     Route::patch('petugas', 'PetugasController@update')->name('petugas.update');
 
     // Siswa
+    Route::post('siswa', 'SiswaController@store')->name('siswa.store');
     Route::patch('siswa/{nis}', 'SiswaController@update')->name('siswa.update');
     Route::get('siswa/{kelas_id}/{th_ajaran_id}', 'SiswaController@listSiswa')->name('siswa.listSiswa');
     Route::get('siswa/kelas', 'SiswaController@listKelas')->name('siswa.kelas');
