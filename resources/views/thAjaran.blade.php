@@ -28,6 +28,7 @@
                             <tr>
                                 <th class="text-center">No</th>
                                 <th class="text-center">Tahun Ajaran</th>
+                                <th class="text-center">ID Tahun Ajaran</th>
                                 @if(Auth::user()->role == 'admin')
                                     <th class="text-center">Action</th>
                                 @endif
@@ -39,6 +40,7 @@
                             <tr>
                                 <td class="text-center">{{$n++}}</td>
                                 <td class="text-center">{{ $data->tahun }}</td>
+                                <td class="text-center">{{ $data->id }}</td>
                                 @if(Auth::user()->role == 'admin')
                                     <td class="text-center">
                                         <button class="btn btn-warning" data-toggle="modal" data-target="#editTahunAjaran" onclick="getData('{{ $data->id }}')">
