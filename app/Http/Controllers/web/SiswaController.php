@@ -222,4 +222,23 @@ class SiswaController extends Controller
         $ket = 'one';
         return view('qrcode', compact(['siswa','kelas','ket']));
     }
+
+    public function import(Request $request) 
+    {
+        $imp = Excel::import(new UsersImport, $request->file('siswa'));
+
+        if($imp) {
+            $response = [
+                'status' => 0,
+                'msg' => 'Gagal Import Data Siswa.'
+            ];
+            return response()->json($response);
+        }
+
+        $response = [
+            'status' => 0,
+            'msg' => 'Success Import Data Siswa.'
+        ];
+        return response()->json($response);
+    }
 }

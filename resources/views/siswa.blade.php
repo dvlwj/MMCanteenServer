@@ -22,6 +22,10 @@
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSiswa">
                           Tambah Siswa +
                         </button>
+                        <br><br>
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#importSiswa">
+                          Import Excel
+                        </button>
                         <hr>
                         <select class="selectpicker" id="k" data-size="5">
                             <option value="">Pilih Kelas</option>
@@ -226,6 +230,35 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary" data-dismiss="modal" id="saveEdit">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL IMPORT -->
+    <div class="modal fade" id="importSiswa" tabindex="-1" role="dialog" aria-labelledby="importSiswaCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="importSiswaCenterTitle">Form Import Data Siswa</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Silahkan download format file excel terlebih dahulu sebelum import data.
+            <a href="{{ asset('file/format.xlsx') }}" class="btn btn-warning" download>Download format excel</a>
+            <br><br>
+            <form>
+                <div class="form-group">
+                    <label for="importData" class="col-form-label">Import file excel</label>
+                    <input type="file" class="form-control" id="importData">
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
           </div>
         </div>
       </div>
