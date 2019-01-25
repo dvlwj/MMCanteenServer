@@ -5,6 +5,8 @@ namespace App\Http\Controllers\web;
 use App\Siswa;
 use App\Kelas;
 use App\TahunAjaran;
+use Excel;
+use App\Imports\SiswaImport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -225,20 +227,7 @@ class SiswaController extends Controller
 
     public function import(Request $request) 
     {
-        $imp = Excel::import(new UsersImport, $request->file('siswa'));
-
-        if($imp) {
-            $response = [
-                'status' => 0,
-                'msg' => 'Gagal Import Data Siswa.'
-            ];
-            return response()->json($response);
-        }
-
-        $response = [
-            'status' => 0,
-            'msg' => 'Success Import Data Siswa.'
-        ];
-        return response()->json($response);
+        Excel::import(new SiswaImport, request()->file('importData'));
+        return redirect()->back();
     }
 }

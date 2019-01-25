@@ -249,16 +249,16 @@
             Silahkan download format file excel terlebih dahulu sebelum import data.
             <a href="{{ asset('file/format.xlsx') }}" class="btn btn-warning" download>Download format excel</a>
             <br><br>
-            <form>
+            <form action="{{route('siswa.import')}}" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="importData" class="col-form-label">Import file excel</label>
-                    <input type="file" class="form-control" id="importData">
+                    <input type="file" class="form-control" name="importData" id="importData">
                 </div>
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="modal">Save</button>
           </div>
         </div>
       </div>
