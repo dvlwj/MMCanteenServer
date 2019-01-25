@@ -3,26 +3,33 @@
 namespace App\Imports;
 
 use App\Siswa;
-use Maatwebsite\Excel\Concerns\ToModel;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class SiswaImport implements ToModel, WithHeadingRow
+class SiswaImport implements ToCollection, WithHeadingRow
 {
     /**
     * @param array $row
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
-    public function model(array $row)
+    public function collection(Collection $rows)
     {
-        return new Siswa([
-            'nis' => $row[0],
-            'name' => $row[1],
-            'no_hp' => $row[2],
-            'kelas_id' => $row[3],
-            'th_ajaran_id' => $row[4],
-            'pagi' => $row[5],
-            'siang' => $row[6]
-        ]);
+        dd($rows);
+        foreach ($rows as $row) 
+        {
+            $in = [
+                'nis' => $row['nis'],
+                'name' => $row['name'],
+                'no_hp' => $row['no_hp'],
+                'kelas_id' => $row['kelas_id'],
+                'th_ajaran_id' => $row['th_ajaran_id'],
+                'pagi' => $row['pagi'],
+                'siang' => $row['siang']
+            ];
+
+            // return Siswa::create($in);
+        }
     }
 }

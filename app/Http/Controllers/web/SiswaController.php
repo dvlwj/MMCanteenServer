@@ -225,9 +225,8 @@ class SiswaController extends Controller
         return view('qrcode', compact(['siswa','kelas','ket']));
     }
 
-    public function import(Request $request) 
+    public function importSiswa(Request $request) 
     {
-        Excel::import(new SiswaImport, request()->file('importData'));
-        return redirect()->back();
+        return Excel::import(new SiswaImport, $request->file('importData'));
     }
 }

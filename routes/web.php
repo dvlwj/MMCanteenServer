@@ -22,7 +22,7 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function() {
 	Route::resource('siswa', 'web\SiswaController')->except(['edit', 'create']);
 	Route::get('siswa/qr/{kelas}/{thAjaran}', 'web\SiswaController@qr')->name('siswa.qrcode');
 	Route::get('siswa/qrone/{id}', 'web\SiswaController@qrOne')->name('siswa.qrcodeOne');
-	Route::post('siswa/import', 'web\SiswaController@import')->name('siswa.import');
+	Route::post('siswa/import', 'web\SiswaController@importSiswa')->name('siswa.import');
 
 	//Route Tahun Ajaran
 	Route::resource('th-ajaran', 'web\TahunAjaranController')->except(['edit', 'create']);
