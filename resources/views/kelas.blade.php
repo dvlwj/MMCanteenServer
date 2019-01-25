@@ -28,6 +28,7 @@
                             <tr>
                                 <th class="text-center">No</th>
                                 <th class="text-center">Kelas</th>
+                                <th class="text-center">ID Kelas</th>
                                 <th class="text-center">Kelompok</th>
                                 <th class="text-center">Harga</th>
                                 @if(Auth::user()->role == 'admin')
@@ -41,6 +42,7 @@
                             <tr>
                                 <td class="text-center">{{$n++}}</td>
                                 <td class="text-center">{{ $data->name }}</td>
+                                <td class="text-center">{{ $data->id }}</td>
                                 <td class="text-center">{{ $data->kelompok->kel_kelas}}</td>
                                 <td class="text-center">Rp {{ number_format($data->kelompok->harga, 2, ",", ".")}}</td>
                                 @if(Auth::user()->role == 'admin')
@@ -74,7 +76,7 @@
             <form>
                 <div class="form-group">
                     <label for="name" class="col-form-label">Nama Kelas</label>
-                    <input type="text" class="form-control" id="name">
+                    <input type="text" class="form-control" id="name" placeholder="cth: 1A">
                 </div>
                 <div class="form-group">
                     <label for="kelompok">Kelompok Kelas</label>

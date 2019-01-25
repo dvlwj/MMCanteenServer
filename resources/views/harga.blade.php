@@ -72,11 +72,11 @@
             <form>
                 <div class="form-group">
                     <label for="kelKelas" class="col-form-label">Kelompok Kelas</label>
-                    <input type="text" class="form-control" id="kelKelas">
+                    <input type="text" class="form-control" id="kelKelas" placeholder="cth: Kelas 1 dan 2">
                 </div>
                 <div class="form-group">
                     <label for="addHargaMakan" class="col-form-label">Harga</label>
-                    <input type="number" class="form-control" id="addHargaMakan">
+                    <input type="number" class="form-control" id="addHargaMakan" placeholder="cth: 10000">
                 </div>
             </form>
           </div>

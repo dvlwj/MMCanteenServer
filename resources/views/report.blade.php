@@ -39,6 +39,12 @@
               <b>Tahun Ajaran : {{ $thAjaran->tahun }}</b>
               <br>
               <b>Periode : {{ $periode }}</b>
+              <br>
+              @if($siswa->no_hp == '')
+              <b>Nomor Hp : ------------</b>
+              @else
+              <b>Nomor Hp : {{ $siswa->no_hp }}</b>
+              @endif
             </div>
             <div class="col-sm-2">
               <img src="{{ asset('img/logo.png') }}" alt="maitreyawira_logo" width="100px" height="100px">

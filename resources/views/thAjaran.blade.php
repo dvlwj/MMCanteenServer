@@ -28,6 +28,7 @@
                             <tr>
                                 <th class="text-center">No</th>
                                 <th class="text-center">Tahun Ajaran</th>
+                                <th class="text-center">ID Tahun Ajaran</th>
                                 @if(Auth::user()->role == 'admin')
                                     <th class="text-center">Action</th>
                                 @endif
@@ -39,6 +40,7 @@
                             <tr>
                                 <td class="text-center">{{$n++}}</td>
                                 <td class="text-center">{{ $data->tahun }}</td>
+                                <td class="text-center">{{ $data->id }}</td>
                                 @if(Auth::user()->role == 'admin')
                                     <td class="text-center">
                                         <button class="btn btn-warning" data-toggle="modal" data-target="#editTahunAjaran" onclick="getData('{{ $data->id }}')">
@@ -70,7 +72,7 @@
             <form>
                 <div class="form-group">
                     <label for="tahun" class="col-form-label">Tahun Ajaran</label>
-                    <input type="text" class="form-control" id="tahun" onkeypress="yearValidation(this.value,event)" oninput="checkNumberFieldLength(this);">
+                    <input type="text" class="form-control" id="tahun" onkeypress="yearValidation(this.value,event)" oninput="checkNumberFieldLength(this);" placeholder="cth: 2015/2016">
                 </div>
             </form>
           </div>

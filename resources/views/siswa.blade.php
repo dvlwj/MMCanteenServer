@@ -7,7 +7,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Siswa</div>
 
@@ -22,6 +22,24 @@
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSiswa">
                           Tambah Siswa +
                         </button>
+                        <br><br>
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#importSiswa">
+                          Import Excel
+                        </button>
+                        <hr>
+                        <select class="selectpicker" id="k" data-size="5">
+                            <option value="">Pilih Kelas</option>
+                            @foreach($kelas as $k)
+                            <option value="{{ $k->id }}">{{ $k->name }}</option>
+                            @endforeach
+                        </select>
+                        <select class="selectpicker" id="ta" data-size="5">
+                            <option value="">Pilih Tahun Ajaran</option>
+                            @foreach($thAjaran as $t)
+                            <option value="{{ $t->id }}">{{ $t->tahun }}</option>
+                            @endforeach
+                        </select>
+                        <button class="btn btn-info" onclick="generateQr()">Generate QR Code</button>
                         <hr>
                     @endif
 
@@ -31,6 +49,7 @@
                                 <th class="text-center">No</th>
                                 <th class="text-center">NIS</th>
                                 <th class="text-center">Nama Siswa</th>
+                                <th class="text-center">No HP</th>
                                 <th class="text-center">Kelas</th>
                                 <th class="text-center">Tahun Ajaran</th>
                                 <th class="text-center">Pagi</th>
@@ -47,6 +66,7 @@
                                 <td class="text-center">{{$n++}}</td>
                                 <td>{{ $data->nis }}</td>
                                 <td>{{ $data->name }}</td>
+                                <td>{{ $data->no_hp }}</td>
                                 <td class="text-center">{{ $data->kelas_name->name }}</td>
                                 <td class="text-center">{{ $data->th_ajaran_name->tahun }}</td>
                                 <td class="text-center">
@@ -65,9 +85,9 @@
                                 </td>
                                 @if(Auth::user()->role == 'admin')
                                     <td class="text-center">
-                                        <a href="{{ route('siswa.qrcode', ['id' => $data->id]) }}" type="button" class="btn btn-info">
-                                          QR Code
-                                        </a>
+                                        <button class="btn btn-info"onclick="qrCode('{{ $data->id }}')">
+                                          Qr Code
+                                        </button>
                                         <button class="btn btn-warning" data-toggle="modal" data-target="#editSiswa" onclick="getData('{{ $data->id }}')">
                                           Edit
                                         </button>
@@ -105,6 +125,10 @@
                 <div class="form-group">
                     <label for="namaSiswa" class="col-form-label">Nama Siswa</label>
                     <input type="text" class="form-control" id="namaSiswa" placeholder="Nama Lengkap Siswa">
+                </div>
+                <div class="form-group">
+                    <label for="nohp" class="col-form-label">No HP</label>
+                    <input type="text" class="form-control" id="nohp" placeholder="Nomor HP Siswa">
                 </div>
                 <div class="form-group">
                     <label for="kelasID">Kelas</label>
@@ -168,6 +192,10 @@
                     <input type="text" class="form-control" id="editNamaSiswa" placeholder="Nama Lengkap Siswa">
                 </div>
                 <div class="form-group">
+                    <label for="editNohp" class="col-form-label">No HP</label>
+                    <input type="text" class="form-control" id="editNohp" placeholder="Nomor HP Siswa">
+                </div>
+                <div class="form-group">
                     <label for="editKelasID">Kelas</label>
                     <select id="editKelasID" class="form-control">
                         @foreach($kelas as $k)
@@ -206,6 +234,36 @@
         </div>
       </div>
     </div>
+
+    <!-- MODAL IMPORT -->
+    <div class="modal fade" id="importSiswa" tabindex="-1" role="dialog" aria-labelledby="importSiswaCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="importSiswaCenterTitle">Form Import Data Siswa</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Silahkan download format file excel terlebih dahulu sebelum import data.
+            <a href="{{ asset('file/format.xlsx') }}" class="btn btn-warning" download>Download format excel</a>
+            <br><br>
+            <form action="{{route('siswa.import')}}" method="POST" enctype="multipart/form-data">
+                {{ csrf_field() }}
+                <div class="form-group">
+                    <label for="importData" class="col-form-label">Import file excel</label>
+                    <input type="file" class="form-control" name="importData">
+                </div>
+                <input type="submit" class="btn btn-success" value="Submit">
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 </div>
 @endsection
 
@@ -234,6 +292,7 @@
             } else {
                 $('#editNis').val(data.nis);
                 $('#editNamaSiswa').val(data.name);
+                $('#editNohp').val(data.no_hp);
                 $('#editKelasID').val(data.kelas_id); 
                 $('#editThAjaranID').val(data.th_ajaran_id);
                 $('#editStatusPagi').val(data.pagi);
@@ -246,10 +305,12 @@
     // TAMBAH DATA Siswa
     $('#saveAdd').click(function(e) {
         e.preventDefault();
-        if($('#nis').val() == '' || $('#namaSiswa').val() == '' || $('#kelasID').val() == '' || $('#thAjaranID').val() == '') {
+        if($('#nis').val() == '' || $('#namaSiswa').val() == '' || $('#kelasID').val() == '' || $('#thAjaranID').val() == '' || $('#nohp').val() == '') {
             alert("Data tidak boleh ada yang kosong!");
         } else if (isNaN($('#nis').val())){
             alert("NIS harus berupa angka!");
+        } else if (isNaN($('#nohp').val())) {
+            alert("No HP harus berupa angka!");
         } else {
             $.ajax({  
                 url: '{{ route("siswa.index") }}',  
@@ -258,6 +319,7 @@
                 data: {
                     nis: $('#nis').val(),
                     name: $('#namaSiswa').val(),
+                    no_hp: $('#nohp').val(),
                     kelas_id: $('#kelasID').val(),
                     th_ajaran_id: $('#thAjaranID').val(),
                     pagi: $('#statusPagi').val(),
@@ -280,10 +342,12 @@
     $('#saveEdit').click(function(e) {
         e.preventDefault();
 
-        if($('#editNis').val() == '' || $('#editNamaSiswa').val() == '') {
+        if($('#editNis').val() == '' || $('#editNamaSiswa').val() == '' || $('#editNohp').val() == '') {
             alert("Data tidak boleh ada yang kosong!");
         } else if (isNaN($('#editNis').val())){
             alert("NIS harus berupa angka!");
+        } else if (isNaN($('#editNohp').val())) {
+            alert("No HP harus berupa angka!");
         } else {
             $.ajax({  
                 url: '{{ route("siswa.index") }}/'+$('#editID').val(),  
@@ -292,6 +356,7 @@
                 data: {
                     nis: $('#editNis').val(),
                     name: $('#editNamaSiswa').val(),
+                    no_hp: $('#editNohp').val(),
                     kelas_id: $('#editKelasID').val(),
                     th_ajaran_id: $('#editThAjaranID').val(),
                     pagi: $('#editStatusPagi').val(),
@@ -333,10 +398,28 @@
     function refreshForm() {
         $('#nis').val('');
         $('#namaSiswa').val('');
+        $('#nohp').val('');
         $('#kelasID').val('');
         $('#thAjaranID').val('');
         $('#statusPagi').val('');
         $('#statusSiang').val('');
+    }
+
+    //GENERATE QR CODE BY CLASS
+    function generateQr() {
+        let kelas = $('#k').val();
+        let thAjaran = $('#ta').val();
+
+        if(kelas == '' || thAjaran == ''){
+            alert("Kelas dan Tahun Ajaran harus dipilih!");
+        }else{
+            window.location = '{{ route("siswa.index") }}/qr/'+kelas+'/'+thAjaran;
+        }
+    }
+
+    //GENERATE QR CODE BY ID SISWA
+    function qrCode(id) {
+            window.location = '{{ route("siswa.index") }}/qrone/'+id;
     }
 </script>
 @endsection

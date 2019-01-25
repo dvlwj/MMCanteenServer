@@ -9,22 +9,36 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
         	<div class="row" id="qrPrint">
-	   			<div class="col-sm-12" style="border: 3px solid black; border-radius: 10px;">
-	   				<div class="col-sm-6">
-				   		<p class="text-center">
-				   			{!! QrCode::size(300)->generate($nis); !!}
-				   		</p>
-			   		</div>
-	   				<div class="col-sm-6">
-				   		<p class="text-center" style="font-size: 16px">
-				   			<br><br><br><br><br>
-				   			<b>{{$nis}}</b>
-				   			<br>
-				   			<b>{{strtoupper($name)}}</b>
-				   			<br><br>
-					   		property ini milik kantin <b>maitreyawira</b>, jika menemukan harap dikembalikan.
-				   		</p>
-				   	</div>
+	   			<div class="col-sm-12">
+	   				@if($ket == 'more')
+		   				@foreach($siswa as $s)
+			   			<!-- CARD -->
+			   			<div class="col-sm-3 col-xs-3" style="border: 2px solid black; margin: 5px 0;">
+				   			<div class="card text-center">
+					   					{!! QrCode::size(150)->generate($s->nis); !!}
+							  	<div class="card-body">
+							    	<p class="card-text text-center">
+							    		<b>Kelas {{$kelas->name}}</b> <br> <b>{{$s->name}}</b>
+							    	</p>
+							  	</div>
+							</div>
+						</div>
+						<!-- /CARD -->
+						@endforeach
+					@elseif($ket == 'one')
+					<!-- CARD -->
+			   			<div class="col-sm-3 col-xs-3" style="border: 2px solid black; margin: 5px 0;">
+				   			<div class="card text-center">
+					   					{!! QrCode::size(150)->generate($siswa->nis); !!}
+							  	<div class="card-body">
+							    	<p class="card-text text-center">
+							    		<b>Kelas {{$kelas->name}}</b> <br> <b>{{$siswa->name}}</b>
+							    	</p>
+							  	</div>
+							</div>
+						</div>
+						<!-- /CARD -->
+					@endif
 	   			</div>
         	</div>
         	<br>

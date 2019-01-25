@@ -40,6 +40,73 @@ class SiswaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  nis, name, no_hp, kelas_id, th_ajaran_id, pagi, siang
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $this->validate($request,[
+            'nis' => 'required', 
+            'name' => 'required',
+            'no_hp' => 'required',
+            'kelas_id' => 'required', 
+            'th_ajaran_id' => 'required',
+            'pagi' => 'required',
+            'siang' => 'required'
+        ]);
+
+        $nis = $request->input('nis');
+        $name = $request->input('name');
+        $no_hp = $request->input('no_hp');
+        $kelas_id = $request->input('kelas_id');
+        $th_ajaran_id = $request->input('th_ajaran_id');
+        $pagi = $request->input('pagi');
+        $siang = $request->input('siang');
+
+        $siswa = new Siswa([
+            'nis' => $nis,
+            'name' => $name,
+            'no_hp' => $no_hp,
+            'kelas_id' => $kelas_id,
+            'th_ajaran_id' => $th_ajaran_id,
+            'pagi' => $pagi,
+            'siang' => $siang
+        ]);
+
+        // Check NIS
+        if (Siswa::where('nis', $nis)->first()) {
+            $response = [
+                'status' => 0,
+                'msg' => 'NIS is already exist',
+            ];
+
+            return response()->json($response);
+        }
+
+        if ($siswa->save()) {
+            $response = [
+                'status' => 1,
+                'msg' => 'Siswa created',
+                'siswa' => $siswa,
+                'link' => 'api/v1/siswa',
+                'method' => 'GET'
+            ];
+
+            return response()->json($response, 201);
+        }
+
+        $response = [
+            'status' => 2,
+            'msg' => 'An Error occured'
+        ];
+
+        return response()->json($response);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\web;
 use App\Siswa;
 use App\Kelas;
 use App\TahunAjaran;
+use Excel;
+use App\Imports\SiswaImport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -42,7 +44,8 @@ class SiswaController extends Controller
     {
         $this->validate($request, [
             'nis' => 'required', 
-            'name' => 'required', 
+            'name' => 'required',
+            'no_hp' => 'required',
             'kelas_id' => 'required', 
             'th_ajaran_id' => 'required',
             'pagi' => 'required',
@@ -51,6 +54,7 @@ class SiswaController extends Controller
 
         $nis = $request->input('nis');
         $name = $request->input('name');
+        $no_hp = $request->input('no_hp');
         $kelas_id = $request->input('kelas_id');
         $th_ajaran_id = $request->input('th_ajaran_id');
         $pagi = $request->input('pagi');
@@ -59,6 +63,7 @@ class SiswaController extends Controller
         $siswa = new Siswa([
             'nis' => $nis,
             'name' => $name,
+            'no_hp' => $no_hp,
             'kelas_id' => $kelas_id,
             'th_ajaran_id' => $th_ajaran_id,
             'pagi' => $pagi,
@@ -123,6 +128,7 @@ class SiswaController extends Controller
         $this->validate($request, [
             'nis' => 'required', 
             'name' => 'required', 
+            'no_hp' => 'required', 
             'kelas_id' => 'required', 
             'th_ajaran_id' => 'required',
             'pagi' => 'required',
@@ -131,6 +137,7 @@ class SiswaController extends Controller
 
         $nis = $request->input('nis');
         $name = $request->input('name');
+        $no_hp = $request->input('no_hp');
         $kelas_id = $request->input('kelas_id');
         $th_ajaran_id = $request->input('th_ajaran_id');
         $pagi = $request->input('pagi');
@@ -142,6 +149,7 @@ class SiswaController extends Controller
         } else {
             $data->nis = $nis;
             $data->name = $name;
+            $data->no_hp = $no_hp;
             $data->kelas_id = $kelas_id;
             $data->th_ajaran_id = $th_ajaran_id;
             $data->pagi = $pagi;
@@ -182,42 +190,46 @@ class SiswaController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function listSiswa($kelas_id, $th_ajaran_id)
-    {
-        //kelas, th_ajaran
-        $siswa = DB::table('siswas')->where('kelas_id', $kelas_id)->where('th_ajaran_id', $th_ajaran_id)->get();
-        foreach($siswa as $data) {
-            $data->detail_siswa = [
-                'link' => 'api/v1/siswa/' . $data->id,
-                'method' => 'GET'
-            ];   
-        }
-
-        $response = [
-            'status' => 1,
-            'msg' => 'List of Siswa',
-            'siswa' => $siswa,
-        ];
-
-        return response()->json($response, 200);
-    }
-
-    /**
     * Display a QR Code of Siswa
     *
     * @param  \App\Siswa  $siswa
     * @return \Illuminate\Http\Response
     */
-    public function qr($id)
+    public function qr($kelas, $thAjaran)
+    {
+        $siswa = Siswa::where('kelas_id',$kelas)->where('th_ajaran_id',$thAjaran)->get();
+        if($siswa == null){
+            return redirect()->route('siswa.index');       
+        }
+
+        $kelas = Kelas::where('id',$kelas)->first();
+        $ket = 'more';
+        return view('qrcode', compact(['siswa','kelas','ket']));
+    }
+
+    /**
+    * Display a QR Code of One Siswa
+    *
+    * @param  \App\Siswa  $id
+    * @return \Illuminate\Http\Response
+    */
+    public function qrOne($id)
     {
         $siswa = Siswa::find($id);
         if($siswa == ''){
             return redirect()->route('siswa.index');       
         }
-        return view('qrcode', ['nis' => $siswa->nis, 'name' => $siswa->name]);
+
+        $kelas = Kelas::where('id',$siswa->kelas_id)->first();
+        $ket = 'one';
+        return view('qrcode', compact(['siswa','kelas','ket']));
+    }
+
+    public function importSiswa(Request $request) 
+    {
+        $import = Excel::import(new SiswaImport, $request->file('importData'));
+        if($import){
+            return redirect()->route('siswa.index');
+        }
     }
 }
