@@ -16,20 +16,20 @@ class SiswaImport implements ToCollection, WithHeadingRow
     */
     public function collection(Collection $rows)
     {
-        dd($rows);
-        foreach ($rows as $row) 
+        foreach ($rows as $row)
         {
-            $in = [
-                'nis' => $row['nis'],
-                'name' => $row['name'],
-                'no_hp' => $row['no_hp'],
-                'kelas_id' => $row['kelas_id'],
-                'th_ajaran_id' => $row['th_ajaran_id'],
-                'pagi' => $row['pagi'],
-                'siang' => $row['siang']
-            ];
-
-            // return Siswa::create($in);
+            // Check NIS
+            if (!Siswa::where('nis', $row['nis'])->first()) {
+                Siswa::create([
+                    'nis' => $row['nis'],
+                    'name' => $row['name'],
+                    'no_hp' => $row['no_hp'],
+                    'kelas_id' => $row['kelas_id'],
+                    'th_ajaran_id' => $row['th_ajaran_id'],
+                    'pagi' => $row['pagi'],
+                    'siang' => $row['siang']
+                ]);   
+            }
         }
     }
 }

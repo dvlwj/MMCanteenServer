@@ -227,6 +227,9 @@ class SiswaController extends Controller
 
     public function importSiswa(Request $request) 
     {
-        return Excel::import(new SiswaImport, $request->file('importData'));
+        $import = Excel::import(new SiswaImport, $request->file('importData'));
+        if($import){
+            return redirect()->route('siswa.index');
+        }
     }
 }
