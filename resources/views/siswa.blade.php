@@ -254,6 +254,7 @@
                 <div class="form-group">
                     <label for="importData" class="col-form-label">Import file excel</label>
                     <input type="file" class="form-control" name="importData">
+                    <span class="label label-danger">Pastikan file yang Anda import sesuai dan memiliki format yang benar.</span>
                 </div>
                 <input type="submit" class="btn btn-success" value="Submit">
             </form>
