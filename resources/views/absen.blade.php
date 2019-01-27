@@ -18,6 +18,16 @@
                         </div>
                     @endif
 
+                    @if(Auth::user()->role == 'admin')
+                    <select class="selectpicker hidden" id="waktu" data-size="5">
+                        <option value="">Pilih Waktu</option>
+                        <option value="pagi">Pagi</option>
+                        <option value="siang">Siang</option>
+                    </select>
+                    <button class="btn btn-success hidden" onclick="generateAbsen()">Generate Absen</button>
+                    <hr>
+                    @endif
+
                     <table id="absen" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
@@ -115,6 +125,28 @@
                         alert(data.msg);
                     }else{
                         alert('Data berhasil dihapus.');
+                        $("#absen").load(window.location + " #absen");
+                    }
+                }
+            });
+        }
+    }
+
+    function generateAbsen(){
+        if($('#waktu').val() == '')
+        {
+            alert('Silahkan pilih waktu terlebih dahulu!');
+        }else{
+            let waktu = $('#waktu').val();
+            $.ajax({
+                url: '{{ route("absen.index") }}/makan/'+waktu,
+                type: 'GET',
+                success: function (data) {
+                    if(data == 'kosong'){
+                        alert('Absen Makan hari ini sudah digenerate!');
+                        $("#absen").load(window.location + " #absen");
+                    }else{
+                        alert('Absen Makan hari ini berhasil digenerate!');
                         $("#absen").load(window.location + " #absen");
                     }
                 }
