@@ -29,7 +29,6 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function() {
 	
 	//Route Absen
 	Route::get('absen', 'web\AbsenController@index')->name('absen.index');
-	Route::get('absen/makan/{status}', 'web\AbsenController@makan')->name('absen.makan');
 	Route::delete('absen/{id}', 'web\AbsenController@destroy')->name('absen.destroy');
 
 	//Route Report
