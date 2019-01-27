@@ -18,16 +18,6 @@
                         </div>
                     @endif
 
-                    @if(Auth::user()->role == 'admin')
-                    <select class="selectpicker" id="waktu" data-size="5">
-                        <option value="">Pilih Waktu</option>
-                        <option value="pagi">Pagi</option>
-                        <option value="siang">Siang</option>
-                    </select>
-                    <button class="btn btn-success" onclick="generateAbsen()">Generate Absen</button>
-                    <hr>
-                    @endif
-
                     <table id="absen" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
