@@ -32,7 +32,7 @@ class TahunAjaranController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'tahun' => 'required|max:4'
+            'tahun' => 'required|max:9'
         ]);
 
         $tahun = $request->input('tahun');
