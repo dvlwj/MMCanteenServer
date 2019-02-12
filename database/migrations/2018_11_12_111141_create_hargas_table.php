@@ -16,7 +16,10 @@ class CreateHargasTable extends Migration
         Schema::create('hargas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('kel_kelas');
-            $table->string('harga');
+            $table->string('h_pagi_b');
+            $table->string('h_pagi_j');
+            $table->string('h_siang_b');
+            $table->string('h_siang_j');
             $table->timestamps();
         });
     }

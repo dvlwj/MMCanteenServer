@@ -22,6 +22,8 @@ class CreateSiswasTable extends Migration
             $table->integer('th_ajaran_id')->unsigned();
             $table->enum('pagi', ['aktif', 'non aktif']);
             $table->enum('siang', ['aktif', 'non aktif']);
+            $table->enum('porsi_pagi', [0, 1]);
+            $table->enum('porsi_siang', [0, 1]);
             $table->timestamps();
 
             $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('cascade');

@@ -30,7 +30,6 @@
                                 <th class="text-center">Kelas</th>
                                 <th class="text-center">ID Kelas</th>
                                 <th class="text-center">Kelompok</th>
-                                <th class="text-center">Harga</th>
                                 @if(Auth::user()->role == 'admin')
                                     <th class="text-center">Action</th>
                                 @endif
@@ -44,7 +43,6 @@
                                 <td class="text-center">{{ $data->name }}</td>
                                 <td class="text-center">{{ $data->id }}</td>
                                 <td class="text-center">{{ $data->kelompok->kel_kelas}}</td>
-                                <td class="text-center">Rp {{ number_format($data->kelompok->harga, 2, ",", ".")}}</td>
                                 @if(Auth::user()->role == 'admin')
                                     <td class="text-center">
                                         <button class="btn btn-warning" data-toggle="modal" data-target="#editKelas" onclick="getData('{{ $data->id }}')">

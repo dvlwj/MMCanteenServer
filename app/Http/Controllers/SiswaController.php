@@ -52,7 +52,9 @@ class SiswaController extends Controller
             'kelas_id' => 'required', 
             'th_ajaran_id' => 'required',
             'pagi' => 'required',
-            'siang' => 'required'
+            'siang' => 'required',
+            'porsi_pagi' => 'required',
+            'porsi_siang' => 'required'
         ]);
 
         $nis = $request->input('nis');
@@ -62,6 +64,8 @@ class SiswaController extends Controller
         $th_ajaran_id = $request->input('th_ajaran_id');
         $pagi = $request->input('pagi');
         $siang = $request->input('siang');
+        $porsi_pagi = $request->input('porsi_pagi');
+        $porsi_siang = $request->input('porsi_siang');
 
         $siswa = new Siswa([
             'nis' => $nis,
@@ -70,7 +74,9 @@ class SiswaController extends Controller
             'kelas_id' => $kelas_id,
             'th_ajaran_id' => $th_ajaran_id,
             'pagi' => $pagi,
-            'siang' => $siang
+            'siang' => $siang,
+            'porsi_pagi' => $porsi_pagi,
+            'porsi_siang' => $porsi_siang
         ]);
 
         // Check NIS
@@ -115,6 +121,8 @@ class SiswaController extends Controller
 
         $pagi = $request->input('pagi');
         $siang = $request->input('siang');
+        $porsi_pagi = $request->input('porsi_pagi');
+        $porsi_siang = $request->input('porsi_siang');
 
         $siswa = Siswa::where('nis', $nis)->first();
         if ($siswa == '') {
@@ -124,6 +132,10 @@ class SiswaController extends Controller
                 $siswa->pagi = $pagi;
             } elseif($siang != '') {
                 $siswa->siang = $siang;
+            } elseif($porsi_pagi != '') {
+                $data->porsi_pagi = $porsi_pagi;
+            } elseif($porsi_siang != '') {
+                $data->porsi_siang = $porsi_siang;
             }
         }
 
