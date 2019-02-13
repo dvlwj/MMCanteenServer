@@ -30,14 +30,24 @@ class ReportController extends Controller
 	    	$report = [];
 	    	$harga = [];
             $periode = '-------';
-	    	$total = 0;	
+	    	$total = 0;
     	}else{
     		$report = Absen::where('siswa_id',$siswa->id)->where('keterangan', 'makan')->whereMonth('time',$bl)->whereYear('time',$th)->get();
-	    	$harga = DB::select(DB::raw("SELECT h.harga AS harga
+            $porsi_pagi = 'h_pagi_b';
+            $porsi_siang = 'h_siang_b';
+            if($siswa->porsi_pagi == 1) {
+                $porsi_pagi = 'h_pagi_j';
+            }
+
+            if($siswa->porsi_siang == 1) {
+                $porsi_siang = 'h_siang_j';
+            }
+
+	    	$harga = DB::select(DB::raw("SELECT h.".$porsi_pagi." AS h_pagi, h.".$porsi_siang." AS h_siang
 			    		FROM siswas AS s, kelas AS k, hargas as h
 			    		WHERE s.kelas_id = k.id AND h.id = k.harga_id AND s.nis = '".$siswa->nis."'"));
 	    	$periode = $bulan[$bl-1]." ".$th;
-	    	$total = count($report) * $harga[0]->harga;
+	    	$total = count($report);
     	}
 
     	return view('report', compact(['report','periode','harga','total','bulan','tahun','siswa','kelas','thAjaran']));

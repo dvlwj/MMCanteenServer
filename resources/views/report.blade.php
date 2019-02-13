@@ -57,21 +57,46 @@
                     <th scope="col">No</th>
                     <th scope="col">Tanggal</th>
                     <th scope="col">Waktu</th>
+                    <th scope="col">Porsi</th>
                     <th scope="col">Biaya</th>
                   </tr>
                 </thead>
                 <tbody>
                   @php $n=1 @endphp
+                  @php $sum=0 @endphp
                   @foreach($report as $r)
                     <tr>
                       <td>{{$n++}}</td>
                       <td>{{ $r->time }}</td>
                       <td>{{ $r->status }}</td>
-                      <td>Rp {{ number_format($harga[0]->harga, 2, ",", ".") }}</td>
+                      <td>
+                        @if($r->status == 'pagi')
+                          @if($siswa->porsi_pagi == 0)
+                            Biasa
+                          @else
+                            Jumbo
+                          @endif
+                        @else
+                          @if($siswa->porsi_siang == 0)
+                            Biasa
+                          @else
+                            Jumbo
+                          @endif
+                        @endif
+                      </td>
+                      <td>
+                        @if($r->status == 'pagi')
+                          Rp {{ number_format($harga[0]->h_pagi, 2, ",", ".") }}
+                          @php $sum += $harga[0]->h_pagi @endphp
+                        @else
+                          Rp {{ number_format($harga[0]->h_siang, 2, ",", ".") }}
+                          @php $sum += $harga[0]->h_siang @endphp
+                        @endif
+                      </td>
                     </tr>
                   @endforeach
                   <tr align="right">
-                    <td colspan="4"><b>Total : Rp {{ number_format($total, 2, ",", ".") }}</b></td>
+                    <td colspan="5"><b>Total : Rp {{ number_format($sum, 2, ",", ".") }}</b></td>
                   </tr>
                 </tbody>
               </table>
