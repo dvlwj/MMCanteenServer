@@ -130,12 +130,15 @@ class SiswaController extends Controller
         } else {
             if($pagi != ''){
                 $siswa->pagi = $pagi;
-            } elseif($siang != '') {
+            } 
+            if($siang != '') {
                 $siswa->siang = $siang;
-            } elseif($porsi_pagi != '') {
-                $data->porsi_pagi = $porsi_pagi;
-            } elseif($porsi_siang != '') {
-                $data->porsi_siang = $porsi_siang;
+            } 
+            if($porsi_pagi != '') {
+                $siswa->porsi_pagi = $porsi_pagi;
+            } 
+            if($porsi_siang != '') {
+                $siswa->porsi_siang = $porsi_siang;
             }
         }
 
