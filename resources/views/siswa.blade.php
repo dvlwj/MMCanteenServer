@@ -53,9 +53,11 @@
                                 <th class="text-center">Kelas</th>
                                 <th class="text-center">Tahun Ajaran</th>
                                 <th class="text-center">Pagi</th>
+                                <th class="text-center">Porsi Pagi</th>
                                 <th class="text-center">Siang</th>
+                                <th class="text-center">Porsi Siang</th>
                                 @if(Auth::user()->role == 'admin')
-                                    <th class="text-center">Action</th>
+                                    <th class="text-center" width="250px">Action</th>
                                 @endif
                             </tr>
                         </thead>
@@ -77,24 +79,38 @@
                                     @endif
                                 </td>
                                 <td class="text-center">
+                                    @if($data->porsi_pagi == 0)
+                                    <span class="label label-success">Biasa</span>
+                                    @else
+                                    <span class="label label-warning">Jumbo</span>
+                                    @endif
+                                </td>
+                                <td class="text-center">
                                     @if($data->siang == 'aktif')
                                     <span class="label label-success">{{ $data->siang }}</span>
                                     @else
                                     <span class="label label-danger">{{ $data->siang }}</span>
                                     @endif
                                 </td>
+                                <td class="text-center">
+                                    @if($data->porsi_siang == 0)
+                                    <span class="label label-success">Biasa</span>
+                                    @else
+                                    <span class="label label-warning">Jumbo</span>
+                                    @endif
+                                </td>
                                 @if(Auth::user()->role == 'admin')
                                     <td class="text-center">
-                                        <button class="btn btn-info"onclick="qrCode('{{ $data->id }}')">
+                                        <button class="btn btn-info btn-sm" onclick="qrCode('{{ $data->id }}')">
                                           Qr Code
                                         </button>
-                                        <button class="btn btn-warning" data-toggle="modal" data-target="#editSiswa" onclick="getData('{{ $data->id }}')">
+                                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editSiswa" onclick="getData('{{ $data->id }}')">
                                           Edit
                                         </button>
-                                        <a href="{{route('report.index',$data->nis)}}" class="btn btn-success">
+                                        <a href="{{route('report.index',$data->nis)}}" class="btn btn-success btn-sm">
                                           Report
                                         </a>
-                                        <button class="btn btn-danger" onclick="deleteData('{{ $data->id }}')">Delete</button>
+                                        <button class="btn btn-danger btn-sm" onclick="deleteData('{{ $data->id }}')">Delete</button>
                                     </td>
                                 @endif
                             </tr>
@@ -160,6 +176,20 @@
                         <option value="non aktif">Non Aktif</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="porsiPagi">Porsi Pagi</label>
+                    <select id="porsiPagi" class="form-control">
+                        <option value="0">Biasa</option>
+                        <option value="1">Jumbo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="porsiSiang">Porsi Siang</label>
+                    <select id="porsiSiang" class="form-control">
+                        <option value="0">Biasa</option>
+                        <option value="1">Jumbo</option>
+                    </select>
+                </div>
             </form>
           </div>
           <div class="modal-footer">
@@ -223,6 +253,20 @@
                     <select id="editStatusSiang" class="form-control">
                         <option value="aktif">Aktif</option>
                         <option value="non aktif">Non Aktif</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editPorsiPagi">Porsi Pagi</label>
+                    <select id="editPorsiPagi" class="form-control">
+                        <option value="0">Biasa</option>
+                        <option value="1">Jumbo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editPorsiSiang">Porsi Siang</label>
+                    <select id="editPorsiSiang" class="form-control">
+                        <option value="0">Biasa</option>
+                        <option value="1">Jumbo</option>
                     </select>
                 </div>
             </form>
@@ -298,7 +342,9 @@
                 $('#editThAjaranID').val(data.th_ajaran_id);
                 $('#editStatusPagi').val(data.pagi);
                 $('#editStatusSiang').val(data.siang);
-                $('#editID').val(data.id); 
+                $('#editPorsiPagi').val(data.porsi_pagi);
+                $('#editPorsiSiang').val(data.porsi_siang);
+                $('#editID').val(data.id);
             }
         });
     }
@@ -324,7 +370,9 @@
                     kelas_id: $('#kelasID').val(),
                     th_ajaran_id: $('#thAjaranID').val(),
                     pagi: $('#statusPagi').val(),
-                    siang: $('#statusSiang').val()
+                    siang: $('#statusSiang').val(),
+                    porsi_pagi: $('#porsiPagi').val(),
+                    porsi_siang: $('#porsiSiang').val()
                 },  
                 success: function (data) {
                     if(data.status == 0) {
@@ -361,7 +409,9 @@
                     kelas_id: $('#editKelasID').val(),
                     th_ajaran_id: $('#editThAjaranID').val(),
                     pagi: $('#editStatusPagi').val(),
-                    siang: $('#editStatusSiang').val()
+                    siang: $('#editStatusSiang').val(),
+                    porsi_pagi: $('#editPorsiPagi').val(),
+                    porsi_siang: $('#editPorsiSiang').val()
                 },  
                 success: function (data) {
                     if(data.status == 0){
@@ -404,6 +454,8 @@
         $('#thAjaranID').val('');
         $('#statusPagi').val('');
         $('#statusSiang').val('');
+        $('#porsiPagi').val('');
+        $('#porsiSiang').val('');
     }
 
     //GENERATE QR CODE BY CLASS

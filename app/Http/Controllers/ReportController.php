@@ -45,15 +45,32 @@ class ReportController extends Controller
 	    		return response()->json($response);
 	    	}else{
 	    		$report = Absen::where('siswa_id',$siswa->id)->where('keterangan', 'makan')->whereMonth('time',$bulan)->whereYear('time',$tahun)->get();
-		    	$harga = DB::select(DB::raw("SELECT h.harga AS harga
-				    		FROM siswas AS s, kelas AS k, hargas as h
-				    		WHERE s.kelas_id = k.id AND h.id = k.harga_id AND s.nis = '".$siswa->nis."'"));
+	    		$porsi_pagi = 'h_pagi_b';
+	            $porsi_siang = 'h_siang_b';
+	            if($siswa->porsi_pagi == 1) {
+	                $porsi_pagi = 'h_pagi_j';
+	            }
+
+	            if($siswa->porsi_siang == 1) {
+	                $porsi_siang = 'h_siang_j';
+	            }
+
+		    	$harga = DB::select(DB::raw("SELECT h.".$porsi_pagi." AS h_pagi, h.".$porsi_siang." AS h_siang
+			    		FROM siswas AS s, kelas AS k, hargas as h
+			    		WHERE s.kelas_id = k.id AND h.id = k.harga_id AND s.nis = '".$siswa->nis."'"));
+		    	$pagi = $siang = 0;
 		    	foreach($report as $r)
 	    		{
-	    			$r->harga = $harga[0]->harga; 
+	    			if($r->status == 'pagi') {
+	    				$r->h_pagi = $harga[0]->h_pagi;
+	    				$pagi += $harga[0]->h_pagi;
+	    			}else{
+		    			$r->h_siang = $harga[0]->h_siang; 
+		    			$siang += $harga[0]->h_siang;
+		    		}
 	    		}
 		    	$periode = $bl[$bulan-1]." ".$tahun;
-		    	$total = count($report) * $harga[0]->harga;
+		    	$total = $pagi + $siang;
 
 		    	$response = [
 	    			'status' => 1,

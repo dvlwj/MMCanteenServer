@@ -12,7 +12,7 @@ class Harga extends Model
      * @var array
      */
     protected $fillable = [
-        'kel_kelas', 'harga'
+        'kel_kelas', 'h_pagi_b', 'h_pagi_j', 'h_siang_b', 'h_siang_j'
     ];
 
 }

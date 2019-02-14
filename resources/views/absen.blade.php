@@ -38,6 +38,7 @@
                                 <th class="text-center">Tahun Ajaran</th>
                                 <th class="text-center">Waktu</th>
                                 <th class="text-center">Status</th>
+                                <th class="text-center">Porsi</th>
                                 <th class="text-center">Keterangan</th>
                                 @if(Auth::user()->role == 'admin')
                                   <th class="text-center">Action</th>
@@ -59,6 +60,21 @@
                                     <span class="label label-success">pagi</span>
                                   @else
                                     <span class="label label-warning">siang</span>
+                                  @endif
+                                </td>
+                                <td class="text-center">
+                                  @if($data->status == 'pagi')
+                                    @if($data->siswa->porsi_pagi == 0)
+                                        <span class="label label-info"> Biasa </span>
+                                    @else
+                                        <span class="label label-danger"> Jumbo </span>
+                                    @endif
+                                  @else
+                                    @if($data->siswa->porsi_siang == 0)
+                                        <span class="label label-info"> Biasa </span>
+                                    @else
+                                        <span class="label label-danger"> Jumbo </span>
+                                    @endif
                                   @endif
                                 </td>
                                 <td class="text-center">

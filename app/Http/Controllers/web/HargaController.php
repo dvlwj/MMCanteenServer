@@ -33,15 +33,24 @@ class HargaController extends Controller
     {
         $this->validate($request,[
             'kel_kelas' => 'required',
-            'harga' => 'required'
+            'h_pagi_b' => 'required',
+            'h_pagi_j' => 'required',
+            'h_siang_b' => 'required',
+            'h_siang_j' => 'required'
         ]);
 
         $kel_kelas = $request->input('kel_kelas');
-        $harga = $request->input('harga');
+        $h_pagi_b = $request->input('h_pagi_b');
+        $h_pagi_j = $request->input('h_pagi_j');
+        $h_siang_b = $request->input('h_siang_b');
+        $h_siang_j = $request->input('h_siang_j');
 
         $addHarga = New Harga([
             'kel_kelas' => $kel_kelas,
-            'harga' => $harga
+            'h_pagi_b' => $h_pagi_b,
+            'h_pagi_j' => $h_pagi_j,
+            'h_siang_b' => $h_siang_b,
+            'h_siang_j' => $h_siang_j,
         ]);
 
         // kel_kelas check
@@ -99,18 +108,27 @@ class HargaController extends Controller
     {
         $this->validate($request, [
             'kel_kelas' => 'required',
-            'harga' => 'required'
+            'h_pagi_b' => 'required',
+            'h_pagi_j' => 'required',
+            'h_siang_b' => 'required',
+            'h_siang_j' => 'required'
         ]);
         
         $kel_kelas = $request->input('kel_kelas');
-        $harga = $request->input('harga');
+        $h_pagi_b = $request->input('h_pagi_b');
+        $h_pagi_j = $request->input('h_pagi_j');
+        $h_siang_b = $request->input('h_siang_b');
+        $h_siang_j = $request->input('h_siang_j');
         $editHarga = Harga::find($id);
 
         if($editHarga == '') {
             return response()->json(['status' => 0,'msg' => 'Kelompok Kelas not found'], 200);
         } else {
             $editHarga->kel_kelas = $kel_kelas;
-            $editHarga->harga = $harga;
+            $editHarga->h_pagi_b = $h_pagi_b;
+            $editHarga->h_pagi_j = $h_pagi_j;
+            $editHarga->h_siang_b = $h_siang_b;
+            $editHarga->h_siang_j = $h_siang_j;
         }
 
         if(!$editHarga->update()) {

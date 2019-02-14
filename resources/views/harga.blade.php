@@ -28,7 +28,10 @@
                             <tr>
                                 <th class="text-center">No</th>
                                 <th class="text-center">Kelompok</th>
-                                <th class="text-center">Harga</th>
+                                <th class="text-center">Harga Pagi Biasa</th>
+                                <th class="text-center">Harga Siang Jumbo</th>
+                                <th class="text-center">Harga Pagi Biasa</th>
+                                <th class="text-center">Harga Siang Jumbo</th>
                                 @if(Auth::user()->role == 'admin')
                                     <th class="text-center">Action</th>
                                 @endif
@@ -40,9 +43,12 @@
                             <tr>
                                 <td class="text-center">{{$n++}}</td>
                                 <td class="text-center">{{ $data->kel_kelas }}</td>
-                                <td class="text-center"> Rp {{ number_format($data->harga, 2, ",", ".") }}</td>
+                                <td class="text-center"> Rp {{ number_format($data->h_pagi_b, 2, ",", ".") }}</td>
+                                <td class="text-center"> Rp {{ number_format($data->h_pagi_j, 2, ",", ".") }}</td>
+                                <td class="text-center"> Rp {{ number_format($data->h_siang_b, 2, ",", ".") }}</td>
+                                <td class="text-center"> Rp {{ number_format($data->h_siang_j, 2, ",", ".") }}</td>
                                 @if(Auth::user()->role == 'admin')
-                                    <td class="text-center">
+                                    <td class="text-center" width="250px">
                                         <button class="btn btn-warning" data-toggle="modal" data-target="#editHarga" onclick="getData('{{ $data->id }}')">
                                           Edit
                                         </button>
@@ -75,8 +81,20 @@
                     <input type="text" class="form-control" id="kelKelas" placeholder="cth: Kelas 1 dan 2">
                 </div>
                 <div class="form-group">
-                    <label for="addHargaMakan" class="col-form-label">Harga</label>
-                    <input type="number" class="form-control" id="addHargaMakan" placeholder="cth: 10000">
+                    <label for="addHargaPagiBiasa" class="col-form-label">Harga Pagi Biasa</label>
+                    <input type="number" class="form-control" id="addHargaPagiBiasa" placeholder="cth: 10000">
+                </div>
+                <div class="form-group">
+                    <label for="addHargaPagiJumbo" class="col-form-label">Harga Pagi Jumbo</label>
+                    <input type="number" class="form-control" id="addHargaPagiJumbo" placeholder="cth: 10000">
+                </div>
+                <div class="form-group">
+                    <label for="addHargaSiangBiasa" class="col-form-label">Harga Siang Biasa</label>
+                    <input type="number" class="form-control" id="addHargaSiangBiasa" placeholder="cth: 10000">
+                </div>
+                <div class="form-group">
+                    <label for="addHargaSiangJumbo" class="col-form-label">Harga Siang Jumbo</label>
+                    <input type="number" class="form-control" id="addHargaSiangJumbo" placeholder="cth: 10000">
                 </div>
             </form>
           </div>
@@ -106,8 +124,20 @@
                     <input type="text" class="form-control" id="editKelKelas">
                 </div>
                 <div class="form-group">
-                    <label for="editHargaMakan" class="col-form-label">Harga</label>
-                    <input type="number" class="form-control" id="editHargaMakan">
+                    <label for="editHargaPagiBiasa" class="col-form-label">Harga Pagi Biasa</label>
+                    <input type="number" class="form-control" id="editHargaPagiBiasa">
+                </div>
+                <div class="form-group">
+                    <label for="editHargaPagiJumbo" class="col-form-label">Harga Pagi Jumbo</label>
+                    <input type="number" class="form-control" id="editHargaPagiJumbo">
+                </div>
+                <div class="form-group">
+                    <label for="editHargaSiangBiasa" class="col-form-label">Harga Siang Biasa</label>
+                    <input type="number" class="form-control" id="editHargaSiangBiasa">
+                </div>
+                <div class="form-group">
+                    <label for="editHargaSiangJumbo" class="col-form-label">Harga Siang Jumbo</label>
+                    <input type="number" class="form-control" id="editHargaSiangJumbo">
                 </div>
             </form>
           </div>
@@ -143,8 +173,12 @@
     function getData(id) {
         $.get('{{ route("harga.index") }}/'+id, function(data) {
             $('#editKelKelas').val(data.kel_kelas);
-            $('#editHargaMakan').val(data.harga);
+            $('#editHargaPagiBiasa').val(data.h_pagi_b);
+            $('#editHargaPagiJumbo').val(data.h_pagi_j);
+            $('#editHargaSiangBiasa').val(data.h_siang_b);
+            $('#editHargaSiangJumbo').val(data.h_siang_j);
             $('#editID').val(data.id); 
+            console.log(data);
         });
     }
 
@@ -152,9 +186,9 @@
     $('#saveAdd').click(function(e) {
         e.preventDefault();
         
-        if($('#kelKelas').val() == '' || $('#addHargaMakan').val() == '') {
+        if($('#kelKelas').val() == '' || $('#addHargaPagiBiasa').val() == '' || $('#addHargaPagiJumbo').val() == '' || $('#addHargaSiangBiasa').val() == '' || $('#addHargaSiangJumbo').val() == '') {
             alert("Kelompok Kelas atau Harga Makan tidak boleh kosong!");
-        } else if ($('#addHargaMakan').val() != '' && isNaN($('#addHargaMakan').val())){
+        } else if ($('#addHargaPagiBiasa').val() != '' && isNaN($('#addHargaPagiBiasa').val()) || $('#addHargaPagiJumbo').val() != '' && isNaN($('#addHargaPagiJumbo').val()) || $('#addHargaSiangBiasa').val() != '' && isNaN($('#addHargaSiangBiasa').val()) || $('#addHargaSiangJumbo').val() != '' && isNaN($('#addHargaSiangJumbo').val())){
             alert("Harga harus berupa angka!");
         } else {
             $.ajax({  
@@ -163,7 +197,10 @@
                 dataType: 'json',  
                 data: {
                     kel_kelas: $('#kelKelas').val(),
-                    harga: $('#addHargaMakan').val()
+                    h_pagi_b: $('#addHargaPagiBiasa').val(),
+                    h_pagi_j: $('#addHargaPagiJumbo').val(),
+                    h_siang_b: $('#addHargaSiangBiasa').val(),
+                    h_siang_j: $('#addHargaSiangJumbo').val(),
                 },  
                 success: function (data) {
                     if(data.status == 0) {
@@ -182,7 +219,7 @@
     $('#saveEdit').click(function(e) {
         e.preventDefault();
 
-        if($('#editHargaMakan').val() != '' && isNaN($('#editHargaMakan').val())){
+        if($('#editHargaPagiBiasa').val() != '' && isNaN($('#editHargaPagiBiasa').val()) || $('#editHargaPagiJumbo').val() != '' && isNaN($('#editHargaPagiJumbo').val()) || $('#editHargaSiangBiasa').val() != '' && isNaN($('#editHargaSiangBiasa').val() || $('#editHargaSiangJumbo').val() != '' && isNaN($('#editHargaSiangJumbo').val()))){
             alert("Harga harus berupa angka!");
         } else {
             $.ajax({  
@@ -191,7 +228,10 @@
                 dataType: 'json',  
                 data: {
                     kel_kelas: $('#editKelKelas').val(),
-                    harga: $('#editHargaMakan').val()
+                    h_pagi_b: $('#editHargaPagiBiasa').val(),
+                    h_pagi_j: $('#editHargaPagiJumbo').val(),
+                    h_siang_b: $('#editHargaSiangBiasa').val(),
+                    h_siang_j: $('#editHargaSiangJumbo').val()
                 },  
                 success: function (data) {
                     if(data.status == 0){
@@ -227,7 +267,10 @@
 
     function refreshForm() {
         $('#kelKelas').val('');
-        $('#addHargaMakan').val('');
+        $('#addHargaPagiBiasa').val('');
+        $('#addHargaPagiJumbo').val('');
+        $('#addHargaSiangBiasa').val('');
+        $('#addHargaSiangJumbo').val('');
     }
 </script>
 @endsection
