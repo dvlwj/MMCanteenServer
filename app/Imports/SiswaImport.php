@@ -32,7 +32,7 @@ class SiswaImport implements ToCollection, WithHeadingRow
 
         foreach ($rows as $row)
         {
-            $pagi = ''; $siang = '';
+            $pagi = $siang = $porsi_pagi = $porsi_siang = '';
 
             //PAGI
             if(is_string($row['pagi'])) {
@@ -76,6 +76,48 @@ class SiswaImport implements ToCollection, WithHeadingRow
                 ];
             }
 
+            //PORSI PAGI
+            if(is_string($row['porsi_pagi'])) {
+                $err[] = [
+                    'nis' => $row['nis'],
+                    'name' => $row['name'],
+                    'msg' => 'kolom Pagi tidak boleh selain 1[aktif] atau 0[non aktif]'
+                ];    
+            }
+
+            if($row['porsi_pagi'] == 0) {
+                $porsi_pagi = 0;
+            }elseif ($row['pagi'] == 1) {
+                $porsi_pagi = 1;
+            }else{
+                $err[] = [
+                    'nis' => $row['nis'],
+                    'name' => $row['name'],
+                    'msg' => 'kolom Porsi Pagi tidak boleh selain 1[aktif] atau 0[non aktif]'
+                ];
+            }
+
+            //PORSI SIANG
+            if(is_string($row['porsi_siang'])) {
+                $err[] = [
+                    'nis' => $row['nis'],
+                    'name' => $row['name'],
+                    'msg' => 'kolom Porsi Siang tidak boleh selain 1[aktif] atau 0[non aktif]'
+                ];    
+            }
+
+            if($row['porsi_siang'] == 0) {
+                $porsi_siang = 0;
+            }elseif ($row['porsi_siang'] == 1) {
+                $porsi_siang = 1;
+            }else{
+                $err[] = [
+                    'nis' => $row['nis'],
+                    'name' => $row['name'],
+                    'msg' => 'kolom Porsi Siang tidak boleh selain 1[aktif] atau 0[non aktif]'
+                ];
+            }
+
             //KELAS_ID
             if(is_string($row['kelas_id'])) {
                 $err[] = [
@@ -113,21 +155,26 @@ class SiswaImport implements ToCollection, WithHeadingRow
                 if(!is_string($row['pagi']) || !is_string($row['siang']) || !is_string($row['kelas_id'] || !is_string($row['th_ajaran_id']))) {
                     if(Kelas::where('id',$row['kelas_id'])->first() && TahunAjaran::where('id',$row['th_ajaran_id'])->first()) {
                         if(($row['pagi'] == 0 || $row['pagi'] == 1) && ($row['siang'] == 0 || $row['siang'] == 1)) {
-                                $success[] = [
-                                    'nis' => $row['nis'],
-                                    'name' => $row['name'],
-                                    'msg' => 'success'
-                                ];
+                                if(($row['porsi_pagi'] == 0 || $row['porsi_pagi'] == 1) && ($row['porsi_siang'] == 0 || $row['porsi_siang'] == 1)){
+                                    $success[] = [
+                                        'nis' => $row['nis'],
+                                        'name' => $row['name'],
+                                        'msg' => 'success'
+                                    ];
 
-                                Siswa::create([
-                                    'nis' => $row['nis'],
-                                    'name' => $row['name'],
-                                    'no_hp' => $row['no_hp'],
-                                    'kelas_id' => $row['kelas_id'],
-                                    'th_ajaran_id' => $row['th_ajaran_id'],
-                                    'pagi' => $pagi,
-                                    'siang' => $siang
-                                ]);
+                                    Siswa::create([
+                                        'nis' => $row['nis'],
+                                        'name' => $row['name'],
+                                        'no_hp' => $row['no_hp'],
+                                        'kelas_id' => $row['kelas_id'],
+                                        'th_ajaran_id' => $row['th_ajaran_id'],
+                                        'pagi' => $pagi,
+                                        'siang' => $siang,
+                                        'porsi_pagi' => $porsi_pagi,
+                                        'porsi_siang' => $porsi_siang
+                                    ]);
+                                    
+                                }
                         }
                     }
                 }
