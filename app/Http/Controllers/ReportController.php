@@ -62,10 +62,10 @@ class ReportController extends Controller
 		    	foreach($report as $r)
 	    		{
 	    			if($r->status == 'pagi') {
-	    				$r->h_pagi = $harga[0]->h_pagi;
+	    				$r->harga = $harga[0]->h_pagi;
 	    				$pagi += $harga[0]->h_pagi;
 	    			}else{
-		    			$r->h_siang = $harga[0]->h_siang; 
+		    			$r->harga = $harga[0]->h_siang; 
 		    			$siang += $harga[0]->h_siang;
 		    		}
 	    		}

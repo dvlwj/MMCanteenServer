@@ -72,7 +72,7 @@
             <form>
                 <div class="form-group">
                     <label for="tahun" class="col-form-label">Tahun Ajaran</label>
-                    <input type="text" class="form-control" id="tahun" placeholder="cth: 2015/2016">
+                    <input type="text" class="form-control" id="tahun" onkeypress="yearValidation(this.value,event)" oninput="checkNumberFieldLength(this);" placeholder="cth: 2015/2016">
                 </div>
             </form>
           </div>
@@ -99,7 +99,7 @@
                 <div class="form-group">
                     <input type="hidden" class="form-control" id="editID">
                     <label for="editTahun" class="col-form-label">Tahun Ajaran</label>
-                    <input type="text" class="form-control" id="editTahun">
+                    <input type="text" class="form-control" id="editTahun" onkeypress="yearValidation(this.value,event)" oninput="checkNumberFieldLength(this);">
                 </div>
             </form>
           </div>
@@ -213,35 +213,36 @@
     }
 
 // VALIDATE YEAR
-// function yearValidation(year,ev) {
+function yearValidation(year,ev) {
 
-//   var text = /^[0-9]{1,4}$/;
-//   if(year.length==4 && ev.keyCode!=8 && ev.keyCode!=46) {
-//     if (year != 0) {
-//         if ((year != "") && (!text.test(year))) {
+  // var text = /^[0-9]{1,9}$/;
+  var text = /\d{4}\/\d{4}/;
+  if(year.length==9 && ev.keyCode!=8 && ev.keyCode!=46) {
+    if (year != 0) {
+        if ((year != "") && (!text.test(year))) {
 
-//             alert("Please Enter Numeric Values Only");
-//             return false;
-//         }
+            alert("Silahkan masukan dengan format nomor");
+            return false;
+        }
 
-//         if (year.length != 4) {
-//             alert("Year is not proper. Please check");
-//             return false;
-//         }
-//         var current_year=new Date().getFullYear();
-//         if((year < 1990) || (year > current_year))
-//             {
-//             alert("Year should be in range 1990 to current year");
-//             return false;
-//             }
-//         return true;
-//     } }
-// }
+        if (year.length != 9) {
+            alert("Tahun tidak sesuai. Silahkan diperbaiki");
+            return false;
+        }
+        var current_year=new Date().getFullYear();
+        if((year < 1990) || (year > current_year))
+            {
+            alert("Tahun yang tersedia 1990 sampai saat ini");
+            return false;
+            }
+        return true;
+    } }
+}
 
-// function checkNumberFieldLength(elem){
-//     if (elem.value.length > 4) {
-//         elem.value = elem.value.slice(0,4); 
-//     }
-// }
+function checkNumberFieldLength(elem){
+    if (elem.value.length > 9) {
+        elem.value = elem.value.slice(0,9); 
+    }
+}
 </script>
 @endsection

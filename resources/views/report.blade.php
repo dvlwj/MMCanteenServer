@@ -102,6 +102,10 @@
               </table>
             </div>
           </div>
+          @else
+          <div class="text-center">
+            <b>LAPORAN TIDAK TERSEDIA</b>
+          </div>
           @endif
           <br>
           <div class="row">
