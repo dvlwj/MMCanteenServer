@@ -86,9 +86,9 @@ class SiswaImport implements ToCollection, WithHeadingRow
             }
 
             if($row['porsi_pagi'] == 0) {
-                $porsi_pagi = 0;
-            }elseif ($row['pagi'] == 1) {
-                $porsi_pagi = 1;
+                $porsi_pagi = '0';
+            }elseif ($row['porsi_pagi'] == 1) {
+                $porsi_pagi = '1';
             }else{
                 $err[] = [
                     'nis' => $row['nis'],
@@ -107,9 +107,9 @@ class SiswaImport implements ToCollection, WithHeadingRow
             }
 
             if($row['porsi_siang'] == 0) {
-                $porsi_siang = 0;
+                $porsi_siang = '0';
             }elseif ($row['porsi_siang'] == 1) {
-                $porsi_siang = 1;
+                $porsi_siang = '1';
             }else{
                 $err[] = [
                     'nis' => $row['nis'],

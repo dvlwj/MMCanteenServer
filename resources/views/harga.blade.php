@@ -29,8 +29,8 @@
                                 <th class="text-center">No</th>
                                 <th class="text-center">Kelompok</th>
                                 <th class="text-center">Harga Pagi Biasa</th>
-                                <th class="text-center">Harga Siang Jumbo</th>
-                                <th class="text-center">Harga Pagi Biasa</th>
+                                <th class="text-center">Harga Pagi Jumbo</th>
+                                <th class="text-center">Harga Siang Biasa</th>
                                 <th class="text-center">Harga Siang Jumbo</th>
                                 @if(Auth::user()->role == 'admin')
                                     <th class="text-center">Action</th>

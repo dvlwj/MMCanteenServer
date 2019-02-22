@@ -80,7 +80,7 @@
                                 </td>
                                 <td class="text-center">
                                     @if($data->porsi_pagi == 0)
-                                    <span class="label label-success">Biasa</span>
+                                    <span class="label label-info">Biasa</span>
                                     @else
                                     <span class="label label-warning">Jumbo</span>
                                     @endif
@@ -94,7 +94,7 @@
                                 </td>
                                 <td class="text-center">
                                     @if($data->porsi_siang == 0)
-                                    <span class="label label-success">Biasa</span>
+                                    <span class="label label-info">Biasa</span>
                                     @else
                                     <span class="label label-warning">Jumbo</span>
                                     @endif
